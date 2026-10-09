@@ -19,12 +19,26 @@ export function uploadPathname(folder: "kajian" | "kegiatan", blobType: string):
   return `${folder}/foto.${blobType === "image/webp" ? "webp" : "jpg"}`;
 }
 
+const NAMA_HOST = /^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/;
+
+/**
+ * Merapikan nilai `BLOB_PUBLIC_HOST` yang ditempel orang: huruf kecil, tanpa spasi, tanpa "https://", dan
+ * tanpa garis miring atau jalur di belakangnya (alamat dasar yang disalin dari Vercel biasanya lengkap dengan
+ * "https://"). Nilai yang bukan nama host dianggap belum diisi, sehingga unggah foto mati dengan pesan yang
+ * jelas dan pembuatan pola gambar di next.config.ts tidak membuat build gagal.
+ */
+export function normalizeBlobHost(mentah: string | undefined): string | undefined {
+  const awal = (mentah ?? "").trim().toLowerCase().replace(/^https?:\/\//, "").split(/[\s/?#]/)[0];
+  return NAMA_HOST.test(awal) ? awal : undefined;
+}
+
 /** Foto milik toko Blob kita: https dan host persis sama dengan `BLOB_PUBLIC_HOST`. */
 export function isOurPhotoUrl(url: string, blobHost: string | undefined): boolean {
-  if (!blobHost) return false;
+  const host = normalizeBlobHost(blobHost);
+  if (!host) return false;
   try {
     const alamat = new URL(url);
-    return alamat.protocol === "https:" && alamat.host === blobHost.toLowerCase();
+    return alamat.protocol === "https:" && alamat.host === host;
   } catch {
     return false;
   }
@@ -49,6 +63,6 @@ export function onlyOurPhotoUrls(urls: (string | null | undefined)[], blobHost: 
  * host), atau kosong bila `BLOB_PUBLIC_HOST` belum diisi.
  */
 export function blobImagePatterns(host: string | undefined): URL[] {
-  const bersih = host?.trim().toLowerCase();
+  const bersih = normalizeBlobHost(host);
   return bersih ? [new URL(`https://${bersih}/**`)] : [];
 }
