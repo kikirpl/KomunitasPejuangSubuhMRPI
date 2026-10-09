@@ -99,6 +99,18 @@ function TodayContent({ now, schedule }: { now: WibParts; schedule: ScheduleData
   );
 }
 
+/** Kartu pada hari libur: "Kajian hari ini diliburkan" dengan catatan untuk jamaah bila ada. */
+export function CancelledCard({ note }: { note?: string }) {
+  return (
+    <div className="rounded-2xl border border-line bg-card p-8 shadow-card hc:border-2">
+      <h3 className="text-2xl font-semibold text-brand">Kajian hari ini diliburkan</h3>
+      {note ? (
+        <p className="mt-2 text-xl text-ink-soft [overflow-wrap:anywhere]">Catatan: {note}</p>
+      ) : null}
+    </div>
+  );
+}
+
 export function TodayCard({
   session,
   status,

@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { useActionState, useMemo, useState } from "react";
-import { ChoiceCards } from "@/components/admin/ChoiceCards";
 import { ErrorSummary } from "@/components/admin/ErrorSummary";
-import { describedBy, Field, inputClass } from "@/components/admin/Field";
+import { KajianFields } from "@/components/admin/KajianFields";
 import { PreviewPane } from "@/components/admin/PreviewPane";
 import { SaveButton } from "@/components/admin/SaveButton";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { WeekCard } from "@/components/WeeklySchedule";
 import type { FormState } from "@/lib/admin/form-state";
-import { MODE_LABEL } from "@/lib/schedule";
+import { masjid, TEMPAT_AWAL, tempatSetelahCara, type KolomKajian } from "@/lib/admin/session-fields";
 import type { SessionInput } from "@/lib/store/types";
 import { sessionSchema } from "@/lib/validation/jadwal";
 import { parseForm, type RawForm } from "@/lib/validation/umum";
@@ -28,9 +27,6 @@ const LABEL: Record<string, string> = {
   imageAlt: "Keterangan foto",
   imagePosition: "Bagian foto yang tampil",
 };
-
-const CARA = (["masjid", "zoom", "hybrid"] as const).map((value) => ({ value, title: MODE_LABEL[value] }));
-const TEMPAT_AWAL = "Ruang utama masjid";
 
 type Nilai = Record<"startTime" | "endTime" | "ustadz" | "topic" | "mode" | "location" | "imageUrl" | "imageAlt" | "imagePosition", string>;
 
@@ -62,8 +58,6 @@ function nilaiAwal(initial: SessionInput | null, echo: RawForm | undefined): Nil
   return echo ? { ...dasar, ...echo } : dasar;
 }
 
-const masjid = (mode: string) => mode === "masjid" || mode === "hybrid";
-
 /**
  * Form satu hari jadwal tetap (klien, terkendali). Tempat hanya tampil bila cara mengikuti mencakup masjid.
  * Kolom foto dibawa sebagai isian tersembunyi supaya foto yang sudah ada tidak terhapus saat menyimpan.
@@ -93,21 +87,10 @@ export function SessionForm({
   const galat = (nama: string): string | undefined =>
     sudahKirim || tersentuh.includes(nama) ? (hasil.ok ? undefined : hasil.fieldErrors[nama]) : undefined;
 
-  const ubah = (nama: keyof Nilai, nilaiBaru: string) => setNilai((s) => ({ ...s, [nama]: nilaiBaru }));
+  const ubah = (nama: KolomKajian, nilaiBaru: string) => setNilai((s) => ({ ...s, [nama]: nilaiBaru }));
   const sentuh = (nama: string) => setTersentuh((s) => (s.includes(nama) ? s : [...s, nama]));
   const pilihCara = (cara: SessionMode) =>
-    setNilai((s) => ({ ...s, mode: cara, location: masjid(cara) && s.location === "" ? TEMPAT_AWAL : s.location }));
-
-  const kolom = (nama: keyof Nilai) => ({
-    id: `field-${nama}`,
-    name: nama,
-    value: nilai[nama],
-    onChange: (e: { target: { value: string } }) => ubah(nama, e.target.value),
-    onBlur: () => sentuh(nama),
-    "aria-invalid": galat(nama) ? (true as const) : undefined,
-    "aria-describedby": describedBy(`field-${nama}`, { hint: nama === "startTime" || nama === "endTime", error: galat(nama) }),
-    className: inputClass(Boolean(galat(nama))),
-  });
+    setNilai((s) => ({ ...s, mode: cara, location: tempatSetelahCara(cara, s.location) }));
 
   const pratinjau: StudySession = {
     id: "pratinjau",
@@ -127,38 +110,7 @@ export function SessionForm({
     <form action={formAction} onSubmit={() => setSudahKirim(true)} noValidate className="space-y-8">
       <ErrorSummary errors={state?.fieldErrors} labels={LABEL} message={state?.message} />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 huge:sm:grid-cols-1 simple:sm:grid-cols-1">
-        <Field id="field-startTime" label="Jam mulai" required hint="Waktu WIB" error={galat("startTime")}>
-          <input type="time" {...kolom("startTime")} />
-        </Field>
-        <Field id="field-endTime" label="Jam selesai" required hint="Waktu WIB" error={galat("endTime")}>
-          <input type="time" {...kolom("endTime")} />
-        </Field>
-      </div>
-
-      <Field id="field-ustadz" label="Nama ustadz" required error={galat("ustadz")}>
-        <input type="text" autoComplete="off" {...kolom("ustadz")} />
-      </Field>
-
-      <Field id="field-topic" label="Tema kajian" required error={galat("topic")}>
-        <input type="text" autoComplete="off" {...kolom("topic")} />
-      </Field>
-
-      <ChoiceCards
-        name="mode"
-        legend="Cara mengikuti"
-        options={CARA}
-        value={nilai.mode as SessionMode | ""}
-        onChange={pilihCara}
-        error={galat("mode")}
-        required
-      />
-
-      {masjid(nilai.mode) ? (
-        <Field id="field-location" label="Tempat" error={galat("location")}>
-          <input type="text" autoComplete="off" {...kolom("location")} />
-        </Field>
-      ) : null}
+      <KajianFields values={nilai} error={galat} onChange={ubah} onBlur={sentuh} onCara={pilihCara} />
 
       <input type="hidden" name="imageUrl" value={nilai.imageUrl} />
       <input type="hidden" name="imageAlt" value={nilai.imageAlt} />

@@ -5,6 +5,15 @@ export type RawForm = Record<string, string>;
 /** Satu pesan galat per kolom (kunci = nama kolom formulir). */
 export type FieldErrors = Record<string, string>;
 
+/** Isian formulir sebagai teks; berkas (bila ada) diabaikan. */
+export function rawFromFormData(formData: FormData): RawForm {
+  const raw: RawForm = {};
+  for (const [nama, nilai] of formData.entries()) {
+    if (typeof nilai === "string") raw[nama] = nilai;
+  }
+  return raw;
+}
+
 /** Semua pesan galat bahasa Indonesia untuk formulir panel (spec §8.4), di satu tempat. */
 export const PESAN = {
   jamMulaiKosong: "Jam mulai belum diisi.",
