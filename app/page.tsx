@@ -40,7 +40,7 @@ export default async function HomePage() {
         <ProfileSection />
         <TodaySchedule schedule={content.schedule} />
         <QuranVerseCard />
-        <WeeklySchedule schedule={content.schedule} />
+        <WeeklySchedule schedule={content.schedule} generatedAt={content.generatedAt} />
         <ZoomSection />
         <VideoGallery />
         <DonationSection />

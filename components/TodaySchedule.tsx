@@ -1,15 +1,15 @@
 "use client";
 
-import { CircleCheck, Clock, Play, Video } from "lucide-react";
+import { CircleCheck, Clock, Play, RefreshCw, Video } from "lucide-react";
 import { CardImage } from "@/components/ui/CardImage";
 import { ModeChips } from "@/components/ui/ModeChips";
 import { Section } from "@/components/ui/Section";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { useWibNow } from "@/hooks/useWibNow";
 import {
+  effectiveSessionOn,
   hasZoom,
   nextSessionAfterToday,
-  sessionForDay,
   sessionStatus,
   type SessionStatus,
 } from "@/lib/schedule";
@@ -18,6 +18,7 @@ import {
   formatLongDate,
   formatTime,
   greetingForHour,
+  toDateKey,
   type WibParts,
 } from "@/lib/time";
 import type { DayIndex, ScheduleData, StudySession } from "@/types";
@@ -69,15 +70,29 @@ export function TodaySchedule({ schedule }: { schedule: ScheduleData }) {
   );
 }
 
-function TodayContent({ now, schedule }: { now: WibParts; schedule: ScheduleData }) {
-  const today = sessionForDay(schedule.sessions, now.weekday);
-  const next = nextSessionAfterToday(schedule.sessions, [], now);
+/**
+ * Isi kartu Kajian Hari Ini untuk waktu `now` (WIB). Pengecualian tanggal hari ini mengalahkan jadwal tetap:
+ * libur menampilkan kartu "Kajian hari ini diliburkan"; ganti menampilkan kajian pengganti dengan lencana
+ * "Ada perubahan hari ini". Kotak "Kajian berikutnya" tampil bila hari ini tidak ada kajian, diliburkan, atau sudah selesai.
+ */
+export function TodayContent({ now, schedule }: { now: WibParts; schedule: ScheduleData }) {
+  const overrides = schedule.overrides ?? [];
+  const hariIni = effectiveSessionOn(toDateKey(now), now.weekday, schedule.sessions, overrides);
+  const today = hariIni.session;
+  const next = nextSessionAfterToday(schedule.sessions, overrides, now);
   const finishedOrNone = !today || sessionStatus(today, now) === "finished";
 
   return (
     <div className="space-y-6">
       {today ? (
-        <TodayCard session={today} status={sessionStatus(today, now)} />
+        <TodayCard
+          session={today}
+          status={sessionStatus(today, now)}
+          changed={hariIni.status === "changed" ? "ganti" : undefined}
+          note={hariIni.note}
+        />
+      ) : hariIni.status === "cancelled" ? (
+        <CancelledCard note={hariIni.note} />
       ) : (
         <div className="rounded-2xl border border-line bg-card p-8 shadow-card hc:border-2">
           <h3 className="text-2xl font-semibold text-brand">
@@ -93,6 +108,7 @@ function TodayContent({ now, schedule }: { now: WibParts; schedule: ScheduleData
         <NextNote
           session={next.session}
           daysAhead={next.daysAhead}
+          changed={next.status === "changed"}
         />
       ) : null}
     </div>
@@ -114,11 +130,26 @@ export function CancelledCard({ note }: { note?: string }) {
 export function TodayCard({
   session,
   status,
+  changed,
+  note,
 }: {
   session: StudySession;
   status: SessionStatus;
+  /** "ganti": kajian pengganti pada tanggal ini (lencana "Ada perubahan hari ini"). */
+  changed?: "ganti";
+  /** Catatan untuk jamaah dari pengecualian, tampil di bawah tema. */
+  note?: string;
 }) {
   const { label, className, Icon } = STATUS[status];
+
+  const statusPill = (
+    <p
+      className={`inline-flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-lg font-bold ${className}`}
+    >
+      <Icon aria-hidden className="size-5" />
+      {label}
+    </p>
+  );
 
   return (
     <article className="overflow-hidden rounded-2xl border border-line bg-card shadow-card hc:border-2 md:grid md:grid-cols-[18rem_minmax(0,1fr)] lg:grid-cols-[22rem_minmax(0,1fr)] simple:md:grid-cols-1 huge:md:grid-cols-1 simple:lg:grid-cols-1 huge:lg:grid-cols-1">
@@ -148,13 +179,21 @@ export function TodayCard({
 
       <div className="px-6 py-8 md:flex md:flex-col md:justify-center md:px-8">
         <div>
-          <p
-            className={`inline-flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-lg font-bold ${className}`}
-          >
-            <Icon aria-hidden className="size-5" />
-            {label}
-          </p>
+          {changed ? (
+            <div className="flex flex-wrap items-center gap-2">
+              {statusPill}
+              <p className="inline-flex items-center gap-2 rounded-full border-2 border-gold bg-gold-tint px-4 py-1.5 text-lg font-bold text-ink hc:border-black">
+                <RefreshCw aria-hidden className="size-5" />
+                Ada perubahan hari ini
+              </p>
+            </div>
+          ) : (
+            statusPill
+          )}
           <h3 className="mt-4 text-3xl font-semibold text-brand [overflow-wrap:anywhere]">{session.topic}</h3>
+          {note ? (
+            <p className="mt-2 text-xl text-ink-soft [overflow-wrap:anywhere]">Catatan: {note}</p>
+          ) : null}
           <p className="mt-2 text-xl text-ink-soft [overflow-wrap:anywhere]">
             Bersama <strong className="text-ink">{session.ustadz}</strong>
           </p>
@@ -176,16 +215,18 @@ export function TodayCard({
 function NextNote({
   session,
   daysAhead,
+  changed,
 }: {
   session: StudySession;
   daysAhead: number;
+  changed?: boolean;
 }) {
   const when = daysAhead === 1 ? "Besok" : dayName(session.day as DayIndex);
   return (
     <div className="rounded-2xl border border-line-soft bg-tint px-6 py-5 text-xl hc:border-2">
       <p>
         <strong className="text-brand">Kajian berikutnya: {when}</strong>, pukul{" "}
-        {formatTime(session.startTime)} WIB.
+        {formatTime(session.startTime)} WIB{changed ? " (ada perubahan)" : ""}.
       </p>
       <p className="mt-1 text-ink-soft [overflow-wrap:anywhere]">
         {session.topic}, bersama {session.ustadz}.

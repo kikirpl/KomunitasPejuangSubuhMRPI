@@ -167,7 +167,9 @@ export function OverrideForm({
       },
     };
     const efektif = effectiveSessionOn(nilai.date, weekdayOfKey(nilai.date), sessions, [draf]);
-    pratinjau = efektif.session ? <TodayCard session={efektif.session} status="upcoming" /> : null;
+    pratinjau = efektif.session ? (
+      <TodayCard session={efektif.session} status="upcoming" changed="ganti" note={nilai.note.trim() || undefined} />
+    ) : null;
   }
 
   return (
