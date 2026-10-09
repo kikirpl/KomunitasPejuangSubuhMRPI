@@ -5,7 +5,6 @@ import { CardImage } from "@/components/ui/CardImage";
 import { ModeChips } from "@/components/ui/ModeChips";
 import { Section } from "@/components/ui/Section";
 import { buttonClass } from "@/components/ui/buttonStyles";
-import { SCHEDULE } from "@/data/content";
 import { useWibNow } from "@/hooks/useWibNow";
 import {
   hasZoom,
@@ -21,7 +20,7 @@ import {
   greetingForHour,
   type WibParts,
 } from "@/lib/time";
-import type { DayIndex, StudySession } from "@/types";
+import type { DayIndex, ScheduleData, StudySession } from "@/types";
 
 const STATUS: Record<
   SessionStatus,
@@ -51,7 +50,7 @@ const UKURAN_FOTO = "(min-width: 1024px) 440px, (min-width: 768px) 360px, 100vw"
  * Kartu khusus untuk kajian hari ini (WIB), dengan status yang diperbarui tiap menit.
  * Gambar kajian (atau gambar pengganti) sama dengan kartunya di Jadwal Sepekan.
  */
-export function TodaySchedule() {
+export function TodaySchedule({ schedule }: { schedule: ScheduleData }) {
   const now = useWibNow();
 
   return (
@@ -63,16 +62,16 @@ export function TodaySchedule() {
           ? `${greetingForHour(now.hour)}. Hari ini ${formatLongDate(now)}.`
           : undefined
       }
-      isSample={SCHEDULE.isSample}
+      isSample={schedule.isSample}
     >
-      {now ? <TodayContent now={now} /> : <TodaySkeleton />}
+      {now ? <TodayContent now={now} schedule={schedule} /> : <TodaySkeleton />}
     </Section>
   );
 }
 
-function TodayContent({ now }: { now: WibParts }) {
-  const today = sessionForDay(SCHEDULE.sessions, now.weekday);
-  const next = nextSessionAfterToday(SCHEDULE.sessions, [], now);
+function TodayContent({ now, schedule }: { now: WibParts; schedule: ScheduleData }) {
+  const today = sessionForDay(schedule.sessions, now.weekday);
+  const next = nextSessionAfterToday(schedule.sessions, [], now);
   const finishedOrNone = !today || sessionStatus(today, now) === "finished";
 
   return (
@@ -100,7 +99,7 @@ function TodayContent({ now }: { now: WibParts }) {
   );
 }
 
-function TodayCard({
+export function TodayCard({
   session,
   status,
 }: {
@@ -117,6 +116,7 @@ function TodayCard({
           type="kajian"
           imageUrl={session.imageUrl}
           alt={session.imageAlt}
+          position={session.imagePosition}
           sizes={UKURAN_FOTO}
           className="w-full max-h-72"
         />
@@ -142,8 +142,8 @@ function TodayCard({
             <Icon aria-hidden className="size-5" />
             {label}
           </p>
-          <h3 className="mt-4 text-3xl font-semibold text-brand">{session.topic}</h3>
-          <p className="mt-2 text-xl text-ink-soft">
+          <h3 className="mt-4 text-3xl font-semibold text-brand [overflow-wrap:anywhere]">{session.topic}</h3>
+          <p className="mt-2 text-xl text-ink-soft [overflow-wrap:anywhere]">
             Bersama <strong className="text-ink">{session.ustadz}</strong>
           </p>
           <div className="mt-5">
@@ -175,7 +175,7 @@ function NextNote({
         <strong className="text-brand">Kajian berikutnya: {when}</strong>, pukul{" "}
         {formatTime(session.startTime)} WIB.
       </p>
-      <p className="mt-1 text-ink-soft">
+      <p className="mt-1 text-ink-soft [overflow-wrap:anywhere]">
         {session.topic}, bersama {session.ustadz}.
       </p>
     </div>

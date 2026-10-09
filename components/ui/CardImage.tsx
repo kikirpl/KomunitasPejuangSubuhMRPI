@@ -1,9 +1,16 @@
 import Image from "next/image";
 import { BookOpen, CalendarDays, Megaphone } from "lucide-react";
-import type { AnnouncementType } from "@/types";
+import type { AnnouncementType, ImagePosition } from "@/types";
 
 /** Jenis kartu bergambar: dua jenis Pengumuman, ditambah "kajian" untuk Jadwal Sepekan dan Kajian Hari Ini. */
 export type CardImageType = AnnouncementType | "kajian";
+
+/** Bagian foto yang dipertahankan saat dipotong ke 16:9 (poster tegak: atas, tengah, atau bawah). */
+const POSISI_FOTO: Record<ImagePosition, string> = {
+  top: "object-top",
+  center: "object-center",
+  bottom: "object-bottom",
+};
 
 const IKON: Record<CardImageType, typeof CalendarDays> = {
   kegiatan: CalendarDays,
@@ -17,6 +24,8 @@ interface CardImageProps {
   imageUrl?: string;
   /** Teks alternatif; kosong = foto dianggap hiasan (judul kartu sudah menjelaskan). */
   alt?: string;
+  /** Bagian foto yang tampil saat dipotong ke 16:9. Bawaan: tengah. */
+  position?: ImagePosition;
   /** Lebar tampil gambar per breakpoint, untuk srcset next/image. */
   sizes: string;
   /** Kelas tambahan untuk slot gambar, mis. batas tinggi pada kartu satu kolom yang sangat lebar. */
@@ -30,13 +39,26 @@ interface CardImageProps {
  * - Tidak ada: gambar pengganti berupa gradien navy -> biru royal, pola bintang
  *   delapan yang sangat halus, dan ikon sesuai jenis (kalender / pengeras suara / buku).
  */
-export function CardImage({ type, imageUrl, alt = "", sizes, className = "" }: CardImageProps) {
+export function CardImage({
+  type,
+  imageUrl,
+  alt = "",
+  position = "center",
+  sizes,
+  className = "",
+}: CardImageProps) {
   const Ikon = IKON[type];
 
   return (
     <div className={`relative aspect-video overflow-hidden bg-brand-deep ${className}`}>
       {imageUrl ? (
-        <Image src={imageUrl} alt={alt} fill sizes={sizes} className="object-cover" />
+        <Image
+          src={imageUrl}
+          alt={alt}
+          fill
+          sizes={sizes}
+          className={`object-cover ${POSISI_FOTO[position]}`}
+        />
       ) : (
         <div
           aria-hidden="true"

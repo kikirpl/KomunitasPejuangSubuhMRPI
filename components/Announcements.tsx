@@ -2,14 +2,13 @@ import { CalendarDays, Megaphone } from "lucide-react";
 import { AnnouncementTabs } from "@/components/AnnouncementTabs";
 import { CardImage } from "@/components/ui/CardImage";
 import { Section } from "@/components/ui/Section";
-import { ANNOUNCEMENTS } from "@/data/content";
 import {
   formatTanggalPengumuman,
   kelompokkanPerJenis,
   LABEL_JENIS,
   PESAN_KOSONG,
 } from "@/lib/announcements";
-import type { AnnouncementItem, AnnouncementType } from "@/types";
+import type { AnnouncementData, AnnouncementItem, AnnouncementType } from "@/types";
 
 /** Lebar tampil foto kartu: 2 kolom mulai 768px (maks. ~604px), 1 kolom di ponsel. */
 const UKURAN_FOTO = "(min-width: 1296px) 604px, (min-width: 768px) 50vw, 100vw";
@@ -23,15 +22,15 @@ const lencana: Record<AnnouncementType, string> = {
  * Section Pengumuman (Server Component). Kartu dirender di server, lalu
  * AnnouncementTabs (client) hanya mengatur tab mana yang tampil.
  */
-export function Announcements() {
-  const perJenis = kelompokkanPerJenis(ANNOUNCEMENTS.items);
+export function Announcements({ data }: { data: AnnouncementData }) {
+  const perJenis = kelompokkanPerJenis(data.items);
 
   return (
     <Section
       id="pengumuman"
       title="Pengumuman Kegiatan"
       intro="Kegiatan dan pengumuman terbaru dari Masjid Raya Pondok Indah."
-      isSample={ANNOUNCEMENTS.isSample}
+      isSample={data.isSample}
     >
       <AnnouncementTabs
         panels={{
@@ -61,14 +60,15 @@ function DaftarKartu({ jenis, items }: { jenis: AnnouncementType; items: Announc
     >
       {items.map((item) => (
         <li key={item.id}>
-          <Kartu item={item} />
+          <AnnouncementCard item={item} />
         </li>
       ))}
     </ul>
   );
 }
 
-function Kartu({ item }: { item: AnnouncementItem }) {
+/** Kartu satu kegiatan atau pengumuman. Diekspor agar panel pengurus memakainya untuk pratinjau. */
+export function AnnouncementCard({ item }: { item: AnnouncementItem }) {
   const eksternal = item.href ? /^https?:\/\//.test(item.href) : false;
 
   return (
@@ -77,6 +77,7 @@ function Kartu({ item }: { item: AnnouncementItem }) {
         type={item.type}
         imageUrl={item.imageUrl}
         alt={item.imageAlt}
+        position={item.imagePosition}
         sizes={UKURAN_FOTO}
       />
       <div className="flex flex-1 flex-col px-6 py-6 md:px-7">
@@ -91,8 +92,8 @@ function Kartu({ item }: { item: AnnouncementItem }) {
           </time>
         </div>
 
-        <h3 className="mt-3 text-2xl font-semibold text-brand">{item.title}</h3>
-        <p className="mt-2 line-clamp-3 text-lg text-ink">{item.excerpt}</p>
+        <h3 className="mt-3 text-2xl font-semibold text-brand [overflow-wrap:anywhere]">{item.title}</h3>
+        <p className="mt-2 line-clamp-3 text-lg text-ink [overflow-wrap:anywhere]">{item.excerpt}</p>
 
         {item.href ? (
           <div className="mt-auto pt-4">

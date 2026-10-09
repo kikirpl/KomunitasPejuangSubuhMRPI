@@ -12,6 +12,10 @@ import { TodaySchedule } from "@/components/TodaySchedule";
 import { VideoGallery } from "@/components/VideoGallery";
 import { WeeklySchedule } from "@/components/WeeklySchedule";
 import { ZoomSection } from "@/components/ZoomSection";
+import { loadPublicContent } from "@/lib/content";
+
+/** Halaman dibuat ulang paling lama tiap 1 jam, dan seketika setiap pengurus menekan Simpan (revalidatePath). */
+export const revalidate = 3600;
 
 /**
  * Halaman utama. Urutan mengikuti fase PRD:
@@ -23,7 +27,9 @@ import { ZoomSection } from "@/components/ZoomSection";
  * Profil berada setelah sapaan (di layar kecil, setelah kisi Menu Utama yang
  * menjadi menu di ponsel) dan sebelum Rekaman Kajian.
  */
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await loadPublicContent();
+
   return (
     <>
       <AccessibilityBar />
@@ -32,13 +38,13 @@ export default function HomePage() {
         <Hero />
         <MenuGrid />
         <ProfileSection />
-        <TodaySchedule />
+        <TodaySchedule schedule={content.schedule} />
         <QuranVerseCard />
-        <WeeklySchedule />
+        <WeeklySchedule schedule={content.schedule} />
         <ZoomSection />
         <VideoGallery />
         <DonationSection />
-        <Announcements />
+        <Announcements data={content.announcements} />
         <ContactSection />
       </main>
       <Footer />
