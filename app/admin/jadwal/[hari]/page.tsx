@@ -7,7 +7,7 @@ import { SessionForm } from "@/components/admin/SessionForm";
 import { StoreNotice } from "@/components/admin/StoreNotice";
 import { MESSAGE_DELETE_FAILED } from "@/lib/admin/form-state";
 import { loadAdminContext } from "@/lib/admin/context";
-import { blobPublicHost } from "@/lib/photo/host";
+import { blobPublicHost, photoUploadEnabled } from "@/lib/photo/host";
 import { dayFromSlug, dayName } from "@/lib/time";
 import type { SessionInput } from "@/lib/store/types";
 
@@ -73,6 +73,7 @@ export default async function HalamanHari({
           day={day}
           initial={awal}
           blobHost={blobPublicHost()}
+          uploadEnabled={photoUploadEnabled()}
           action={simpanJadwalHari.bind(null, day)}
         />
       </div>

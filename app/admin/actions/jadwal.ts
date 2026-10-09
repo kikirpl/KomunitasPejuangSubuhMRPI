@@ -2,10 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import { commandDeps } from "@/lib/admin/action-helpers";
 import { deleteSessionCommand, saveSessionCommand } from "@/lib/admin/commands";
 import type { FormState } from "@/lib/admin/form-state";
 import { requireAdmin } from "@/lib/auth/guard";
+import { deletePhotos } from "@/lib/photo/blob";
 import { daySlug } from "@/lib/time";
 import { rawFromFormData } from "@/lib/validation/umum";
 import type { DayIndex } from "@/types";
@@ -16,14 +18,16 @@ function hariSah(hari: number): hari is DayIndex {
 
 /**
  * Simpan jadwal tetap satu hari. Urutan: pagar admin, validasi dan simpan, hasil gagal dikembalikan ke
- * formulir (isian ikut), berhasil: web publik dibuat ulang lalu kembali ke daftar. `redirect` di luar `try`.
- * `deleteImageUrls` diabaikan sampai unggah foto tersedia (belum ada foto yang bisa diganti dari panel).
+ * formulir (isian ikut), berhasil: foto lama yang diganti dihapus dari Blob sesudah respons (`after`), web publik
+ * dibuat ulang, lalu kembali ke daftar. `redirect` di luar `try`.
  */
 export async function simpanJadwalHari(hari: DayIndex, _prev: FormState, formData: FormData): Promise<FormState> {
   await requireAdmin();
   if (!hariSah(hari)) throw new Error("Hari tidak sah.");
-  const hasil = await saveSessionCommand(commandDeps(), hari, rawFromFormData(formData));
+  const deps = commandDeps();
+  const hasil = await saveSessionCommand(deps, hari, rawFromFormData(formData));
   if (!hasil.ok) return hasil.state;
+  after(() => deletePhotos(hasil.deleteImageUrls, deps.blobHost));
   revalidatePath("/");
   redirect("/admin/jadwal?hasil=tersimpan");
 }
@@ -32,8 +36,10 @@ export async function simpanJadwalHari(hari: DayIndex, _prev: FormState, formDat
 export async function hapusJadwalHari(hari: DayIndex): Promise<void> {
   await requireAdmin();
   if (!hariSah(hari)) throw new Error("Hari tidak sah.");
-  const hasil = await deleteSessionCommand(commandDeps(), hari);
+  const deps = commandDeps();
+  const hasil = await deleteSessionCommand(deps, hari);
   if (!hasil.ok) redirect(`/admin/jadwal/${daySlug(hari)}?galat=hapus`);
+  after(() => deletePhotos(hasil.deleteImageUrls, deps.blobHost));
   revalidatePath("/");
   redirect("/admin/jadwal?hasil=terhapus");
 }

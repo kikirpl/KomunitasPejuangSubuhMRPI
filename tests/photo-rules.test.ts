@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { blobImagePatterns, isAllowedImageUrl, isOurPhotoUrl, onlyOurPhotoUrls } from "@/lib/photo/rules";
+import {
+  blobImagePatterns,
+  isAcceptedImageType,
+  isAllowedImageUrl,
+  isOurPhotoUrl,
+  onlyOurPhotoUrls,
+  uploadPathname,
+} from "@/lib/photo/rules";
 
 const HOST = "abc.public.blob.vercel-storage.com";
 const MILIK = `https://${HOST}/kajian/x.webp`;
@@ -50,5 +57,19 @@ describe("blobImagePatterns", () => {
     expect(blobImagePatterns(` ${HOST.toUpperCase()} `).map(String)).toEqual([`https://${HOST}/**`]);
     expect(blobImagePatterns(undefined)).toEqual([]);
     expect(blobImagePatterns("   ")).toEqual([]);
+  });
+});
+
+describe("isAcceptedImageType", () => {
+  it("JPG, PNG, dan WebP saja; PDF, GIF, dan jenis kosong ditolak", () => {
+    for (const sah of ["image/jpeg", "image/png", "image/webp"]) expect(isAcceptedImageType(sah)).toBe(true);
+    for (const salah of ["application/pdf", "image/gif", "image/svg+xml", "text/html", ""]) expect(isAcceptedImageType(salah)).toBe(false);
+  });
+});
+
+describe("uploadPathname", () => {
+  it("folder kajian atau kegiatan; akhiran mengikuti jenis hasil pengecilan", () => {
+    expect(uploadPathname("kajian", "image/webp")).toBe("kajian/foto.webp");
+    expect(uploadPathname("kegiatan", "image/jpeg")).toBe("kegiatan/foto.jpg");
   });
 });

@@ -7,6 +7,18 @@ export const ALLOWED_UPLOAD_TYPES = ["image/webp", "image/jpeg"] as const;
 /** Sisi terpanjang foto setelah diperkecil di HP. */
 export const MAX_SIDE_PX = 1600;
 
+/** Jenis berkas yang boleh dipilih pengurus (sebelum diperkecil dan disimpan ulang sebagai WebP atau JPEG). */
+export const ACCEPTED_INPUT_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+
+export function isAcceptedImageType(type: string): boolean {
+  return (ACCEPTED_INPUT_TYPES as readonly string[]).includes(type);
+}
+
+/** Jalur berkas di toko Blob: folder "kajian" atau "kegiatan"; akhiran mengikuti jenis hasil pengecilan (SDK menambah akhiran acak). */
+export function uploadPathname(folder: "kajian" | "kegiatan", blobType: string): string {
+  return `${folder}/foto.${blobType === "image/webp" ? "webp" : "jpg"}`;
+}
+
 /** Foto milik toko Blob kita: https dan host persis sama dengan `BLOB_PUBLIC_HOST`. */
 export function isOurPhotoUrl(url: string, blobHost: string | undefined): boolean {
   if (!blobHost) return false;

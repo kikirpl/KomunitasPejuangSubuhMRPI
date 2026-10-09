@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ChoiceCards } from "@/components/admin/ChoiceCards";
 import { ErrorSummary, pesanButir } from "@/components/admin/ErrorSummary";
 import { describedBy, Field } from "@/components/admin/Field";
-import { blobPublicHost } from "@/lib/photo/host";
+import { blobPublicHost, photoUploadEnabled } from "@/lib/photo/host";
 
 const LABEL = { startTime: "Jam mulai", endTime: "Jam selesai", ustadz: "Nama ustadz" };
 
@@ -111,5 +111,17 @@ describe("blobPublicHost", () => {
     expect(blobPublicHost({})).toBeUndefined();
     expect(blobPublicHost({ BLOB_PUBLIC_HOST: "   " })).toBeUndefined();
     expect(blobPublicHost({ BLOB_PUBLIC_HOST: " ABC.public.blob.vercel-storage.com " })).toBe("abc.public.blob.vercel-storage.com");
+  });
+});
+
+describe("photoUploadEnabled", () => {
+  it("butuh host publik toko dan token baca-tulis; salah satunya kosong menonaktifkan unggah", () => {
+    const host = "abc.public.blob.vercel-storage.com";
+    expect(photoUploadEnabled({ BLOB_PUBLIC_HOST: host, BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_x_y" })).toBe(true);
+    expect(photoUploadEnabled({ BLOB_PUBLIC_HOST: host })).toBe(false);
+    expect(photoUploadEnabled({ BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_x_y" })).toBe(false);
+    expect(photoUploadEnabled({ BLOB_PUBLIC_HOST: "  ", BLOB_READ_WRITE_TOKEN: "t" })).toBe(false);
+    expect(photoUploadEnabled({ BLOB_PUBLIC_HOST: host, BLOB_READ_WRITE_TOKEN: "   " })).toBe(false);
+    expect(photoUploadEnabled({})).toBe(false);
   });
 });

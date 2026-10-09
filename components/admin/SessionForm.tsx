@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { useActionState, useMemo, useState } from "react";
+import { ChoiceCards } from "@/components/admin/ChoiceCards";
 import { ErrorSummary } from "@/components/admin/ErrorSummary";
+import { describedBy, Field, inputClass } from "@/components/admin/Field";
 import { KajianFields } from "@/components/admin/KajianFields";
+import { PhotoField } from "@/components/admin/PhotoField";
 import { PreviewPane } from "@/components/admin/PreviewPane";
 import { SaveButton } from "@/components/admin/SaveButton";
 import { buttonClass } from "@/components/ui/buttonStyles";
@@ -13,7 +16,7 @@ import { masjid, TEMPAT_AWAL, tempatSetelahCara, type KolomKajian } from "@/lib/
 import type { SessionInput } from "@/lib/store/types";
 import { sessionSchema } from "@/lib/validation/jadwal";
 import { parseForm, type RawForm } from "@/lib/validation/umum";
-import type { DayIndex, SessionMode, StudySession } from "@/types";
+import type { DayIndex, ImagePosition, SessionMode, StudySession } from "@/types";
 
 /** Label kolom untuk ringkasan galat. */
 const LABEL: Record<string, string> = {
@@ -27,6 +30,12 @@ const LABEL: Record<string, string> = {
   imageAlt: "Keterangan foto",
   imagePosition: "Bagian foto yang tampil",
 };
+
+const POSISI_FOTO = [
+  { value: "top", title: "Atas" },
+  { value: "center", title: "Tengah" },
+  { value: "bottom", title: "Bawah" },
+] as const;
 
 type Nilai = Record<"startTime" | "endTime" | "ustadz" | "topic" | "mode" | "location" | "imageUrl" | "imageAlt" | "imagePosition", string>;
 
@@ -60,17 +69,20 @@ function nilaiAwal(initial: SessionInput | null, echo: RawForm | undefined): Nil
 
 /**
  * Form satu hari jadwal tetap (klien, terkendali). Tempat hanya tampil bila cara mengikuti mencakup masjid.
- * Kolom foto dibawa sebagai isian tersembunyi supaya foto yang sudah ada tidak terhapus saat menyimpan.
+ * Foto diunggah lewat PhotoField; keterangan dan bagian foto yang tampil hanya muncul bila ada foto.
  */
 export function SessionForm({
   day,
   initial,
   blobHost,
+  uploadEnabled,
   action,
 }: {
   day: DayIndex;
   initial: SessionInput | null;
   blobHost?: string;
+  /** Unggah foto siap dipakai (host publik dan token Blob terisi). */
+  uploadEnabled: boolean;
   action: (prev: FormState, formData: FormData) => Promise<FormState>;
 }) {
   const [state, formAction] = useActionState(action, undefined);
@@ -88,6 +100,8 @@ export function SessionForm({
     sudahKirim || tersentuh.includes(nama) ? (hasil.ok ? undefined : hasil.fieldErrors[nama]) : undefined;
 
   const ubah = (nama: KolomKajian, nilaiBaru: string) => setNilai((s) => ({ ...s, [nama]: nilaiBaru }));
+  const ubahFoto = (nama: "imageAlt" | "imagePosition", nilaiBaru: string) =>
+    setNilai((s) => ({ ...s, [nama]: nilaiBaru }));
   const sentuh = (nama: string) => setTersentuh((s) => (s.includes(nama) ? s : [...s, nama]));
   const pilihCara = (cara: SessionMode) =>
     setNilai((s) => ({ ...s, mode: cara, location: tempatSetelahCara(cara, s.location) }));
@@ -112,9 +126,55 @@ export function SessionForm({
 
       <KajianFields values={nilai} error={galat} onChange={ubah} onBlur={sentuh} onCara={pilihCara} />
 
-      <input type="hidden" name="imageUrl" value={nilai.imageUrl} />
-      <input type="hidden" name="imageAlt" value={nilai.imageAlt} />
-      <input type="hidden" name="imagePosition" value={nilai.imagePosition} />
+      <PhotoField
+        name="imageUrl"
+        value={nilai.imageUrl}
+        onChange={(url) => {
+          setNilai((s) => ({ ...s, imageUrl: url, imageAlt: url === "" ? "" : s.imageAlt }));
+          sentuh("imageUrl");
+        }}
+        folder="kajian"
+        uploadEnabled={uploadEnabled}
+        error={galat("imageUrl")}
+      />
+
+      {nilai.imageUrl ? (
+        <>
+          <Field
+            id="field-imageAlt"
+            label="Keterangan foto"
+            hint="Ceritakan foto ini dalam satu kalimat untuk pembaca layar. Boleh dikosongkan."
+            error={galat("imageAlt")}
+          >
+            <input
+              id="field-imageAlt"
+              name="imageAlt"
+              type="text"
+              autoComplete="off"
+              value={nilai.imageAlt}
+              onChange={(e) => ubahFoto("imageAlt", e.target.value)}
+              onBlur={() => sentuh("imageAlt")}
+              aria-invalid={galat("imageAlt") ? true : undefined}
+              aria-describedby={describedBy("field-imageAlt", { hint: true, error: galat("imageAlt") })}
+              className={inputClass(Boolean(galat("imageAlt")))}
+            />
+          </Field>
+          <ChoiceCards<ImagePosition>
+            name="imagePosition"
+            legend="Bagian foto yang tampil"
+            options={POSISI_FOTO}
+            value={nilai.imagePosition as ImagePosition}
+            onChange={(posisi) => ubahFoto("imagePosition", posisi)}
+            error={galat("imagePosition")}
+            required
+          />
+        </>
+      ) : (
+        <>
+          <input type="hidden" name="imageAlt" value="" />
+          <input type="hidden" name="imagePosition" value={nilai.imagePosition} />
+        </>
+      )}
 
       <PreviewPane>
         <WeekCard session={pratinjau} isToday={false} as="div" />
