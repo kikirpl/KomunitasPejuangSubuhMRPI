@@ -4,23 +4,26 @@ Website komunitas **Pejuang Subuh**: profil, jadwal kajian, ayat tadabbur pekan 
 
 Dibuat dengan **Next.js 16 (App Router) + TypeScript + Tailwind CSS 4**.
 
+Jadwal kajian, kegiatan, dan pengumuman diubah pengurus sendiri lewat **Panel Pengurus** (`/admin`), tanpa menyentuh kode. Lihat bagian "Panel Pengurus" di bawah.
+
 ## Sebelum diterbitkan: masih ada DATA CONTOH dan isian yang kosong
 
 Tidak ada data resmi masjid di dalam proyek ini. Nomor telepon, WhatsApp, alamat, tautan Zoom, rekening, QRIS, video, jadwal, dan pengumuman semuanya **contoh**. Tiap bagian yang masih contoh menampilkan lencana "Contoh data, belum resmi" supaya tidak pernah dianggap resmi oleh jamaah.
 
 Daftar yang wajib diisi atau diganti:
 
-- [ ] **Foto kegiatan** (opsional): kartu Kegiatan/Pengumuman memakai gambar pengganti sampai `imageUrl` diisi. Cara mengisinya ada di bagian "Kegiatan dan Pengumuman" di bawah.
-- [ ] **Foto kajian** (opsional): kartu Jadwal Sepekan dan Kajian Hari Ini memakai gambar pengganti sampai `imageUrl` tiap hari diisi. Lihat bagian "Foto kajian" di bawah.
+- [ ] **Foto kegiatan** (opsional): kartu Kegiatan/Pengumuman memakai gambar pengganti sampai fotonya diunggah lewat Panel Pengurus. Lihat bagian "Kegiatan dan Pengumuman" di bawah.
+- [ ] **Foto kajian** (opsional): kartu Jadwal Sepekan dan Kajian Hari Ini memakai gambar pengganti sampai foto tiap hari diunggah lewat Panel Pengurus. Lihat bagian "Foto kajian" di bawah.
 - [ ] **Tautan TikTok, Instagram, dan Grup WhatsApp** (objek `SOCIAL_LINKS` di bagian atas `components/VideoGallery.tsx`). Saat ini berisi `#`. Tautan YouTube sudah diisi: https://www.youtube.com/@pejuangsubuhmrpi
-- [ ] Jadwal kajian: hari, jam, ustadz, tema, tempat, dan mode (masjid / Zoom / keduanya)
+- [ ] **Jadwal kajian** (lewat Panel Pengurus, menu Jadwal Kajian): jam, ustadz, tema, tempat, dan cara mengikuti (di masjid / Zoom / keduanya) untuk tiap hari
 - [ ] Tautan Zoom, Meeting ID, dan kode sandi
 - [ ] ID video YouTube untuk video utama di Rekaman Kajian (video contoh memakai ID palsu, jadi pemutar belum aktif)
 - [ ] Gambar QRIS asli (berkas `public/qris-contoh.svg` hanya gambar contoh dan tidak bisa dipindai)
 - [ ] Nama bank, nomor rekening, dan nama pemilik rekening
-- [ ] Kegiatan dan pengumuman (`ANNOUNCEMENTS`): isi `type` tiap butir (`"kegiatan"` atau `"pengumuman"`). Empat butir contoh sementara diklasifikasikan sebagai kegiatan; tab Pengumuman masih kosong.
+- [ ] **Kegiatan dan pengumuman** (lewat Panel Pengurus): empat butir contoh dari data awal tampil sebagai Kegiatan dan tab Pengumuman masih kosong. Ganti atau hapus butir contoh, lalu tambah yang resmi.
 - [ ] Alamat, nomor telepon, nomor WhatsApp admin, dan tautan peta
-- [ ] Ubah `isSample: true` menjadi `isSample: false` pada tiap bagian yang sudah diisi data resmi
+- [ ] **Tandai resmi** Jadwal Kajian dan Kegiatan dan Pengumuman di Panel Pengurus (tombol "Tandai sudah resmi") setelah datanya diganti; lencana "Contoh data, belum resmi" di web pun hilang
+- [ ] Bagian yang masih diubah lewat kode (Zoom, video, donasi, kontak): ubah `isSample: true` menjadi `isSample: false` di `data/content.ts` setelah diisi data resmi
 - [ ] **Data cadangan Ayat Pekan Ini dari Al Quran Cloud** (`AYAT_CADANGAN` di `data/ayatPekan.ts`): saat ini sementara memakai teks Kemenag yang sudah diverifikasi, karena API Al Quran Cloud tidak bisa diakses dari lingkungan pembuat. Lihat "Ayat Pekan Ini".
 
 Setelah itu, coba sendiri: pindai QRIS dengan aplikasi bank, tekan tombol WhatsApp, telepon, Zoom, dan keempat tombol media sosial dari ponsel.
@@ -41,24 +44,131 @@ npm run build      # build produksi
 npm run start      # jalankan hasil build (http://localhost:3000)
 npm run typecheck  # periksa tipe TypeScript
 npm run lint       # periksa gaya kode
+npm test           # tes otomatis (Vitest; butuh Node 22.12 atau lebih baru)
 ```
+
+Tanpa pengaturan apa pun, situs tampil dari salinan `data/content.ts`. Untuk mencoba Panel Pengurus di komputer sendiri, lihat "Mencoba di komputer sendiri" di bagian Panel Pengurus.
 
 Dua hal yang mungkin membuat bingung saat menjalankan:
 
 - Saat pertama kali `npm run dev`, Next.js 16 membuat sendiri berkas `AGENTS.md` (petunjuk untuk asisten AI). Itu normal dan aman dibiarkan.
 - `npm install` bisa menampilkan "5 high severity vulnerabilities". Peringatan itu hanya mengenai paket pemeriksa kode (`eslint-config-next`) yang dipakai saat pengembangan dan tidak dikirim ke pengunjung situs (`npm audit --omit=dev` melaporkan 0 masalah). Jangan jalankan `npm audit fix --force`: perintah itu akan menurunkan `eslint-config-next` ke versi lama.
 
+## Panel Pengurus
+
+**Panel Pengurus** (`/admin`) adalah halaman khusus pengurus untuk mengubah isi situs tanpa menyentuh kode: **jadwal kajian** (jam, ustadz, tema, tempat, dan foto tiap hari), **libur atau ganti jadwal pada tanggal tertentu**, serta **kegiatan dan pengumuman** lengkap dengan foto dari ponsel. Pengurus masuk dengan akun Google yang sudah didaftarkan, dan setiap Simpan langsung tampil di web. Bagian lain (Zoom, video, donasi, kontak, profil, ayat) belum ada di panel dan masih diubah lewat kode.
+
+Halaman utama tetap statis dan cepat: dibuat ulang paling lama tiap 1 jam dan seketika setiap Simpan di panel.
+
+### Mencoba di komputer sendiri (tanpa akun apa pun)
+
+1. Buat berkas `.env.local` (tidak di-commit) berisi tiga baris ini:
+
+   ```
+   CONTENT_STORE=memory
+   SESSION_SECRET=isi-dengan-hasil-perintah-di-bawah
+   ADMIN_EMAILS=email-anda@gmail.com
+   ```
+
+   `SESSION_SECRET` dibuat dengan `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
+2. Jalankan `npm run dev`, buka http://localhost:3000/admin, lalu tekan **Masuk mode pengembang**. Tombol itu hanya ada di `npm run dev`, tidak di hasil build.
+3. Data disimpan di memori, jadi hilang saat server dimatikan; `CONTENT_STORE=memory` ditolak otomatis bila dijalankan di Vercel. Unggah foto aktif bila `BLOB_READ_WRITE_TOKEN` dan `BLOB_PUBLIC_HOST` diisi; tanpa itu panel menampilkan "Unggah foto belum disiapkan." dan bagian lain tetap bisa dipakai.
+
+### Memasang di Vercel (sekali saja)
+
+1. **Repositori.** Simpan proyek di Git (GitHub, GitLab, atau Bitbucket) lalu impor ke Vercel, atau deploy lewat CLI Vercel.
+2. **Database.** Di proyek Vercel: Storage, Marketplace, **Neon**, lalu hubungkan ke proyek. Vercel mengisi `DATABASE_URL` sendiri.
+3. **Foto.** Storage, **Blob**: buat toko berakses **Publik** dan hubungkan ke proyek (Production, Preview, dan Development bila ingin dicoba di komputer). Vercel mengisi `BLOB_READ_WRITE_TOKEN`. Salin host toko (`id-toko.public.blob.vercel-storage.com`, terlihat pada alamat foto yang diunggah) ke `BLOB_PUBLIC_HOST`, **lalu deploy ulang**: nilai ini dibaca saat build untuk mengizinkan gambar dari toko itu.
+4. **Masuk dengan Google.** Di Google Cloud Console buat proyek; isi layar persetujuan OAuth (jenis Eksternal, nama aplikasi, email dukungan, scope `openid`, `email`, `profile`); lalu Credentials, OAuth client ID jenis **Web**, dengan alamat balik `https://{alamat-situs}/admin/auth/google/callback` dan `http://localhost:3000/admin/auth/google/callback`. Salin ID dan rahasianya ke `AUTH_GOOGLE_ID` dan `AUTH_GOOGLE_SECRET`. Masuk hanya berfungsi di alamat produksi dan localhost, karena Google mewajibkan alamat balik yang terdaftar persis (tidak di alamat preview Vercel).
+5. **Variabel lain.** Isi `SESSION_SECRET` (acak, paling sedikit 32 karakter), `ADMIN_EMAILS` (email pengurus, dipisah koma), `ADMIN_HELP_WHATSAPP` (opsional), dan `NEXT_PUBLIC_SITE_URL`.
+6. **Deploy.** Buka `/admin`, masuk dengan Google, tekan **Siapkan database**, lalu **Lihat web**.
+
+| Variabel | Fungsi | Dari mana |
+| --- | --- | --- |
+| `DATABASE_URL` | Sambungan ke database Neon | Terisi otomatis saat Neon dihubungkan |
+| `BLOB_READ_WRITE_TOKEN` | Izin menyimpan dan menghapus foto di Blob | Terisi otomatis saat toko Blob dihubungkan |
+| `BLOB_PUBLIC_HOST` | Host publik toko Blob; hanya foto dari host ini yang diterima dan dimuat | Diisi manual, lalu deploy ulang |
+| `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | Masuk dengan Google | Google Cloud Console |
+| `SESSION_SECRET` | Kunci enkripsi cookie sesi (paling sedikit 32 karakter; kosong atau pendek = panel menolak semua akses) | Dibuat sendiri, acak |
+| `ADMIN_EMAILS` | Email yang boleh masuk, dipisah koma | Diisi manual |
+| `ADMIN_HELP_WHATSAPP` | Nomor WhatsApp pengelola web untuk tautan "Bantuan" (opsional; kosong = tautan disembunyikan) | Diisi manual, format `62...` |
+| `NEXT_PUBLIC_SITE_URL` | Alamat situs; dasar alamat balik masuk dengan Google dan gambar pratinjau tautan | Diisi manual |
+| `CONTENT_STORE` | `memory` untuk menjalankan panel tanpa database di komputer sendiri (ditolak di Vercel) | Hanya di `.env.local` |
+
+Contoh semuanya ada di `.env.example` (dikomentari, tanpa nilai rahasia).
+
+### Pertama kali dipakai
+
+1. Buka `/admin` dan masuk dengan Google.
+2. Tekan **Siapkan database** sekali. Tombol ini membuat tabel dan menyalin data contoh dari `data/content.ts` supaya tampilan web tidak berubah; aman ditekan ulang dan tidak menimpa perubahan pengurus.
+3. Ganti data contoh: ubah jadwal tiap hari, hapus atau ganti kegiatan contoh, tambah kegiatan dan pengumuman, unggah foto.
+4. Bila datanya sudah resmi, tekan **Tandai sudah resmi** (di beranda panel, Jadwal Kajian, atau Kegiatan dan Pengumuman) supaya lencana "Contoh data, belum resmi" hilang dari web. Ada tautan **Kembalikan ke status contoh** bila perlu.
+
+Sehari-hari: pilih **Jadwal Kajian** untuk mengubah satu hari, atau meliburkan dan mengganti kajian pada tanggal tertentu; pilih **Kegiatan dan Pengumuman** untuk menambah, mengubah, atau menghapus kartu. Setiap layar punya pratinjau kartu asli web, dan setiap penghapusan meminta konfirmasi.
+
+### Mencabut atau menambah akses pengurus
+
+Hapus emailnya dari `ADMIN_EMAILS` di variabel lingkungan Vercel, lalu **deploy ulang**. Daftar itu diperiksa pada setiap permintaan, jadi sesi lama (berlaku paling lama 14 hari) ikut tidak sah begitu deploy baru berjalan. Menambah pengurus caranya sama: tambahkan emailnya (huruf kecil, persis seperti akun Google-nya; varian titik atau plus pada Gmail tidak disamakan), lalu deploy ulang.
+
+### Peringatan "aplikasi belum diverifikasi" dari Google
+
+Belum dapat dipastikan dari dokumentasi resmi Google apakah layar persetujuan menampilkan peringatan "Google belum memverifikasi aplikasi ini" untuk aplikasi seperti ini (bergantung pada mode Testing atau Production). Periksa saat setup dan catat hasilnya di tabel ini:
+
+1. Di Google Cloud Console, layar persetujuan OAuth, mode **Testing**: daftarkan email pengurus sebagai "Test user", masuk ke `/admin`, lalu catat apakah peringatan muncul dan apa yang harus ditekan pengurus.
+2. Ubah ke mode **Production** (scope tetap hanya `openid`, `email`, `profile`), masuk lagi, dan catat hasilnya.
+
+| Mode | Peringatan muncul? | Langkah yang perlu dilakukan pengurus |
+| --- | --- | --- |
+| Testing | _belum dicoba_ | _isi saat setup_ |
+| Production | _belum dicoba_ | _isi saat setup_ |
+
+### Uji ujung ke ujung di Vercel (daftar periksa pemilik repo)
+
+Lakukan sekali setelah deploy pertama, dari ponsel dan dari komputer. Pembuat panel tidak bisa menguji Google, Neon, dan Blob yang asli dari lingkungannya (bagian-bagian itu diuji dengan tiruan), jadi daftar ini yang menutup celahnya:
+
+- [ ] Buka `/admin` tanpa masuk: diarahkan ke layar masuk. Masuk dengan Google; email yang belum terdaftar ditolak dengan pesan ramah.
+- [ ] Tekan **Siapkan database**; **Lihat web** menampilkan isi yang sama seperti sebelumnya.
+- [ ] Ubah tema satu hari lalu **Simpan**: spanduk "Tersimpan" muncul dan web memuat tema baru.
+- [ ] Buat **Libur** untuk besok dan **Ganti jadwal** untuk lusa: Kajian Hari Ini dan Jadwal Sepekan menampilkan lencana yang benar pada tanggalnya.
+- [ ] Unggah foto dari kamera ponsel (tegak maupun mendatar): foto tampil tegak, ukurannya kecil, dan muncul di web. Ganti fotonya, lalu pastikan foto lama hilang dari Storage, Blob.
+- [ ] Tambah satu pengumuman berjam; pastikan tampil di tab Pengumuman web ("... pukul 05.30 WIB"), lalu hapus lewat dialog konfirmasi.
+- [ ] Tandai bagian resmi dan pastikan lencana "Contoh data, belum resmi" hilang di web.
+- [ ] Cabut akses satu email uji (hapus dari `ADMIN_EMAILS`, deploy ulang) dan pastikan ia tidak bisa membuka panel.
+- [ ] Di keluaran `npm run build` (atau log build Vercel), baris `/` bertanda statis atau ISR, bukan dinamis.
+
+### Batas dan syarat paket gratis
+
+- **Vercel Hobby** hanya untuk pemakaian **non-komersial**. Meminta donasi tidak dihitung komersial; menerima bayaran untuk membuat atau merawat situs dihitung komersial dan membutuhkan paket Pro. Periksa posisi Anda sendiri; rancangan panel tidak bergantung pada paket.
+- **Neon gratis:** penyimpanan 1 GB (angka dari rancangan; paket gratis bisa berubah, cek halaman harga Neon). Komputasi tidur setelah 5 menit tidak dipakai, jadi halaman panel pertama bisa lebih lambat beberapa detik (halaman web publik tidak terpengaruh karena statis). Riwayat pemulihan hanya 6 jam: data yang terhapus salah hanya bisa dipulihkan bila cepat ketahuan, karena itu setiap penghapusan meminta konfirmasi.
+- **Blob gratis (per bulan):** 1 GB penyimpanan, 2.000 operasi lanjutan (unggah dan sejenisnya), 10.000 operasi sederhana (pembacaan tanpa cache). Melewati batas mengunci Blob selama 30 hari. Foto diperkecil di ponsel (sisi terpanjang 1600 px, biasanya di bawah 1 MB), jadi batas ini sangat jauh. Penghapusan gratis, dan foto yang diganti atau dihapus dibersihkan otomatis.
+
+### Catatan teknis saat deploy
+
+- Halaman utama dibuat statis (`revalidate` 1 jam) dan dibuat ulang seketika setiap Simpan. Bila database terpasang tetapi tidak terjangkau saat build, **build sengaja gagal** (deploy tidak terbit) dan halaman tidak pernah diam-diam memakai data contoh. Setelah terbit, bila pembuatan ulang halaman gagal, halaman terakhir yang berhasil tetap disajikan (perilaku ini bersandar pada dokumentasi Next.js; menunggu satu jam untuk mengujinya tidak dilakukan saat pembuatan).
+- Hasil pembacaan database saat halaman dibuat disimpan di **cache data Next.js**, bukan hanya di cache build. Setiap Simpan di panel membersihkannya. Bila Anda mengubah data **langsung di database** (bukan lewat panel) atau memulihkannya dari cadangan Neon, tekan Simpan apa saja di panel supaya halaman utama dibuat ulang; deploy ulang saja belum tentu cukup karena cache data bisa terpakai lagi.
+- `BLOB_PUBLIC_HOST` dibaca saat **build**; mengubahnya butuh deploy ulang.
+- Tanpa `DATABASE_URL` dan `CONTENT_STORE`, web memakai salinan `data/content.ts` dan panel menampilkan "Database belum dipasang" (formulir dinonaktifkan).
+- Untuk mengulang pemeriksaan tampilan atau membandingkan piksel di komputer sendiri: jalankan `npm run build` segar sebelum `npm run start`, karena halaman utama yang sudah dibuat ulang tersimpan di folder `.next` dan ikut terbawa ke server berikutnya.
+
+### Keamanan singkat
+
+Hanya email di `ADMIN_EMAILS` yang bisa masuk (email Google harus terverifikasi). Sesi adalah cookie terenkripsi berumur 14 hari (`HttpOnly`, `Secure`, `SameSite=Lax`). Setiap halaman, aksi, dan endpoint panel memeriksa sesi sendiri, dan seluruh masukan divalidasi di server. Unggah foto dibatasi ke WebP atau JPEG di bawah 2 MB dan ke folder `kajian/` dan `kegiatan/`; gambar hanya dimuat dari toko Blob sendiri atau berkas di `public/`. Halaman panel tidak diindeks mesin pencari dan tidak boleh dibingkai situs lain.
+
+### Pengujian
+
+`npm test` menjalankan tes otomatis (Vitest): aturan jadwal, validasi, sesi, penyimpanan (memori dan SQL di atas PGlite), unggah foto, dan komponen panel. Tampilan di peramban (axe, ukuran huruf terbesar, kontras tinggi, Tampilan Sederhana, lebar 375 dan 1280 px) diperiksa saat pembuatan dengan skenario peramban terpisah yang tidak disertakan di repositori.
+
 ## Mengganti isi situs
 
-Sebagian besar isi ada di satu berkas: **`data/content.ts`**. Setiap bagian punya petunjuk singkat di komentarnya.
+**Jadwal kajian dan kegiatan/pengumuman diubah lewat Panel Pengurus** (lihat di atas). Isi lainnya ada di berkas **`data/content.ts`**; setiap bagian punya petunjuk singkat di komentarnya. `SCHEDULE` dan `ANNOUNCEMENTS` di berkas itu kini hanya **data awal** (disalin ke database saat "Siapkan database") dan **cadangan** (dipakai web selama database belum dipasang), bukan tempat mengubah jadwal sehari-hari.
 
 | Bagian | Yang diisi | Catatan |
 | --- | --- | --- |
-| `SCHEDULE` | Satu entri per hari | `day`: 0 = Ahad, 1 = Senin ... 6 = Sabtu. Jam format 24 jam, zona WIB. `mode`: `"masjid"`, `"zoom"`, atau `"hybrid"`. Opsional: `imageUrl`, `imageAlt` (foto kajian, lihat "Foto kajian") |
+| `SCHEDULE` | Data awal dan cadangan jadwal | Diubah lewat Panel Pengurus. `day`: 0 = Ahad, 1 = Senin ... 6 = Sabtu. Jam format 24 jam, zona WIB. `mode`: `"masjid"`, `"zoom"`, atau `"hybrid"` |
 | `ZOOM` | `meetingUrl`, `meetingId`, `passcode`, `slots` | Tombol "Buka Zoom" dan "Salin Tautan Zoom" memakai `meetingUrl` |
 | `VIDEO` | `title`, `ustadz`, `youtubeId` | Satu video utama. `youtubeId` = 11 karakter di akhir alamat YouTube, contoh `youtube.com/watch?v=XXXXXXXXXXX`. Pemutar baru dimuat setelah tombol putar ditekan |
 | `DONATION` | `qris`, `bankAccounts` | Taruh gambar QRIS di `public/`, lalu isi `imageSrc` (contoh `"/qris.png"`), `width`, dan `height` sesuai ukuran asli gambar. Bisa lebih dari satu rekening |
-| `ANNOUNCEMENTS` | Satu entri per kegiatan/pengumuman | `type`: `"kegiatan"` atau `"pengumuman"` (menentukan tab). `date` ISO, contoh `2026-10-09` atau `2026-10-09T05:00:00+07:00` (jam ikut tampil). `excerpt` ringkasan (dipotong 3 baris). Opsional: `imageUrl`, `imageAlt`, `href` (tautan "Selengkapnya"). Urutan otomatis: terbaru dulu |
+| `ANNOUNCEMENTS` | Data awal dan cadangan kegiatan/pengumuman | Diubah lewat Panel Pengurus. `type`: `"kegiatan"` atau `"pengumuman"` (menentukan tab). `date` ISO, contoh `2026-10-09` atau `2026-10-09T05:00:00+07:00` (jam ikut tampil). Urutan otomatis: terbaru dulu |
 | `CONTACT` | Alamat, telepon, WhatsApp, peta | `whatsappNumber` diawali `62` tanpa `0` dan tanpa `+` (contoh `6281234567890`). `phoneTel` format `+62...` |
 
 Berkas lain yang mungkin diubah:
@@ -83,22 +193,25 @@ Section `id="profil"` (setelah beranda, sebelum Rekaman Kajian) berjudul **Tenta
 
 Section Pengumuman punya dua tab, **Kegiatan** (bawaan) dan **Pengumuman**, dengan pola tabs WAI-ARIA: panah kiri/kanan (serta Home/End) untuk berpindah tab, fokus terlihat, area sentuh minimal 44px. Kartu diurutkan dari tanggal terbaru dan menampilkan lencana jenis, tanggal (format Indonesia, WIB, hari Ahad), judul, ringkasan maksimal 3 baris, dan tautan "Selengkapnya" bila `href` diisi. Bila satu tab kosong, tampil "Belum ada kegiatan." atau "Belum ada pengumuman.".
 
+**Menambah dan mengubah kartu:** di Panel Pengurus pilih **Kegiatan dan Pengumuman**. Tiap kartu punya jenis (Kegiatan atau Pengumuman), judul, tanggal, jam (opsional), ringkasan, foto (opsional), dan tautan "Selengkapnya" (opsional).
+
 **Mengganti gambar pengganti dengan foto asli:**
 
-1. Simpan foto di folder `public/kegiatan/` (buat foldernya), misalnya `public/kegiatan/kerja-bakti-2026-10.jpg`. Rasio 16:9 paling pas (contoh 1600x900 piksel); foto lain tetap dipotong rapi ke 16:9.
-2. Di `data/content.ts`, pada butir yang sesuai, tambahkan `imageUrl: "/kegiatan/kerja-bakti-2026-10.jpg"` (tanpa kata `public`) dan, bila foto memberi informasi, `imageAlt: "Jamaah membersihkan serambi masjid"`.
-3. Foto dari situs lain (URL `https://...`) juga bisa, tetapi alamat situsnya harus diizinkan dulu di `images.remotePatterns` pada `next.config.ts` (contohnya ada di komentar berkas itu).
+1. Di formulir kartu, tekan **Pilih foto** lalu ambil dari galeri atau kamera ponsel.
+2. Foto diperkecil otomatis di ponsel (sisi terpanjang 1600 px, WebP atau JPEG, metadata seperti lokasi GPS dibuang) lalu diunggah ke Vercel Blob; indikatornya tampil di layar. Tidak perlu menyiapkan ukuran khusus; rasio 16:9 paling pas, foto lain dipotong rapi ke 16:9.
+3. Pilih **Bagian foto yang tampil** (Atas, Tengah, atau Bawah) bila foto tegak, dan isi **Keterangan foto** bila foto memberi informasi (dibacakan pembaca layar).
 
-Foto dimuat lewat `next/image` (otomatis diperkecil dan lazy load). Ruang gambar 16:9 selalu dipesan, jadi halaman tidak bergeser saat foto dimuat.
+Foto dimuat lewat `next/image` (otomatis diperkecil dan lazy load); ruang gambar 16:9 selalu dipesan, jadi halaman tidak bergeser saat foto dimuat. Foto di folder `public/` (jalur seperti `/kegiatan/foto.jpg`) tetap bisa dipakai pada data awal di `data/content.ts`.
 
 ## Foto kajian
 
-Setiap kartu di **Jadwal Kajian Sepekan** punya gambar di bagian atas. Pada hari yang sesuai, gambar yang sama tampil di kartu **Kajian Hari Ini** bersama jam, tema, ustadz, dan cara mengikuti kajian. Selama `imageUrl` belum diisi, kartu memakai gambar pengganti (gradien biru, bintang segi delapan, ikon buku), sama seperti kartu Pengumuman.
+Setiap kartu di **Jadwal Kajian Sepekan** punya gambar di bagian atas. Pada hari yang sesuai, gambar yang sama tampil di kartu **Kajian Hari Ini** bersama jam, tema, ustadz, dan cara mengikuti kajian. Selama belum ada foto, kartu memakai gambar pengganti (gradien biru, bintang segi delapan, ikon buku), sama seperti kartu Pengumuman.
 
-1. Simpan foto di folder `public/kajian/` (buat foldernya), misalnya `public/kajian/senin.jpg`. Rasio 16:9 paling pas (contoh 1600x900 piksel); foto lain tetap dipotong rapi ke 16:9.
-2. Di `data/content.ts`, pada entri `SCHEDULE` hari yang sesuai, tambahkan `imageUrl: "/kajian/senin.jpg"` (tanpa kata `public`) dan, bila foto memberi informasi, `imageAlt: "Ustadz menyampaikan tafsir di ruang utama masjid"`.
+1. Di Panel Pengurus pilih **Jadwal Kajian**, lalu **Ubah** pada hari yang sesuai.
+2. Tekan **Pilih foto** dan ambil dari galeri atau kamera ponsel. Foto diperkecil otomatis di ponsel lalu diunggah (sama seperti foto kegiatan, lihat di atas).
+3. Pilih **Bagian foto yang tampil** dan, bila foto memberi informasi, isi **Keterangan foto** (contoh "Ustadz menyampaikan tafsir di ruang utama masjid"), lalu **Simpan**.
 
-Cukup mengisi sekali: satu `imageUrl` mengisi kartu Jadwal Sepekan sekaligus Kajian Hari Ini. Foto dari situs lain (URL `https://...`) memakai aturan yang sama seperti foto Pengumuman (`images.remotePatterns` di `next.config.ts`).
+Cukup mengisi sekali: satu foto mengisi kartu Jadwal Sepekan sekaligus Kajian Hari Ini. Bila kajian pada suatu tanggal diganti (**Ganti jadwal**), kajian pengganti memakai foto jadwal tetap hari itu.
 
 ## Ayat Pekan Ini
 
@@ -164,17 +277,30 @@ Sesuai rancangan: **tanpa formulir dan tanpa konfirmasi lewat WhatsApp**. Jamaah
 app/            layout, halaman utama, gaya global, palet warna dan tema Tailwind (globals.css),
                 huruf judul (fonts/), gambar pratinjau tautan (opengraph-image.jpg), ikon situs (icon.svg)
 app/api/ayat/   Route Handler GET /api/ayat?week=... (Al Quran Cloud, cache 24 jam, data cadangan)
+app/admin/      Panel Pengurus: layar masuk, beranda panel, jadwal (hari dan tanggal), kegiatan dan pengumuman;
+                actions/ berisi Server Action (simpan, hapus, tandai resmi, siapkan database, keluar)
+app/api/admin/  POST /api/admin/foto (izin unggah foto langsung ke Blob, hanya pengurus yang masuk)
 components/     komponen tampilan, satu berkas per bagian halaman. Server Component kecuali bagian
                 interaktif: AyatPekanCard (kartu ayat + murottal) dan AnnouncementTabs (tab) memakai
                 "use client". MountainBackdrop = pegunungan beranda, ProfileIcons = ikon empat pilar
 components/ui/  komponen kecil bersama (tombol, lencana, logo, bagian halaman, CardImage, tombol salin,
                 tautan kembali ke menu, rentang jam)
+components/admin/ komponen Panel Pengurus (kerangka, isian, kartu pilihan, dialog konfirmasi, PhotoField,
+                form jadwal, pengecualian, dan pengumuman, daftar, spanduk hasil)
 data/           content.ts (isi situs), profile.ts (Tentang Kami), nav.ts (menu),
                 ayatPekan.ts (acuan, override, qari, ayat cadangan)
 hooks/          useAyatPekan, useAyahAudio (satu pemutar murottal), useAccessibility, useWibNow
 lib/            ayatPekan (rotasi nomor global, label), quranCloud (klien API, hanya server),
                 ayatCadangan, validasiAyat (pemeriksa tipe tanpa any), announcements (urutan, tanggal WIB),
-                quranMeta (jumlah ayat dan nama surat), accessibility, time (WIB), schedule, clipboard
+                quranMeta (jumlah ayat dan nama surat), accessibility, time (WIB), schedule (termasuk jadwal
+                efektif per tanggal), clipboard, content (pembaca isi halaman utama dengan cadangan)
+lib/store/      penyimpanan isi dinamis: antarmuka, SqlStore (Neon), MemoryStore (lokal), skema, data awal
+lib/auth/       masuk dengan Google (OIDC dengan PKCE), sesi terenkripsi, daftar email, penjaga akses
+lib/admin/      perintah simpan dan hapus (tanpa bergantung pada Next.js), keadaan formulir, pembantu aksi
+lib/photo/      aturan foto, pengecilan di peramban, izin unggah, penghapusan foto lama
+lib/validation/ skema zod dan pesan galat berbahasa Indonesia
+proxy.ts        pagar awal untuk /admin (pemeriksaan sebenarnya ada di tiap halaman, aksi, dan endpoint)
+tests/          tes otomatis Vitest (npm test)
 types/          index.ts (semua tipe TypeScript)
 public/         gambar statis (qris-contoh.svg)
 ```
@@ -198,7 +324,7 @@ Tidak ada pelacak, iklan, atau formulir. Pemutar YouTube memakai `youtube-nocook
 
 ## Menerbitkan
 
-Halaman utama dibangun statis (`next build`), sedangkan `/api/ayat` adalah Route Handler yang berjalan di server. Karena itu situs perlu dipasang di layanan yang menjalankan Next.js (Vercel, Netlify, atau server Node dengan `npm run build && npm run start`), bukan sebagai ekspor statis murni. Di Vercel cukup impor repositori; tidak ada variabel lingkungan yang wajib diisi.
+Halaman utama dibangun statis (`next build`), sedangkan `/api/ayat` adalah Route Handler yang berjalan di server. Karena itu situs perlu dipasang di layanan yang menjalankan Next.js (Vercel, Netlify, atau server Node dengan `npm run build && npm run start`), bukan sebagai ekspor statis murni. Di Vercel cukup impor repositori: situs publik berjalan tanpa variabel lingkungan apa pun (isinya dari `data/content.ts`). Variabel lingkungan hanya dibutuhkan untuk Panel Pengurus; langkahnya ada di bagian "Panel Pengurus".
 
 ### Pratinjau tautan di WhatsApp
 
@@ -211,4 +337,5 @@ Sebelum publikasi, pertimbangkan juga mengganti `app/icon.svg` bila masjid punya
 ## Pengembangan lanjutan (usulan)
 
 - Waktu shalat harian lewat API jadwal shalat untuk Jakarta, ditampilkan di bawah sapaan.
-- Mengelola isi lewat panel admin sederhana (bukan lewat berkas) bila pengurus sering mengubah jadwal.
+- Mengelola Zoom, video, donasi, dan kontak lewat Panel Pengurus juga (kini masih lewat `data/content.ts`).
+- Batas jumlah kartu di daftar Kegiatan dan Pengumuman di web bila daftarnya sudah sangat panjang.

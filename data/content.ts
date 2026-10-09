@@ -8,13 +8,19 @@ import type {
 } from "@/types";
 
 /* ==========================================================================
- * data/content.ts: berkas utama yang perlu diubah pengurus untuk
- * mengganti isi situs (jadwal, Zoom, video, rekening, pengumuman, kontak).
+ * data/content.ts: isi situs yang masih diubah lewat kode (Zoom, video, rekening, kontak).
  * Isi "Tentang Kami" ada di data/profile.ts; Ayat Pekan Ini di data/ayatPekan.ts.
  *
+ * JADWAL KAJIAN dan KEGIATAN/PENGUMUMAN (SCHEDULE dan ANNOUNCEMENTS) kini diubah
+ * lewat Panel Pengurus (/admin), bukan di berkas ini. Isi keduanya di sini hanya
+ * DATA AWAL (disalin ke database saat tombol "Siapkan database" ditekan) dan
+ * CADANGAN (dipakai web selama database belum dipasang atau belum disiapkan).
+ * Penanda "contoh/resmi" kedua bagian itu juga diatur di panel.
+ *
  * PENTING: semua isi di bawah ini masih DATA CONTOH. Ganti dengan data resmi,
- * lalu ubah `isSample: true` menjadi `isSample: false` pada tiap bagian agar
- * lencana "Contoh data, belum resmi" hilang dari halaman.
+ * lalu ubah `isSample: true` menjadi `isSample: false` pada tiap bagian yang
+ * diubah lewat kode (Zoom, video, donasi, kontak) agar lencana "Contoh data,
+ * belum resmi" hilang dari halaman.
  * ========================================================================== */
 
 export const COMMUNITY = {
@@ -24,6 +30,8 @@ export const COMMUNITY = {
 } as const;
 
 /* ------------------------------- Jadwal kajian ------------------------------ */
+/* DATA AWAL dan CADANGAN: jadwal sebenarnya diubah lewat Panel Pengurus (/admin). Berkas ini dipakai hanya saat */
+/* "Siapkan database" pertama kali, atau selama database belum dipasang. */
 /* day: 0 = Ahad, 1 = Senin, 2 = Selasa, 3 = Rabu, 4 = Kamis, 5 = Jumat, 6 = Sabtu */
 /* Jam memakai format 24 jam dan zona waktu WIB. mode: "masjid" | "zoom" | "hybrid" */
 /* imageUrl: opsional. Simpan gambar di public/kajian/ lalu tulis "/kajian/senin.jpg" (rasio 16:9 paling pas). */
@@ -151,6 +159,9 @@ export const DONATION: DonationInfo = {
 
 /* ---------------------------------- Pengumuman ---------------------------------- */
 /*
+ * DATA AWAL dan CADANGAN: kegiatan dan pengumuman sebenarnya diubah lewat Panel Pengurus (/admin).
+ * Berkas ini dipakai hanya saat "Siapkan database" pertama kali, atau selama database belum dipasang.
+ *
  * Isi section "Pengumuman Kegiatan", dibagi dua tab:
  *   type: "kegiatan"   -> acara yang dihadiri jamaah (tab Kegiatan)
  *   type: "pengumuman" -> informasi/pemberitahuan (tab Pengumuman)
