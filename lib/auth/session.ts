@@ -1,4 +1,5 @@
 import { EncryptJWT, jwtDecrypt } from "jose";
+import type { EnvLike } from "@/lib/env";
 import { isAllowed } from "./allowlist";
 
 /** Nama cookie sesi pengurus. */
@@ -12,6 +13,17 @@ export interface AdminSession {
   email: string;
   name?: string;
   sub: string;
+}
+
+/** Opsi cookie sesi: HttpOnly, SameSite=Lax, berlaku 14 hari, Secure di produksi. */
+export function sessionCookieOptions(env: EnvLike = process.env) {
+  return {
+    httpOnly: true,
+    secure: env.NODE_ENV === "production",
+    sameSite: "lax" as const,
+    path: "/",
+    maxAge: SESSION_MAX_AGE_S,
+  };
 }
 
 /** Rahasia sesi layak bila ada dan paling sedikit 32 karakter. */

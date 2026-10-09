@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { isAllowed, parseAllowlist } from "@/lib/auth/allowlist";
-import { isSecretUsable, openSession, sealSession } from "@/lib/auth/session";
+import {
+  isSecretUsable,
+  openSession,
+  sealSession,
+  SESSION_MAX_AGE_S,
+  sessionCookieOptions,
+} from "@/lib/auth/session";
 
 const SECRET = "x".repeat(32);
 const ADMIN = { email: "rizky@gmail.com", name: "Rizky", sub: "123" };
@@ -42,6 +48,20 @@ describe("sesi terenkripsi", () => {
       true,
       false,
     ]);
+  });
+});
+
+describe("cookie sesi", () => {
+  it("HttpOnly, SameSite=Lax, 14 hari, Secure hanya di produksi", () => {
+    expect(sessionCookieOptions({ NODE_ENV: "production" })).toEqual({
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_MAX_AGE_S,
+    });
+    expect(SESSION_MAX_AGE_S).toBe(14 * 24 * 60 * 60);
+    expect(sessionCookieOptions({ NODE_ENV: "development" }).secure).toBe(false);
   });
 });
 
