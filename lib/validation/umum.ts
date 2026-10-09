@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isAllowedImageUrl } from "@/lib/photo/rules";
 
 /** Isian formulir apa adanya: nama kolom -> teks. */
 export type RawForm = Record<string, string>;
@@ -35,6 +36,15 @@ export const PESAN = {
   tanggalTerlaluJauh: "Tanggal paling jauh satu tahun dari sekarang.",
   pilihanKosong: "Pilih Libur atau Ganti jadwal.",
   catatanPanjang: "Catatan terlalu panjang (maksimal 200 huruf).",
+  jenisKosong: "Pilih jenis: Kegiatan atau Pengumuman.",
+  judulKosong: "Judul belum diisi.",
+  judulPanjang: "Judul terlalu panjang (maksimal 140 huruf).",
+  ringkasanKosong: "Ringkasan belum diisi.",
+  ringkasanPanjang: "Ringkasan terlalu panjang (maksimal 400 huruf).",
+  tanggalTidakMasukAkal: "Tanggal tidak masuk akal. Periksa tahunnya.",
+  tautanSalah: "Tautan harus diawali https:// atau http://.",
+  tautanPanjang: "Tautan terlalu panjang (maksimal 500 huruf).",
+  formulirKedaluwarsa: "Formulir ini sudah tidak berlaku. Muat ulang halaman, lalu coba lagi.",
 } as const;
 
 /** Jam 24 jam "HH:mm". */
@@ -79,3 +89,29 @@ export function parseForm<T>(
   }
   return { ok: false, fieldErrors };
 }
+
+/**
+ * Pemeriksaan lintas kolom dijalankan walau kolom lain sudah bergalat. Tanpa ini zod melewatinya begitu ada
+ * galat pilihan (mis. cara belum dipilih), sehingga pengurus baru melihat galat lainnya pada pengiriman berikutnya.
+ */
+export const SELALU = { when: () => true };
+
+/**
+ * Kolom foto yang sama untuk jadwal tetap dan kegiatan/pengumuman: alamat (toko kita atau jalur lokal), keterangan,
+ * bagian foto yang tampil (bawaan "center"), dan penanda "foto masih diunggah" (diperiksa oleh pemakainya lewat `SELALU`).
+ */
+export const kolomFoto = (blobHost: string | undefined) => ({
+  imageUrl: z.preprocess(
+    keTeks,
+    z
+      .string()
+      .trim()
+      .refine((url) => url === "" || isAllowedImageUrl(url, blobHost), { error: PESAN.fotoTidakDikenal }),
+  ),
+  imageAlt: teksOpsional(200, PESAN.keteranganFotoPanjang),
+  imagePosition: z.preprocess(
+    (nilai) => (nilai == null || nilai === "" ? "center" : nilai),
+    z.enum(["top", "center", "bottom"], { error: PESAN.posisiFoto }),
+  ),
+  fotoMasihDiunggah: z.preprocess(keTeks, z.string()),
+});

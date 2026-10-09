@@ -1,6 +1,7 @@
 import { onlyOurPhotoUrls } from "@/lib/photo/rules";
 import type { ContentStore } from "@/lib/store/types";
 import { overrideSchema, sessionSchema } from "@/lib/validation/jadwal";
+import { announcementSchema } from "@/lib/validation/pengumuman";
 import { parseForm, type RawForm } from "@/lib/validation/umum";
 import type { DayIndex } from "@/types";
 import { MESSAGE_DELETE_FAILED, MESSAGE_SAVE_FAILED, type FormState } from "./form-state";
@@ -31,6 +32,19 @@ const KOLOM_SESI = [
   "imageUrl",
   "imageAlt",
   "imagePosition",
+  "fotoMasihDiunggah",
+] as const;
+const KOLOM_PENGUMUMAN = [
+  "id",
+  "type",
+  "title",
+  "date",
+  "time",
+  "excerpt",
+  "imageUrl",
+  "imageAlt",
+  "imagePosition",
+  "href",
   "fotoMasihDiunggah",
 ] as const;
 const KOLOM_PENGECUALIAN = ["date", "kind", "note", "startTime", "endTime", "ustadz", "topic", "mode", "location"] as const;
@@ -104,6 +118,33 @@ export async function deleteOverrideCommand(deps: CommandDeps, date: string): Pr
     return { ok: true, deleteImageUrls: [] };
   } catch (error) {
     console.error("[admin] Gagal menghapus pengecualian", date, error);
+    return gagal(MESSAGE_DELETE_FAILED, {});
+  }
+}
+
+/**
+ * Menyimpan satu kegiatan atau pengumuman. `id` wajib dan datang dari formulir (UUID dari halaman "baru"):
+ * menyimpan dua kali dengan id yang sama tetap satu butir.
+ */
+export async function saveAnnouncementCommand(deps: CommandDeps, raw: RawForm): Promise<CommandResult> {
+  const kolom = ambilKolom(raw, KOLOM_PENGUMUMAN);
+  const hasil = parseForm(announcementSchema({ blobHost: deps.blobHost, todayKey: deps.todayKey }), kolom);
+  if (!hasil.ok) return { ok: false, state: { ok: false, fieldErrors: hasil.fieldErrors, values: kolom } };
+  try {
+    const { previousImageUrl } = await deps.store.saveAnnouncement(hasil.data);
+    return { ok: true, deleteImageUrls: fotoUntukDihapus(previousImageUrl, hasil.data.imageUrl, deps.blobHost) };
+  } catch (error) {
+    console.error("[admin] Gagal menyimpan kegiatan atau pengumuman", hasil.data.id, error);
+    return gagal(MESSAGE_SAVE_FAILED, kolom);
+  }
+}
+
+export async function deleteAnnouncementCommand(deps: CommandDeps, id: string): Promise<CommandResult> {
+  try {
+    const { previousImageUrl } = await deps.store.deleteAnnouncement(id);
+    return { ok: true, deleteImageUrls: fotoUntukDihapus(previousImageUrl, undefined, deps.blobHost) };
+  } catch (error) {
+    console.error("[admin] Gagal menghapus kegiatan atau pengumuman", id, error);
     return gagal(MESSAGE_DELETE_FAILED, {});
   }
 }

@@ -1,15 +1,10 @@
 import { z } from "zod";
-import { isAllowedImageUrl } from "@/lib/photo/rules";
 import type { SessionInput } from "@/lib/store/types";
 import { addDaysToKey, isValidDateKey } from "@/lib/time";
 import type { SessionOverride } from "@/types";
-import { jam, keTeks, PESAN, POLA_JAM, teksOpsional, teksWajib } from "./umum";
+import { jam, keTeks, kolomFoto, PESAN, POLA_JAM, SELALU, teksOpsional, teksWajib } from "./umum";
 
 const cara = z.preprocess(keTeks, z.enum(["masjid", "zoom", "hybrid"], { error: PESAN.caraKosong }));
-const posisiFoto = z.preprocess(
-  (nilai) => (nilai == null || nilai === "" ? "center" : nilai),
-  z.enum(["top", "center", "bottom"], { error: PESAN.posisiFoto }),
-);
 
 /** Kolom kajian yang dipakai jadwal tetap maupun kajian pengganti. */
 const kolomInti = {
@@ -20,12 +15,6 @@ const kolomInti = {
   mode: cara,
   location: teksOpsional(120, PESAN.tempatPanjang),
 };
-
-/**
- * Pemeriksaan lintas kolom dijalankan walau kolom lain sudah bergalat. Tanpa ini zod melewatinya begitu ada
- * galat pilihan (mis. cara belum dipilih), sehingga pengurus baru melihat "jam selesai" pada pengiriman berikutnya.
- */
-const SELALU = { when: () => true };
 
 /** Jam selesai harus setelah jam mulai (hanya diperiksa bila keduanya jam yang sah). */
 function urutanJam(
@@ -46,16 +35,7 @@ export function sessionSchema(blobHost: string | undefined): z.ZodType<SessionIn
   return z
     .object({
       ...kolomInti,
-      imageUrl: z.preprocess(
-        keTeks,
-        z
-          .string()
-          .trim()
-          .refine((url) => url === "" || isAllowedImageUrl(url, blobHost), { error: PESAN.fotoTidakDikenal }),
-      ),
-      imageAlt: teksOpsional(200, PESAN.keteranganFotoPanjang),
-      imagePosition: posisiFoto,
-      fotoMasihDiunggah: z.preprocess(keTeks, z.string()),
+      ...kolomFoto(blobHost),
     })
     .superRefine((v, ctx) => {
       urutanJam(v, (kolom, pesan) => ctx.addIssue({ code: "custom", path: [kolom], message: pesan }));
