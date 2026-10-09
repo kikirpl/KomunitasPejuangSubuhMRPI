@@ -40,6 +40,8 @@
   --c-ivory: #fbfaf5; /* latar netral */
   --c-ink: #0f1b33; /* teks utama */
   --c-ink-soft: #5a6b85; /* teks sekunder */
+  --c-danger: #b3261e; /* merah galat dan tindakan menghapus (panel pengurus) */
+  --c-danger-tint: #fdecea; /* latar lembut untuk ringkasan galat */
 
   /* ---- Peran warna (dipakai komponen) ---- */
   --paper: var(--c-ivory); /* latar halaman */
@@ -59,6 +61,9 @@
   --gold-tint: var(--c-gold-tint);
   --gold-soft: var(--c-gold-soft);
   --on-gold: var(--c-ink); /* teks di atas emas */
+  --danger: var(--c-danger); /* teks, garis, dan isi tombol berbahaya; teks galat */
+  --danger-tint: var(--c-danger-tint);
+  --on-danger: #ffffff; /* teks di atas isi merah */
   --line: rgb(212 175 55 / 0.5); /* garis emas tipis */
   --line-soft: rgb(11 37 89 / 0.16); /* garis biru tipis */
   --line-dark: rgb(212 175 55 / 0.45); /* garis emas di latar gelap */
@@ -99,6 +104,9 @@ html[data-contrast="high"] {
   --gold-tint: #ffffff;
   --gold-soft: #ffd23f;
   --on-gold: #000000;
+  --danger: #8c0000;
+  --danger-tint: #ffffff;
+  --on-danger: #ffffff;
   --line: #000000;
   --line-soft: #000000;
   --line-dark: #ffd23f;
@@ -127,6 +135,9 @@ html[data-contrast="high"] {
   --color-gold-tint: var(--gold-tint);
   --color-gold-soft: var(--gold-soft);
   --color-on-gold: var(--on-gold);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
+  --color-on-danger: var(--on-danger);
   --color-line: var(--line);
   --color-line-soft: var(--line-soft);
   --color-line-dark: var(--line-dark);

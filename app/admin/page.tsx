@@ -37,10 +37,11 @@ function KartuMenu({
   );
   const dasar = "flex items-center gap-5 rounded-2xl border-2 bg-card p-6 shadow-card hc:border-black";
 
+  // next/link (bukan <a>): perpindahan terjadi di peramban dan kerangka pemuat (loading.tsx) tampil seketika.
   return aktif ? (
-    <a href={href} className={`${dasar} border-primary hover:border-accent hover:bg-tint`}>
+    <Link href={href} className={`${dasar} border-primary hover:border-accent hover:bg-tint`}>
       {isi}
-    </a>
+    </Link>
   ) : (
     <div aria-disabled="true" className={`${dasar} border-line opacity-60`}>
       {isi}
