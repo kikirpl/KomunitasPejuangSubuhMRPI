@@ -3,10 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnnouncementTabs } from "@/components/AnnouncementTabs";
 import { AnnouncementAdminList } from "@/components/admin/AnnouncementAdminList";
+import { ErrorBanner } from "@/components/admin/ErrorBanner";
+import { SampleStatus } from "@/components/admin/SampleStatus";
 import { StoreNotice } from "@/components/admin/StoreNotice";
 import { SuccessBanner } from "@/components/admin/SuccessBanner";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { loadAdminContext } from "@/lib/admin/context";
+import { MESSAGE_STATUS_FAILED } from "@/lib/admin/form-state";
+import { LABEL_BAGIAN } from "@/lib/admin/status";
 import { kelompokkanPerJenis } from "@/lib/announcements";
 
 export const metadata: Metadata = { title: "Kegiatan dan Pengumuman" };
@@ -15,10 +19,10 @@ export const metadata: Metadata = { title: "Kegiatan dan Pengumuman" };
 export default async function PengumumanAdmin({
   searchParams,
 }: {
-  searchParams: Promise<{ hasil?: string; jenis?: string }>;
+  searchParams: Promise<{ hasil?: string; jenis?: string; galat?: string }>;
 }) {
   const { store, ready } = await loadAdminContext();
-  const { hasil, jenis } = await searchParams;
+  const { hasil, jenis, galat } = await searchParams;
 
   if (!store || !ready) {
     return (
@@ -29,7 +33,8 @@ export default async function PengumumanAdmin({
     );
   }
 
-  const perJenis = kelompokkanPerJenis(await store.listAnnouncements());
+  const [butir, bendera] = await Promise.all([store.listAnnouncements(), store.getSampleFlags()]);
+  const perJenis = kelompokkanPerJenis(butir);
 
   return (
     <div>
@@ -41,6 +46,14 @@ export default async function PengumumanAdmin({
       <SuccessBanner
         hasil={hasil === "tersimpan" || hasil === "terhapus" ? hasil : undefined}
         viewHref="/#pengumuman"
+      />
+
+      {galat === "status" ? <ErrorBanner>{MESSAGE_STATUS_FAILED}</ErrorBanner> : null}
+      <SampleStatus
+        section="announcements"
+        isSample={bendera.announcements}
+        label={LABEL_BAGIAN.announcements}
+        kembali="/admin/pengumuman"
       />
 
       <Link href="/admin/pengumuman/baru" className={buttonClass("primary", "xl", "mt-6 w-full sm:w-auto")}>

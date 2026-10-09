@@ -1,9 +1,9 @@
-import { CircleAlert } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hapusPengumuman, simpanPengumuman } from "@/app/admin/actions/pengumuman";
 import { AnnouncementForm } from "@/components/admin/AnnouncementForm";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { ErrorBanner } from "@/components/admin/ErrorBanner";
 import { StoreNotice } from "@/components/admin/StoreNotice";
 import { loadAdminContext } from "@/lib/admin/context";
 import { MESSAGE_DELETE_FAILED } from "@/lib/admin/form-state";
@@ -43,15 +43,7 @@ export default async function PengumumanUbah({
       <h1 className="font-display text-4xl font-semibold text-brand">Ubah kegiatan atau pengumuman</h1>
       <p className="mt-2 text-xl text-ink-soft">Setelah disimpan, perubahan langsung tampil di web.</p>
 
-      {galat === "hapus" ? (
-        <p
-          role="alert"
-          className="mt-6 flex items-start gap-3 rounded-xl border-2 border-danger bg-danger-tint px-5 py-4 text-xl font-bold text-danger"
-        >
-          <CircleAlert aria-hidden className="mt-0.5 size-7 shrink-0" />
-          {MESSAGE_DELETE_FAILED}
-        </p>
-      ) : null}
+      {galat === "hapus" ? <ErrorBanner>{MESSAGE_DELETE_FAILED}</ErrorBanner> : null}
 
       <div className="mt-8">
         <AnnouncementForm

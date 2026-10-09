@@ -2,19 +2,23 @@ import { CalendarPlus } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { OverrideList } from "@/components/admin/OverrideList";
+import { ErrorBanner } from "@/components/admin/ErrorBanner";
+import { SampleStatus } from "@/components/admin/SampleStatus";
 import { StoreNotice } from "@/components/admin/StoreNotice";
 import { SuccessBanner } from "@/components/admin/SuccessBanner";
 import { WeekDayList } from "@/components/admin/WeekDayList";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { loadAdminContext } from "@/lib/admin/context";
+import { MESSAGE_STATUS_FAILED } from "@/lib/admin/form-state";
+import { LABEL_BAGIAN } from "@/lib/admin/status";
 import { todayKey } from "@/lib/time";
 
 export const metadata: Metadata = { title: "Jadwal Kajian" };
 
 /** Daftar jadwal tetap tujuh hari dan perubahan untuk tanggal tertentu (libur atau ganti). */
-export default async function JadwalPage({ searchParams }: { searchParams: Promise<{ hasil?: string }> }) {
+export default async function JadwalPage({ searchParams }: { searchParams: Promise<{ hasil?: string; galat?: string }> }) {
   const { store, ready } = await loadAdminContext();
-  const { hasil } = await searchParams;
+  const { hasil, galat } = await searchParams;
 
   if (!store || !ready) {
     return (
@@ -25,7 +29,11 @@ export default async function JadwalPage({ searchParams }: { searchParams: Promi
     );
   }
 
-  const [sessions, overrides] = await Promise.all([store.listSessions(), store.listOverrides(todayKey())]);
+  const [sessions, overrides, bendera] = await Promise.all([
+    store.listSessions(),
+    store.listOverrides(todayKey()),
+    store.getSampleFlags(),
+  ]);
 
   return (
     <div>
@@ -38,6 +46,9 @@ export default async function JadwalPage({ searchParams }: { searchParams: Promi
         hasil={hasil === "tersimpan" || hasil === "terhapus" ? hasil : undefined}
         viewHref="/#jadwal-hari-ini"
       />
+
+      {galat === "status" ? <ErrorBanner>{MESSAGE_STATUS_FAILED}</ErrorBanner> : null}
+      <SampleStatus section="schedule" isSample={bendera.schedule} label={LABEL_BAGIAN.schedule} kembali="/admin/jadwal" />
 
       <section aria-labelledby="judul-jadwal-tetap" className="mt-10">
         <h2 id="judul-jadwal-tetap" className="font-display text-3xl font-semibold text-brand">

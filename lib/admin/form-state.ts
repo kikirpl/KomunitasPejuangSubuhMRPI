@@ -14,3 +14,6 @@ export const MESSAGE_SAVE_FAILED =
 
 export const MESSAGE_DELETE_FAILED =
   "Belum terhapus karena sambungan terputus atau server sedang sibuk. Coba lagi.";
+
+export const MESSAGE_STATUS_FAILED =
+  "Belum berhasil mengubah status. Periksa sambungan, lalu coba lagi.";

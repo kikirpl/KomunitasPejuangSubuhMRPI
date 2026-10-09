@@ -1,9 +1,14 @@
 import { CalendarDays, ChevronRight, CircleAlert, CircleCheck, Globe, Megaphone } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ErrorBanner } from "@/components/admin/ErrorBanner";
+import { SampleStatus } from "@/components/admin/SampleStatus";
 import { StoreNotice } from "@/components/admin/StoreNotice";
+import { SuccessBanner } from "@/components/admin/SuccessBanner";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { loadAdminContext } from "@/lib/admin/context";
+import { MESSAGE_STATUS_FAILED } from "@/lib/admin/form-state";
+import { LABEL_BAGIAN } from "@/lib/admin/status";
 
 type Ikon = typeof CalendarDays;
 
@@ -58,13 +63,14 @@ export default async function AdminHome({
   const { admin, store, ready } = await loadAdminContext();
   const { hasil, galat } = await searchParams;
   const aktif = Boolean(store) && ready;
+  const bendera = store && ready ? await store.getSampleFlags() : null;
 
   return (
     <div>
       <h1 className="font-display text-4xl font-semibold text-brand">Panel Pengurus</h1>
       <p className="mt-2 text-lg text-ink-soft [overflow-wrap:anywhere]">Masuk sebagai {admin.email}</p>
 
-      {hasil === "tersimpan" && aktif ? (
+      {hasil === "siap" && aktif ? (
         <p
           role="status"
           className="mt-6 flex items-center gap-3 rounded-xl border-2 border-primary bg-tint px-5 py-4 text-xl font-bold text-brand hc:border-black"
@@ -73,6 +79,11 @@ export default async function AdminHome({
           Database sudah disiapkan. Silakan pilih yang ingin diubah.
         </p>
       ) : null}
+      <SuccessBanner
+        hasil={aktif && (hasil === "tersimpan" || hasil === "terhapus") ? hasil : undefined}
+        viewHref="/"
+      />
+      {galat === "status" ? <ErrorBanner>{MESSAGE_STATUS_FAILED}</ErrorBanner> : null}
       {galat === "setup" ? (
         <p
           role="alert"
@@ -104,6 +115,18 @@ export default async function AdminHome({
           />
         </li>
       </ul>
+
+      {bendera ? (
+        <>
+          <SampleStatus section="schedule" isSample={bendera.schedule} label={LABEL_BAGIAN.schedule} kembali="/admin" />
+          <SampleStatus
+            section="announcements"
+            isSample={bendera.announcements}
+            label={LABEL_BAGIAN.announcements}
+            kembali="/admin"
+          />
+        </>
+      ) : null}
 
       {/* prefetch dimatikan: web publik dibuat ulang setiap Simpan, jangan tampilkan salinan lama. */}
       <Link href="/" prefetch={false} className={buttonClass("outline", "lg", "mt-8")}>

@@ -24,5 +24,5 @@ export async function siapkanDatabase(): Promise<void> {
   if (!berhasil) redirect("/admin?galat=setup");
 
   revalidatePath("/");
-  redirect("/admin?hasil=tersimpan");
+  redirect("/admin?hasil=siap");
 }

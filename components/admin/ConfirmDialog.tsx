@@ -3,7 +3,7 @@
 import { LoaderCircle, Trash2 } from "lucide-react";
 import { useId, useRef, type ReactNode, type RefObject } from "react";
 import { useFormStatus } from "react-dom";
-import { buttonClass } from "@/components/ui/buttonStyles";
+import { buttonClass, type ButtonVariant } from "@/components/ui/buttonStyles";
 
 /**
  * Tombol "Ya, ..." pengirim formulir di dalam dialog: nonaktif dan berganti tulisan selama permintaan berjalan.
@@ -66,6 +66,8 @@ export function ConfirmDialogBox({
  */
 export function ConfirmDialog({
   triggerLabel,
+  triggerVariant = "danger",
+  triggerIcon,
   title,
   message,
   confirmLabel,
@@ -73,6 +75,10 @@ export function ConfirmDialog({
   hidden,
 }: {
   triggerLabel: string;
+  /** Gaya tombol pemicu; bawaan "danger" (hapus). Tindakan yang tidak merusak (mis. tandai resmi) memakai "outline". */
+  triggerVariant?: ButtonVariant;
+  /** Ikon di pemicu; bawaan tempat sampah. */
+  triggerIcon?: ReactNode;
   title: string;
   message: string;
   confirmLabel: string;
@@ -86,9 +92,9 @@ export function ConfirmDialog({
       <button
         type="button"
         onClick={() => dialog.current?.showModal()}
-        className={buttonClass("danger", "lg", "w-full sm:w-auto")}
+        className={buttonClass(triggerVariant, "lg", "w-full sm:w-auto")}
       >
-        <Trash2 aria-hidden className="size-6" />
+        {triggerIcon ?? <Trash2 aria-hidden className="size-6" />}
         {triggerLabel}
       </button>
       <ConfirmDialogBox dialogRef={dialog} title={title} message={message}>

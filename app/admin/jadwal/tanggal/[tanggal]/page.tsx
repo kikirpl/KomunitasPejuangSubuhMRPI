@@ -1,9 +1,9 @@
-import { CircleAlert } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hapusPengecualian, simpanPengecualian } from "@/app/admin/actions/pengecualian";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { OverrideForm } from "@/components/admin/OverrideForm";
+import { ErrorBanner } from "@/components/admin/ErrorBanner";
 import { StoreNotice } from "@/components/admin/StoreNotice";
 import { loadAdminContext } from "@/lib/admin/context";
 import { MESSAGE_DELETE_FAILED } from "@/lib/admin/form-state";
@@ -48,15 +48,7 @@ export default async function PengecualianTanggal({
       <h1 className="font-display text-4xl font-semibold text-brand">Ubah perubahan untuk {lengkap}</h1>
       <p className="mt-2 text-xl text-ink-soft">Setelah disimpan, perubahan langsung tampil di web.</p>
 
-      {galat === "hapus" ? (
-        <p
-          role="alert"
-          className="mt-6 flex items-start gap-3 rounded-xl border-2 border-danger bg-danger-tint px-5 py-4 text-xl font-bold text-danger"
-        >
-          <CircleAlert aria-hidden className="mt-0.5 size-7 shrink-0" />
-          {MESSAGE_DELETE_FAILED}
-        </p>
-      ) : null}
+      {galat === "hapus" ? <ErrorBanner>{MESSAGE_DELETE_FAILED}</ErrorBanner> : null}
 
       <div className="mt-8">
         <OverrideForm
