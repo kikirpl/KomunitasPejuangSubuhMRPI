@@ -44,10 +44,10 @@ export function ConfirmDialogBox({
       aria-describedby={pesanId}
       className="m-auto w-[min(34rem,calc(100%-2rem))] rounded-2xl border-2 border-danger bg-card p-6 text-ink shadow-card backdrop:bg-black/60 hc:border-black"
     >
-      <h2 id={judulId} className="font-display text-3xl font-semibold text-brand">
+      <h2 id={judulId} className="font-display text-3xl font-semibold text-brand [overflow-wrap:anywhere]">
         {title}
       </h2>
-      <p id={pesanId} className="mt-3 text-xl">
+      <p id={pesanId} className="mt-3 text-xl [overflow-wrap:anywhere]">
         {message}
       </p>
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">

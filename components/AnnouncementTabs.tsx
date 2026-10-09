@@ -7,6 +7,8 @@ import type { AnnouncementType } from "@/types";
 interface AnnouncementTabsProps {
   /** Isi tiap tab (daftar kartu), sudah dirender di server. */
   panels: Record<AnnouncementType, ReactNode>;
+  /** Tab yang terbuka lebih dulu. Bawaan "kegiatan"; panel pengurus membuka jenis yang baru disimpan. */
+  initial?: AnnouncementType;
 }
 
 /*
@@ -29,8 +31,8 @@ const panelId = (jenis: AnnouncementType) => `pengumuman-panel-${jenis}`;
  * Tab terpilih: isi biru royal, teks putih. Tab lain: garis tepi.
  * Pergantian tab memakai fade 180 ms (mati otomatis bila "kurangi gerakan").
  */
-export function AnnouncementTabs({ panels }: AnnouncementTabsProps) {
-  const [aktif, setAktif] = useState<AnnouncementType>("kegiatan");
+export function AnnouncementTabs({ panels, initial = "kegiatan" }: AnnouncementTabsProps) {
+  const [aktif, setAktif] = useState<AnnouncementType>(initial);
   // Fade hanya setelah pengguna berpindah tab, bukan saat halaman pertama dimuat.
   const [sudahPindah, setSudahPindah] = useState(false);
   const tabRefs = useRef<Partial<Record<AnnouncementType, HTMLButtonElement | null>>>({});

@@ -82,3 +82,9 @@ export function formatTanggalPengumuman(iso: string): string {
   // Jam hanya ditampilkan bila tanggal ISO memuat jam ("...T05:30...").
   return iso.includes("T") ? `${teks}, pukul ${FORMAT_JAM.format(tanggal)} WIB` : teks;
 }
+
+/** "2026-10-17T05:30:00+07:00" -> { date: "2026-10-17", time: "05:30" }; tanpa jam, time kosong. Untuk mengisi formulir. */
+export function pisahTanggalJam(iso: string): { date: string; time: string } {
+  const [tanggal, jam = ""] = iso.split("T");
+  return { date: tanggal, time: jam.slice(0, 5) };
+}
