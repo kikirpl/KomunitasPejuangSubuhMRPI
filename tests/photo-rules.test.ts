@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isAllowedImageUrl, isOurPhotoUrl, onlyOurPhotoUrls } from "@/lib/photo/rules";
+import { blobImagePatterns, isAllowedImageUrl, isOurPhotoUrl, onlyOurPhotoUrls } from "@/lib/photo/rules";
 
 const HOST = "abc.public.blob.vercel-storage.com";
 const MILIK = `https://${HOST}/kajian/x.webp`;
@@ -41,5 +41,14 @@ describe("onlyOurPhotoUrls", () => {
   it("menyaring URL milik kita saja", () => {
     expect(onlyOurPhotoUrls([MILIK, "/kajian/x.jpg", null, undefined, "https://evil.example/x.webp"], HOST)).toEqual([MILIK]);
     expect(onlyOurPhotoUrls([MILIK], undefined)).toEqual([]);
+  });
+});
+
+describe("blobImagePatterns", () => {
+  it("satu pola untuk toko kita (bukan wildcard host), atau tidak ada bila host kosong", () => {
+    expect(blobImagePatterns(HOST).map(String)).toEqual([`https://${HOST}/**`]);
+    expect(blobImagePatterns(` ${HOST.toUpperCase()} `).map(String)).toEqual([`https://${HOST}/**`]);
+    expect(blobImagePatterns(undefined)).toEqual([]);
+    expect(blobImagePatterns("   ")).toEqual([]);
   });
 });

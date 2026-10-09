@@ -31,3 +31,12 @@ export function isAllowedImageUrl(url: string, blobHost: string | undefined): bo
 export function onlyOurPhotoUrls(urls: (string | null | undefined)[], blobHost: string | undefined): string[] {
   return urls.filter((url): url is string => typeof url === "string" && isOurPhotoUrl(url, blobHost));
 }
+
+/**
+ * Pola gambar jarak jauh untuk `images.remotePatterns` di next.config.ts: hanya toko Blob kita (bukan wildcard
+ * host), atau kosong bila `BLOB_PUBLIC_HOST` belum diisi.
+ */
+export function blobImagePatterns(host: string | undefined): URL[] {
+  const bersih = host?.trim().toLowerCase();
+  return bersih ? [new URL(`https://${bersih}/**`)] : [];
+}

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { blobImagePatterns } from "./lib/photo/rules";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -16,15 +17,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  /*
-   * Foto kartu Kegiatan/Pengumuman yang disimpan di public/ (mis. "/kegiatan/foto.jpg")
-   * tidak perlu pengaturan apa pun. Bila memakai foto dari situs lain (URL https://...),
-   * izinkan alamatnya di sini dulu, contoh:
-   *
-   * images: {
-   *   remotePatterns: [new URL("https://contoh-penyimpanan.id/foto-kegiatan/**")],
-   * },
-   */
+  images: {
+    /*
+     * Foto yang diunggah dari panel pengurus disimpan di toko Vercel Blob. Hanya toko kita yang diizinkan
+     * (BLOB_PUBLIC_HOST, mis. "abc.public.blob.vercel-storage.com"), bukan semua host. Foto di folder public/
+     * (mis. "/kegiatan/foto.jpg") tidak butuh pengaturan apa pun.
+     */
+    remotePatterns: blobImagePatterns(process.env.BLOB_PUBLIC_HOST),
+  },
 };
 
 export default nextConfig;
