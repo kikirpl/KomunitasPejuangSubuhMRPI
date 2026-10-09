@@ -1,0 +1,393 @@
+@import "tailwindcss";
+
+/* Varian untuk mode aksesibilitas: hc:bg-white, simple:hidden, dst. */
+@custom-variant hc (&:where([data-contrast="high"] *));
+@custom-variant simple (&:where([data-simple="true"] *));
+/* Ukuran tulisan "Lebih besar" dan "Terbesar" (level 3 dan 4): tata letak diperlonggar. */
+@custom-variant huge (&:where([data-text-scale="3"] *, [data-text-scale="4"] *));
+
+/* ==========================================================================
+   Tipografi
+   - Judul: Playfair Display (serif elegan, file di app/fonts, dimuat lewat next/font).
+   - Isi dan tombol: Atkinson Hyperlegible Next (sans-serif yang mudah dibaca).
+   - Arab: Amiri.
+   ========================================================================== */
+@theme {
+  --font-sans: "Atkinson Hyperlegible Next Variable", "Atkinson Hyperlegible Next",
+    "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
+  /* Angka tegak (lining) pada huruf judul, bukan angka gaya lama. */
+  --font-display--font-feature-settings: "lnum" 1;
+  --font-arabic: Amiri, "Scheherazade New", "Noto Naskh Arabic", "Geeza Pro",
+    "Traditional Arabic", serif;
+}
+
+/* ==========================================================================
+   PALET WARNA (tema biru, selaras poster). Ubah warna situs di blok ini saja.
+   Komponen tidak memakai kode warna langsung, melainkan nama peran di bawahnya.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --c-navy: #0b2559; /* header/footer gelap, judul di latar terang */
+  --c-royal: #1f4fb8; /* warna utama: tombol, tautan di latar terang */
+  --c-sky: #2490db; /* aksen: ikon, gradasi, hover. Bukan untuk teks kecil */
+  --c-ice: #eaf5fc; /* latar section dan kartu */
+  --c-ice-strong: #bfe3f7; /* latar aksen yang lebih kuat */
+  --c-gold: #d4af37; /* garis pemisah, border, sorotan */
+  --c-gold-tint: #fff6d9; /* latar sorotan emas */
+  --c-gold-soft: #ecd27c; /* teks besar/ikon emas di atas navy */
+  --c-ivory: #fbfaf5; /* latar netral */
+  --c-ink: #0f1b33; /* teks utama */
+  --c-ink-soft: #5a6b85; /* teks sekunder */
+
+  /* ---- Peran warna (dipakai komponen) ---- */
+  --paper: var(--c-ivory); /* latar halaman */
+  --paper-2: var(--c-ice); /* latar section selang-seling */
+  --card: #ffffff;
+  --tint: var(--c-ice); /* chip, latar terpilih, hover lembut */
+  --ink: var(--c-ink);
+  --ink-soft: var(--c-ink-soft);
+  --brand: var(--c-navy); /* judul di latar terang, panel gelap */
+  --brand-deep: var(--c-navy); /* header, footer, hero, section gelap */
+  --primary: var(--c-royal); /* tombol utama dan tautan */
+  --primary-hover: var(--c-navy);
+  --accent: var(--c-sky); /* ikon dan hiasan (bukan teks) */
+  --on-brand: #ffffff; /* teks di atas navy/royal */
+  --on-brand-soft: #d3e2f6; /* teks sekunder di atas navy/royal */
+  --gold: var(--c-gold);
+  --gold-tint: var(--c-gold-tint);
+  --gold-soft: var(--c-gold-soft);
+  --on-gold: var(--c-ink); /* teks di atas emas */
+  --line: rgb(212 175 55 / 0.5); /* garis emas tipis */
+  --line-soft: rgb(11 37 89 / 0.16); /* garis biru tipis */
+  --line-dark: rgb(212 175 55 / 0.45); /* garis emas di latar gelap */
+  --focus: var(--c-navy);
+  --focus-on-dark: var(--c-gold);
+  --card-shadow: 0 1px 2px rgb(11 37 89 / 0.06), 0 16px 32px -18px rgb(11 37 89 / 0.3);
+  /* Ornamen bintang delapan: sangat halus (opacity 4-8%). */
+  --ornament-light: rgb(31 79 184 / 0.05);
+  --ornament-dark: rgb(212 175 55 / 0.08);
+
+  /* Pegunungan biru muda di dasar hero (components/MountainBackdrop.tsx).
+     --mtn-1 punggung terjauh ... --mtn-4 paling dekat (makin dekat makin pekat). */
+  --mtn-1: var(--c-ice); /* #eaf5fc */
+  --mtn-2: var(--c-ice-strong); /* #bfe3f7 */
+  --mtn-3: #a5d5f2;
+  --mtn-4: #8cc7ee;
+  --mtn-glow: var(--c-gold-soft); /* cahaya emas samar di balik punggung terjauh */
+  --mtn-mist: var(--paper); /* kabut dasar = latar section berikutnya */
+  /* Tinggi area pegunungan; padding bawah hero dihitung dari angka ini. */
+  --mtn-height: clamp(160px, 28vw, 340px);
+}
+
+html[data-contrast="high"] {
+  --paper: #ffffff;
+  --paper-2: #ffffff;
+  --card: #ffffff;
+  --tint: #ffffff;
+  --ink: #000000;
+  --ink-soft: #000000;
+  --brand: #001a4d;
+  --brand-deep: #00112f;
+  --primary: #0a2f8c;
+  --primary-hover: #001a4d;
+  --accent: #001a4d;
+  --on-brand: #ffffff;
+  --on-brand-soft: #ffffff;
+  --gold: #ffd23f;
+  --gold-tint: #ffffff;
+  --gold-soft: #ffd23f;
+  --on-gold: #000000;
+  --line: #000000;
+  --line-soft: #000000;
+  --line-dark: #ffd23f;
+  --focus: #000000;
+  --focus-on-dark: #ffd23f;
+  --card-shadow: none;
+  --ornament-light: transparent;
+  --ornament-dark: transparent;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-card: var(--card);
+  --color-tint: var(--tint);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-on-brand: var(--on-brand);
+  --color-on-brand-soft: var(--on-brand-soft);
+  --color-gold: var(--gold);
+  --color-gold-tint: var(--gold-tint);
+  --color-gold-soft: var(--gold-soft);
+  --color-on-gold: var(--on-gold);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-line-dark: var(--line-dark);
+  --shadow-card: var(--card-shadow);
+}
+
+/* ==========================================================================
+   Dasar
+   ========================================================================== */
+@layer base {
+  html {
+    /* "Normal" = 18px, lebih besar dari standar web (16px). Diubah oleh widget aksesibilitas. */
+    font-size: 112.5%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /*
+   * Jarak (padding, margin, celah, tinggi tombol) ikut membesar bersama huruf sampai
+   * ukuran "Besar", lalu dikunci di piksel yang sama. Pada "Lebih besar" dan "Terbesar"
+   * hanya hurufnya yang terus membesar, supaya kartu tidak kehabisan ruang di layar ponsel.
+   */
+  html[data-text-scale="3"] {
+    --spacing: 0.2174rem; /* 143,75% x 16px x 0,2174rem = 5px */
+  }
+  html[data-text-scale="4"] {
+    --spacing: 0.1923rem; /* 162,5% x 16px x 0,1923rem = 5px */
+  }
+
+  [id] {
+    scroll-margin-top: 1rem;
+  }
+  @media (min-width: 64rem) {
+    [id] {
+      scroll-margin-top: 6.5rem;
+    }
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Jaring pengaman: kata yang lebih lebar dari kotaknya dipatahkan, bukan meluber atau terpotong. */
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-feature-settings: "lnum" 1;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 4px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  a,
+  button,
+  summary,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  ::selection {
+    background: rgb(36 144 219 / 0.28);
+  }
+
+  /* Saat jendela QRIS terbuka, halaman di belakangnya tidak ikut bergulir. */
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Teks Arab: minimal 32px, jarak antarbaris lega agar harakat terbaca jelas. */
+  .arabic {
+    font-family: var(--font-arabic);
+    font-size: max(32px, clamp(2rem, 1.35rem + 2.6vw, 3.6rem));
+    font-weight: 400;
+    line-height: 2.2;
+    letter-spacing: 0;
+    word-spacing: 0.08em;
+    /* Kata Arab tidak boleh dipatahkan di tengah. */
+    overflow-wrap: normal;
+  }
+
+  /* Latar gelap: warna fokus emas agar tetap terlihat. */
+  .on-dark {
+    --focus: var(--focus-on-dark);
+  }
+
+  /*
+   * Pola bintang delapan (khatam). Bentuknya dari gambar SVG, warnanya dari
+   * variabel --ornament-* (opacity 4-8%), jadi mudah diubah tanpa menyentuh gambar.
+   */
+  .khatam-pattern,
+  .khatam-pattern-light {
+    pointer-events: none;
+    background-color: var(--ornament-dark);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.2'%3E%3Crect x='20' y='20' width='32' height='32'/%3E%3Crect x='20' y='20' width='32' height='32' transform='rotate(45 36 36)'/%3E%3C/g%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.2'%3E%3Crect x='20' y='20' width='32' height='32'/%3E%3Crect x='20' y='20' width='32' height='32' transform='rotate(45 36 36)'/%3E%3C/g%3E%3C/svg%3E");
+    -webkit-mask-size: 72px 72px;
+    mask-size: 72px 72px;
+  }
+  .khatam-pattern-light {
+    background-color: var(--ornament-light);
+  }
+
+  .toast-in {
+    animation: toast-in 0.28s ease-out both;
+  }
+
+  /* Satu-satunya gerak otomatis di situs: langit fajar di lengkung hero. */
+  .dawn-rise {
+    animation: dawn-rise 3.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
+  }
+  .dawn-stars {
+    animation: dawn-stars 3.6s ease-in-out 0.3s both;
+  }
+
+  /* Kabut di dasar pegunungan hero (MountainBackdrop): bening di atas, pekat di bawah. */
+  .mtn-mist {
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--mtn-mist) 55%, transparent) 50%,
+      var(--mtn-mist) 86%
+    );
+  }
+
+  /* Pengumuman: panel tab yang baru dipilih muncul pelan (jawaban atas klik tab). */
+  .tab-fade {
+    animation: tab-fade 0.18s ease-out both;
+  }
+
+  /* Murottal: batang equalizer bergerak pelan selama audio diputar (berhenti bila "kurangi gerakan"). */
+  .eq-bar {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: eq-bar 0.9s ease-in-out infinite alternate;
+  }
+  .eq-bar:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .eq-bar:nth-child(3) {
+    animation-delay: -0.6s;
+  }
+
+  /* Ayat Pekan Ini: kartu muncul berurutan saat daftar dibuka (jawaban atas tekanan tombol). */
+  .ayat-muncul {
+    animation: ayat-muncul 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dawn-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dawn-stars {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.18;
+  }
+}
+
+@keyframes tab-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes eq-bar {
+  from {
+    transform: scaleY(0.35);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes ayat-muncul {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Mode kontras tinggi dan tampilan sederhana: buang hiasan latar. */
+html[data-contrast="high"] .khatam-pattern,
+html[data-contrast="high"] .khatam-pattern-light,
+html[data-simple="true"] .khatam-pattern,
+html[data-simple="true"] .khatam-pattern-light {
+  display: none;
+}
+
+html[data-contrast="high"] a {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
