@@ -72,7 +72,7 @@ export function TodaySchedule() {
 
 function TodayContent({ now }: { now: WibParts }) {
   const today = sessionForDay(SCHEDULE.sessions, now.weekday);
-  const next = nextSessionAfterToday(SCHEDULE.sessions, now);
+  const next = nextSessionAfterToday(SCHEDULE.sessions, [], now);
   const finishedOrNone = !today || sessionStatus(today, now) === "finished";
 
   return (

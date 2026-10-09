@@ -166,12 +166,40 @@ export interface StudySession {
    * kajian di ruang utama masjid". Kosongkan bila gambar hanya hiasan.
    */
   imageAlt?: string;
+  /** Bagian foto yang tampil saat dipotong ke rasio 16:9. Bawaan: "center". */
+  imagePosition?: ImagePosition;
+}
+
+/** Bagian foto yang dipertahankan saat kartu memotong foto menjadi 16:9. */
+export type ImagePosition = "top" | "center" | "bottom";
+
+/**
+ * Perubahan jadwal untuk satu tanggal WIB: libur, atau kajian pengganti yang
+ * lengkap (disalin dari jadwal tetap saat dibuat, bukan "ikut" jadwal tetap).
+ */
+export interface SessionOverride {
+  /** Tanggal WIB "YYYY-MM-DD". */
+  date: string;
+  kind: "libur" | "ganti";
+  /** Catatan untuk jamaah, mis. "Ustadz berhalangan hadir". */
+  note?: string;
+  /** Hanya untuk kind "ganti". */
+  session?: {
+    startTime: string;
+    endTime: string;
+    ustadz: string;
+    topic: string;
+    mode: SessionMode;
+    location?: string;
+  };
 }
 
 export interface ScheduleData {
   /** true = data contoh; tampilkan lencana "Data contoh" di halaman. */
   isSample?: boolean;
   sessions: StudySession[];
+  /** Perubahan untuk tanggal tertentu (libur atau ganti). */
+  overrides?: SessionOverride[];
 }
 
 /* -------------------------------------------------------------------------
@@ -285,6 +313,8 @@ export interface AnnouncementItem {
    * serambi masjid". Kosongkan bila foto hanya hiasan.
    */
   imageAlt?: string;
+  /** Bagian foto yang tampil saat dipotong ke rasio 16:9. Bawaan: "center". */
+  imagePosition?: ImagePosition;
   /** Tautan "Selengkapnya" (opsional). */
   href?: string;
 }
@@ -292,6 +322,17 @@ export interface AnnouncementItem {
 export interface AnnouncementData {
   isSample?: boolean;
   items: AnnouncementItem[];
+}
+
+/** Bagian situs yang kontennya dikelola lewat Panel Pengurus. */
+export type SectionKey = "schedule" | "announcements";
+
+/** Seluruh konten dinamis yang dibaca halaman utama. */
+export interface PublicContent {
+  schedule: ScheduleData;
+  announcements: AnnouncementData;
+  /** ISO, saat halaman dibuat di server. */
+  generatedAt: string;
 }
 
 export interface ContactInfo {
