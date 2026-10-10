@@ -275,7 +275,7 @@ Sesuai rancangan: **tanpa formulir dan tanpa konfirmasi lewat WhatsApp**. Jamaah
 
 ```
 app/            layout, halaman utama, gaya global, palet warna dan tema Tailwind (globals.css),
-                huruf judul (fonts/), gambar pratinjau tautan (opengraph-image.jpg), ikon situs (icon.svg)
+                huruf judul (fonts/), gambar pratinjau tautan (opengraph-image.jpg), ikon situs (icon.png)
 app/api/ayat/   Route Handler GET /api/ayat?week=... (Al Quran Cloud, cache 24 jam, data cadangan)
 app/admin/      Panel Pengurus: layar masuk, beranda panel, jadwal (hari dan tanggal), kegiatan dan pengumuman;
                 actions/ berisi Server Action (simpan, hapus, tandai resmi, siapkan database, keluar)
@@ -332,7 +332,7 @@ Saat tautan situs dibagikan di grup WhatsApp, muncul kartu pratinjau berisi judu
 
 Untuk mengganti gambar, timpa `app/opengraph-image.jpg` dengan gambar berukuran 1200x630 piksel (JPG atau PNG, usahakan di bawah 300 KB) dan ubah teks alternatifnya di `app/opengraph-image.alt.txt`. WhatsApp menyimpan pratinjau lama beberapa lama; bila gambar baru belum muncul, bagikan tautan dengan tambahan `?v=2` di ujungnya.
 
-Sebelum publikasi, pertimbangkan juga mengganti `app/icon.svg` bila masjid punya logo resmi.
+Logo komunitas ada di dua tempat: `public/logo.png` (dipakai di kepala halaman dan kepala panel lewat `components/ui/Logo.tsx`) dan `app/icon.png` (ikon tab browser, persegi 256x256 piksel). Untuk menggantinya, timpa kedua file itu dengan logo baru. Browser menyimpan ikon tab lama dalam cache, jadi muat ulang dengan Ctrl+F5 bila ikon baru belum muncul.
 
 ## Pengembangan lanjutan (usulan)
 
