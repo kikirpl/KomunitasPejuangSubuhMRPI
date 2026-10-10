@@ -9,7 +9,7 @@ describe("loadPublicContent", () => {
   it("tanpa penyimpanan: salinan content.ts", async () => {
     const c = await loadPublicContent({ store: null, now: NOW });
     expect(c.schedule.sessions).toHaveLength(7);
-    expect(c.announcements.items).toHaveLength(4);
+    expect(c.announcements.items).toHaveLength(5);
     expect(c.schedule.isSample).toBe(true);
     expect(c.schedule.overrides ?? []).toEqual([]);
     expect(c.generatedAt).toBe(NOW.toISOString());

@@ -21,7 +21,7 @@ describe("SqlStore di atas PGlite", () => {
   it("kolom tanggal pengumuman terbaca sebagai YYYY-MM-DD", async () => {
     const store = new SqlStore(await createPgliteClient());
     await store.setup();
-    expect((await store.getAnnouncement("a1"))?.date).toBe("2026-10-09");
+    expect((await store.getAnnouncement("a1"))?.date).toBe("2026-10-10");
     expect((await store.listOverrides("2000-01-01")).length).toBe(0);
   });
 

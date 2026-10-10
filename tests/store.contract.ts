@@ -41,7 +41,7 @@ export function runStoreContract(label: string, create: () => Promise<ContentSto
       const sesi = await store.listSessions();
       expect(sesi).toHaveLength(7);
       expect(sesi.map((s) => s.id).sort()).toEqual(["ahad", "jumat", "kamis", "rabu", "sabtu", "selasa", "senin"]);
-      expect(await store.listAnnouncements()).toHaveLength(4);
+      expect(await store.listAnnouncements()).toHaveLength(5);
       expect(await store.getSampleFlags()).toEqual({ schedule: true, announcements: true });
     });
 
@@ -108,9 +108,11 @@ export function runStoreContract(label: string, create: () => Promise<ContentSto
       ).rejects.toThrow();
     });
 
-    it("listAnnouncements: terbaru lebih dulu", async () => {
+    it("listAnnouncements: terbaru lebih dulu, tanggal sama urut id", async () => {
       await store.setup();
-      expect((await store.listAnnouncements()).map((a) => a.id)).toEqual(["a4", "a3", "a2", "a1"]);
+      await store.saveAnnouncement({ ...P, id: "baru", date: "2026-10-11" });
+      await store.saveAnnouncement(P);
+      expect((await store.listAnnouncements()).map((a) => a.id)).toEqual(["baru", "a1", "a2", "a3", "a4", "a5", "p1"]);
     });
 
     it("pengumuman: id sama dua kali menjadi satu baris, dan foto lama dikembalikan", async () => {
@@ -119,7 +121,7 @@ export function runStoreContract(label: string, create: () => Promise<ContentSto
       expect(await store.saveAnnouncement({ ...P, imageUrl: "https://h/q.webp" })).toEqual({
         previousImageUrl: "https://h/p.webp",
       });
-      expect(await store.listAnnouncements()).toHaveLength(5);
+      expect(await store.listAnnouncements()).toHaveLength(6);
     });
 
     it("pengumuman: semua kolom terpetakan dan tanggal disusun dari tanggal dan jam", async () => {

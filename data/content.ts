@@ -24,7 +24,7 @@ import type {
  * ========================================================================== */
 
 export const COMMUNITY = {
-  name: "Pejuang Subuh",
+  name: "Komunitas Pejuang Subuh",
   mosque: "Masjid Raya Pondok Indah",
   mosqueShort: "MRPI",
 } as const;
@@ -38,7 +38,7 @@ export const COMMUNITY = {
 /*           Tampil di Jadwal Sepekan, dan di Kajian Hari Ini pada harinya. Tanpa imageUrl dipakai gambar pengganti. */
 /* imageAlt: opsional, keterangan gambar untuk pembaca layar. */
 export const SCHEDULE: ScheduleData = {
-  isSample: true,
+  isSample: false,
   sessions: [
     {
       id: "senin",
@@ -49,6 +49,8 @@ export const SCHEDULE: ScheduleData = {
       topic: "Tafsir Juz 'Amma",
       mode: "hybrid",
       location: "Ruang utama masjid",
+      imageAlt: "ustad",
+      imageUrl: "/kajian/senin.jpeg",
     },
     {
       id: "selasa",
@@ -59,6 +61,8 @@ export const SCHEDULE: ScheduleData = {
       topic: "Fiqih Ibadah Sehari-hari",
       mode: "masjid",
       location: "Ruang utama masjid",
+      imageAlt: "ustad",
+      imageUrl: "/kajian/sabtu.jpeg",
     },
     {
       id: "rabu",
@@ -69,6 +73,8 @@ export const SCHEDULE: ScheduleData = {
       topic: "Hadits Arba'in",
       mode: "hybrid",
       location: "Ruang utama masjid",
+       imageAlt: "ustad",
+      imageUrl: "/kajian/senin.jpeg",
     },
     {
       id: "kamis",
@@ -79,6 +85,8 @@ export const SCHEDULE: ScheduleData = {
       topic: "Akhlak dan Adab Sehari-hari",
       mode: "masjid",
       location: "Ruang utama masjid",
+       imageAlt: "ustad",
+      imageUrl: "/kajian/sabtu.jpeg",
     },
     {
       id: "jumat",
@@ -89,6 +97,8 @@ export const SCHEDULE: ScheduleData = {
       topic: "Sirah Nabawiyah, dilanjut sarapan bersama",
       mode: "hybrid",
       location: "Ruang utama masjid",
+       imageAlt: "ustad",
+      imageUrl: "/kajian/senin.jpeg",
     },
     {
       id: "sabtu",
@@ -99,6 +109,8 @@ export const SCHEDULE: ScheduleData = {
       topic: "Tadabbur Al-Qur'an",
       mode: "hybrid",
       location: "Ruang utama masjid",
+       imageAlt: "ustad",
+      imageUrl: "/kajian/sabtu.jpeg",
     },
     {
       id: "ahad",
@@ -109,16 +121,18 @@ export const SCHEDULE: ScheduleData = {
       topic: "Keluarga Sakinah",
       mode: "masjid",
       location: "Ruang utama masjid",
+       imageAlt: "ustad",
+      imageUrl: "/kajian/senin.jpeg",
     },
   ],
 };
 
 /* ---------------------------------- Zoom ---------------------------------- */
 export const ZOOM: ZoomInfo = {
-  isSample: true,
-  meetingUrl: "https://zoom.us/j/0000000000",
-  meetingId: "000 0000 0000",
-  passcode: "000000",
+  isSample: false,
+  meetingUrl: "https://bit.ly/kajianpsmrpi",
+  meetingId: "988 0693 3810",
+  passcode: "1730114",
   slots: [
     { label: "Senin sampai Sabtu", time: "05.00 WIB" },
     { label: "Ahad", time: "05.30 WIB" },
@@ -130,29 +144,29 @@ export const ZOOM: ZoomInfo = {
 /* Satu video utama. youtubeId = 11 karakter di akhir alamat video, contoh: youtube.com/watch?v=XXXXXXXXXXX */
 /* Tautan TikTok, Instagram, YouTube, dan Grup WhatsApp ada di bagian atas components/VideoGallery.tsx. */
 export const VIDEO: FeaturedVideo = {
-  isSample: true,
-  title: "Keutamaan Shalat Subuh Berjamaah",
-  ustadz: "Ustadz Fulan A",
-  youtubeId: "ID_VIDEO_1",
+  isSample: false,
+  title: "Profile Komunitas Pejuang Subuh MRPI",
+  ustadz: "MRPI",
+  youtubeId: "ASHOlXFAFYg",
 };
 
 /* ----------------------------- Donasi (tanpa konfirmasi) ----------------------------- */
 /* Letakkan gambar QRIS asli di folder public/, lalu ubah imageSrc (contoh: "/qris.png"). */
 export const DONATION: DonationInfo = {
-  isSample: true,
+  isSample: false,
   qris: {
-    imageSrc: "/qris-contoh.svg",
+    imageSrc: "/qris2.jpeg",
     imageAlt: "Kode QRIS donasi Masjid Raya Pondok Indah",
     width: 640,
     height: 640,
-    merchantName: "DKM Masjid Raya Pondok Indah",
+    merchantName: "Donasi Pejuang Subuh MRPI",
   },
   bankAccounts: [
     {
       id: "bsi",
       bankName: "Bank Syariah Indonesia (BSI)",
-      accountNumber: "0000000000",
-      accountHolder: "DKM Masjid Raya Pondok Indah",
+      accountNumber: "(451) 811 1730 114",
+      accountHolder: "Komunitas Pejuang Subuh MRP",
     },
   ],
 };
@@ -174,45 +188,57 @@ export const DONATION: DonationInfo = {
  * Urutan di halaman otomatis: tanggal terbaru lebih dulu.
  */
 export const ANNOUNCEMENTS: AnnouncementData = {
-  isSample: true,
+  isSample: false,
   items: [
     /*
-     * CATATAN KLASIFIKASI: data lama belum punya jenis. Keempat butir di bawah
-     * diklasifikasikan "kegiatan" karena semuanya acara bertanggal yang dihadiri
-     * jamaah. Belum ada butir "pengumuman", jadi tab Pengumuman menampilkan
-     * "Belum ada pengumuman." Mohon dicek pengurus.
-     * Jam, tempat, dan rincian lama tidak lagi ditampilkan di kartu baru.
+     * Kegiatan Dakwah & Sosial: program tetap komunitas, bukan acara sekali jalan. Kartu wajib
+     * bertanggal, jadi kelimanya diberi tanggal yang sama dan tampil sesuai urutan id (a1 sampai a5).
+     * Ringkasan hanya menjelaskan judul; mohon dilengkapi pengurus (jadwal, syarat penerima, kontak).
      */
     {
       id: "a1",
-      type: "kegiatan", // diklasifikasikan dari isi: acara Subuh berjamaah + sarapan
-      title: "Subuh berjamaah dan sarapan bersama",
-      date: "2026-10-09",
-      excerpt:
-        "Jumat berkah: shalat Subuh berjamaah, kajian singkat, lalu sarapan bersama para jamaah.",
+      type: "kegiatan",
+      title: "Pengajian online dan offline 5 kali setiap minggu",
+      date: "2026-10-10",
+      excerpt: "Pengajian rutin 5 kali setiap minggu, bisa diikuti langsung di masjid maupun secara daring.",
+        imageAlt: "pengajian",
+      imageUrl: "/kegiatan/pendidikan.jpg",
     },
     {
       id: "a2",
-      type: "kegiatan", // diklasifikasikan dari isi: acara jalan sehat
-      title: "Jalan sehat Pejuang Subuh",
-      date: "2026-10-11",
-      excerpt:
-        "Jalan santai bersama mengelilingi kawasan sekitar masjid. Rute pendek dan ramah untuk lansia.",
+      type: "kegiatan",
+      title: "Bantuan pemakaman jenazah untuk dhuafa",
+      date: "2026-10-10",
+      excerpt: "Membantu pengurusan pemakaman jenazah bagi keluarga dhuafa.",
+      imageAlt: "pengajian",
+      imageUrl: "/kegiatan/kuburan.jpg",
     },
     {
       id: "a3",
-      type: "kegiatan", // diklasifikasikan dari isi: acara penyerahan santunan
-      title: "Santunan anak yatim dan dhuafa",
-      date: "2026-10-16",
-      excerpt: "Penyerahan santunan kepada anak yatim dan dhuafa di sekitar masjid.",
+      type: "kegiatan",
+      title: "Bantuan pendidikan untuk anak yatim dan dhuafa",
+      date: "2026-10-10",
+      excerpt: "Bantuan pendidikan bagi anak yatim dan dhuafa agar tetap dapat belajar.",
+      imageAlt: "pengajian",
+      imageUrl: "/kegiatan/pendidikan.jpg",
     },
     {
       id: "a4",
-      type: "kegiatan", // diklasifikasikan dari isi: acara kerja bakti
-      title: "Kerja bakti membersihkan masjid",
-      date: "2026-10-17",
-      excerpt:
-        "Membersihkan dan merapikan masjid bersama-sama. Setiap bantuan, sekecil apa pun, sangat berarti.",
+      type: "kegiatan",
+      title: "Bantuan pengobatan untuk dhuafa",
+      date: "2026-10-10",
+      excerpt: "Membantu kebutuhan pengobatan bagi dhuafa yang membutuhkan.",
+      imageAlt: "pengajian",
+      imageUrl: "/kegiatan/pendidikan.jpg",
+    },
+    {
+      id: "a5",
+      type: "kegiatan",
+      title: "Bantuan bencana alam",
+      date: "2026-10-10",
+      excerpt: "Penyaluran bantuan bagi saudara-saudara yang terdampak bencana alam.",
+      imageAlt: "pengajian",
+      imageUrl: "/kegiatan/kuburan.jpg",
     },
   ],
 };
@@ -220,14 +246,14 @@ export const ANNOUNCEMENTS: AnnouncementData = {
 /* ------------------------------------ Kontak ------------------------------------ */
 /* whatsappNumber: awali dengan 62 (tanpa 0 dan tanpa +). Contoh: 6281234567890 */
 export const CONTACT: ContactInfo = {
-  isSample: true,
+  isSample: false,
   mosqueName: "Masjid Raya Pondok Indah",
   addressLines: ["Masjid Raya Pondok Indah", "Kawasan Pondok Indah, Jakarta Selatan"],
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Masjid+Raya+Pondok+Indah+Jakarta",
-  phoneDisplay: "(021) 000-0000",
-  phoneTel: "+62210000000",
-  whatsappNumber: "6281200000000",
+  phoneDisplay: "08111730114",
+  phoneTel: "+628111730114",
+  whatsappNumber: "628111730114",
   whatsappMessage:
     "Assalamualaikum, saya ingin bertanya tentang jadwal kajian Pejuang Subuh di Masjid Raya Pondok Indah.",
 };

@@ -30,10 +30,10 @@ describe("AnnouncementAdminList", () => {
     const html = renderToStaticMarkup(<AnnouncementAdminList jenis="kegiatan" items={kegiatan} />);
     const judul = [...html.matchAll(/<h3[^>]*>([^<]+)<\/h3>/g)].map((m) => m[1].replace(/&#x27;/g, "'"));
     expect(judul).toEqual(kegiatan.map((k) => k.title));
-    expect(judul[0]).toBe("Kerja bakti membersihkan masjid"); // 2026-10-17 paling baru
+    expect(judul[0]).toBe("Pengajian online dan offline 5 kali setiap minggu"); // tanggal sama semua: urut id, a1 lebih dulu
     const alamat = [...html.matchAll(/href="(\/admin\/pengumuman\/[^"]+)"/g)].map((m) => m[1]);
     expect(alamat).toEqual(kegiatan.map((k) => `/admin/pengumuman/${k.id}`));
-    expect(teks(html)).toContain("Sabtu, 17 Oktober 2026");
+    expect(teks(html)).toContain("Sabtu, 10 Oktober 2026");
   });
 
   it("butir berjam menampilkan 'pukul ... WIB'", () => {

@@ -21,8 +21,8 @@ describe("buildSeed", () => {
       mode: "hybrid",
       imagePosition: "center",
     });
-    expect(seed.announcements.map((a) => a.id)).toEqual(["a1", "a2", "a3", "a4"]);
-    expect(seed.announcements[0]).toMatchObject({ type: "kegiatan", date: "2026-10-09", imagePosition: "center" });
+    expect(seed.announcements.map((a) => a.id)).toEqual(["a1", "a2", "a3", "a4", "a5"]);
+    expect(seed.announcements[0]).toMatchObject({ type: "kegiatan", date: "2026-10-10", imagePosition: "center" });
     expect(seed.flags).toEqual({ schedule: true, announcements: true });
   });
 });
