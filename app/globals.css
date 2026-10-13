@@ -25,7 +25,7 @@
 /* ==========================================================================
    PALET WARNA "FAJAR DI MRPI": diambil langsung dari lukisan Masjid Raya Pondok Indah
    di beranda (public/beranda/masjid-raya-pondok-indah.jpg). Semua biru berada di
-   keluarga warna yang sama dengan atap dan langitnya (biru langit, hue 200-205),
+   keluarga warna yang sama dengan atap dan langitnya (biru langit, hue 195-206),
    emasnya dari cahaya fajar di kaki langit, dan abu-abunya dari beton masjid.
    Ubah warna situs di blok ini saja: komponen memakai nama peran di bawahnya.
    ========================================================================== */
@@ -36,10 +36,8 @@
   --c-night: #062b45; /* langit Subuh: kepala/kaki halaman, section gelap, judul */
   --c-roof-deep: #005a92; /* atap di sisi bayangan: tombol dan tautan (7,3:1 di atas putih) */
   --c-roof: #0173b9; /* atap masjid: ikon dan hiasan */
-  --c-sky: #0aa0c8; /* langit pagi: hiasan saja, bukan untuk teks */
   --c-horizon: #0381ae; /* warna langit di tepi atas lukisan beranda */
   --c-mist: #ebf4f8; /* kabut pagi: latar section selang-seling, chip */
-  --c-mist-strong: #cfe6f0; /* kabut yang lebih pekat */
   --c-dawn: #e8ad40; /* cahaya fajar: tombol emas, garis, sorotan */
   --c-dawn-soft: #fbd982; /* teks besar/ikon emas di atas langit gelap */
   --c-dawn-tint: #fdf4dc; /* latar sorotan emas */

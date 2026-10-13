@@ -54,7 +54,9 @@ export function Hero() {
         <div aria-hidden="true" className="hero-mist absolute inset-x-0 bottom-0 h-[24%]" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-6xl px-5 pt-10 pb-[calc(var(--hero-art-h)+1.25rem)] sm:px-8 sm:pt-14 sm:pb-[calc(var(--hero-art-h)*0.85)] md:pt-16 xl:pt-12 xl:pb-(--hero-art-h) huge:xl:pt-16 huge:xl:pb-[calc(var(--hero-art-h)*0.85)] hc:pb-12 hc:sm:pb-16 hc:lg:pb-20 hc:xl:pb-20 simple:max-w-3xl simple:pb-12 simple:sm:pb-16 simple:lg:pb-20 simple:xl:pb-20">
+      {/* hc:huge:xl: dan simple:huge:xl: perlu: Tailwind mengeluarkan varian huge sesudah hc dan simple, jadi tanpa itu
+          padding setinggi lukisan tetap terpakai saat lukisan disembunyikan (Kontras Tinggi/Sederhana + tulisan besar). */}
+      <div className="relative mx-auto w-full max-w-6xl px-5 pt-10 pb-[calc(var(--hero-art-h)+1.25rem)] sm:px-8 sm:pt-14 sm:pb-[calc(var(--hero-art-h)*0.85)] md:pt-16 xl:pt-12 xl:pb-(--hero-art-h) huge:xl:pt-16 huge:xl:pb-[calc(var(--hero-art-h)*0.85)] hc:pb-12 hc:sm:pb-16 hc:lg:pb-20 hc:xl:pb-20 hc:huge:xl:pb-20 simple:max-w-3xl simple:pb-12 simple:sm:pb-16 simple:lg:pb-20 simple:xl:pb-20 simple:huge:xl:pb-20">
         <div className="grid grid-cols-1 gap-y-7 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-end xl:gap-x-14 huge:xl:grid-cols-1 simple:xl:grid-cols-1">
           <div>
             <p className="font-display text-xl text-gold-soft sm:text-2xl">
@@ -83,6 +85,8 @@ export function Hero() {
 
           {/*
             Di ponsel, tombol tampil lebih dulu dari paragraf sambutan (order), supaya terlihat tanpa menggulir.
+            Tombol boleh berada di atas langit lukisan yang terang, jadi saat fokus papan ketik cincin emasnya
+            diberi bingkai biru malam (shadow 11px) agar tetap kontras dengan langit di sekitarnya.
             Layar lebar (dua kolom): margin bawah negatif membuat hanya kolom ini (tombol) yang turun ke pucuk
             langit lukisan; kolom judul tetap berakhir tepat di tepi atas lukisan.
           */}
@@ -97,7 +101,7 @@ export function Hero() {
                 className={buttonClass(
                   "gold",
                   "xl",
-                  "w-full shadow-[0_14px_30px_-14px_rgb(232_173_64/0.75)] sm:w-auto xl:w-full huge:xl:w-auto hc:shadow-none simple:xl:w-auto",
+                  "w-full shadow-[0_14px_30px_-14px_rgb(232_173_64/0.75)] focus-visible:shadow-[0_0_0_11px_var(--c-night)] sm:w-auto xl:w-full huge:xl:w-auto hc:shadow-none simple:xl:w-auto",
                 )}
               >
                 <CalendarDays aria-hidden className="size-8" />
@@ -108,7 +112,7 @@ export function Hero() {
                 className={buttonClass(
                   "outlineOnDark",
                   "xl",
-                  "w-full backdrop-blur-[2px] sm:w-auto xl:w-full huge:xl:w-auto simple:xl:w-auto",
+                  "w-full backdrop-blur-[2px] focus-visible:shadow-[0_0_0_11px_var(--c-night)] sm:w-auto xl:w-full huge:xl:w-auto simple:xl:w-auto",
                 )}
               >
                 <Video aria-hidden className="size-8" />
