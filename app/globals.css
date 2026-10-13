@@ -23,67 +23,66 @@
 }
 
 /* ==========================================================================
-   PALET WARNA (tema biru, selaras poster). Ubah warna situs di blok ini saja.
-   Komponen tidak memakai kode warna langsung, melainkan nama peran di bawahnya.
+   PALET WARNA "FAJAR DI MRPI": diambil langsung dari lukisan Masjid Raya Pondok Indah
+   di beranda (public/beranda/masjid-raya-pondok-indah.jpg). Semua biru berada di
+   keluarga warna yang sama dengan atap dan langitnya (biru langit, hue 195-206),
+   emasnya dari cahaya fajar di kaki langit, dan abu-abunya dari beton masjid.
+   Ubah warna situs di blok ini saja: komponen memakai nama peran di bawahnya.
    ========================================================================== */
 :root {
   color-scheme: light;
 
-  --c-navy: #0b2559; /* header/footer gelap, judul di latar terang */
-  --c-royal: #1f4fb8; /* warna utama: tombol, tautan di latar terang */
-  --c-sky: #2490db; /* aksen: ikon, gradasi, hover. Bukan untuk teks kecil */
-  --c-ice: #eaf5fc; /* latar section dan kartu */
-  --c-ice-strong: #bfe3f7; /* latar aksen yang lebih kuat */
-  --c-gold: #d4af37; /* garis pemisah, border, sorotan */
-  --c-gold-tint: #fff6d9; /* latar sorotan emas */
-  --c-gold-soft: #ecd27c; /* teks besar/ikon emas di atas navy */
-  --c-ivory: #fbfaf5; /* latar netral */
-  --c-ink: #0f1b33; /* teks utama */
-  --c-ink-soft: #5a6b85; /* teks sekunder */
+  --c-zenith: #041f33; /* langit tertinggi sebelum fajar: bilah Atur Tampilan */
+  --c-night: #062b45; /* langit Subuh: kepala/kaki halaman, section gelap, judul */
+  --c-roof-deep: #005a92; /* atap di sisi bayangan: tombol dan tautan (7,3:1 di atas putih) */
+  --c-roof: #0173b9; /* atap masjid: ikon dan hiasan */
+  --c-horizon: #0381ae; /* warna langit di tepi atas lukisan beranda */
+  --c-mist: #ebf4f8; /* kabut pagi: latar section selang-seling, chip */
+  --c-dawn: #e8ad40; /* cahaya fajar: tombol emas, garis, sorotan */
+  --c-dawn-soft: #fbd982; /* teks besar/ikon emas di atas langit gelap */
+  --c-dawn-tint: #fdf4dc; /* latar sorotan emas */
+  --c-concrete: #d7dee3; /* beton: garis netral kartu */
+  --c-paper: #f6f8f9; /* pelataran putih: latar halaman */
+  --c-ink: #0b2233; /* teks utama */
+  --c-ink-soft: #4a5e6d; /* teks sekunder (6,3:1 di atas latar) */
   --c-danger: #b3261e; /* merah galat dan tindakan menghapus (panel pengurus) */
   --c-danger-tint: #fdecea; /* latar lembut untuk ringkasan galat */
 
   /* ---- Peran warna (dipakai komponen) ---- */
-  --paper: var(--c-ivory); /* latar halaman */
-  --paper-2: var(--c-ice); /* latar section selang-seling */
+  --paper: var(--c-paper); /* latar halaman */
+  --paper-2: var(--c-mist); /* latar section selang-seling */
   --card: #ffffff;
-  --tint: var(--c-ice); /* chip, latar terpilih, hover lembut */
+  --tint: var(--c-mist); /* chip, latar terpilih, hover lembut */
   --ink: var(--c-ink);
   --ink-soft: var(--c-ink-soft);
-  --brand: var(--c-navy); /* judul di latar terang, panel gelap */
-  --brand-deep: var(--c-navy); /* header, footer, hero, section gelap */
-  --primary: var(--c-royal); /* tombol utama dan tautan */
-  --primary-hover: var(--c-navy);
-  --accent: var(--c-sky); /* ikon dan hiasan (bukan teks) */
-  --on-brand: #ffffff; /* teks di atas navy/royal */
-  --on-brand-soft: #d3e2f6; /* teks sekunder di atas navy/royal */
-  --gold: var(--c-gold);
-  --gold-tint: var(--c-gold-tint);
-  --gold-soft: var(--c-gold-soft);
+  --brand: var(--c-night); /* judul di latar terang, panel gelap */
+  --brand-deep: var(--c-night); /* header, footer, hero, section gelap */
+  --toolbar: var(--c-zenith); /* bilah Atur Tampilan di paling atas */
+  --primary: var(--c-roof-deep); /* tombol utama dan tautan */
+  --primary-hover: var(--c-night);
+  --accent: var(--c-roof); /* ikon dan hiasan (bukan teks) */
+  --on-brand: #ffffff; /* teks di atas langit gelap / biru atap */
+  --on-brand-soft: #c9deeb; /* teks sekunder di atas langit gelap / biru atap */
+  --gold: var(--c-dawn);
+  --gold-tint: var(--c-dawn-tint);
+  --gold-soft: var(--c-dawn-soft);
   --on-gold: var(--c-ink); /* teks di atas emas */
   --danger: var(--c-danger); /* teks, garis, dan isi tombol berbahaya; teks galat */
   --danger-tint: var(--c-danger-tint);
   --on-danger: #ffffff; /* teks di atas isi merah */
-  --line: rgb(212 175 55 / 0.5); /* garis emas tipis */
-  --line-soft: rgb(11 37 89 / 0.16); /* garis biru tipis */
-  --line-dark: rgb(212 175 55 / 0.45); /* garis emas di latar gelap */
-  --focus: var(--c-navy);
-  --focus-on-dark: var(--c-gold);
-  --card-shadow: 0 1px 2px rgb(11 37 89 / 0.06), 0 16px 32px -18px rgb(11 37 89 / 0.3);
-  /* Ornamen bintang delapan: sangat halus (opacity 4-8%). */
-  --ornament-light: rgb(31 79 184 / 0.05);
-  --ornament-dark: rgb(212 175 55 / 0.08);
+  --line: var(--c-concrete); /* garis kartu: beton terang */
+  --line-soft: rgb(6 43 69 / 0.14); /* garis biru malam tipis */
+  --line-dark: rgb(251 217 130 / 0.32); /* garis emas fajar di latar gelap */
+  --focus: var(--c-night);
+  --focus-on-dark: var(--c-dawn-soft);
+  --card-shadow: 0 1px 2px rgb(6 43 69 / 0.05), 0 18px 36px -22px rgb(6 43 69 / 0.32);
+  /* Ornamen bintang delapan: sangat halus (opacity 4-7%). */
+  --ornament-light: rgb(1 115 185 / 0.05);
+  --ornament-dark: rgb(251 217 130 / 0.07);
 
-  /* Pegunungan biru muda di dasar hero (components/MountainBackdrop.tsx).
-     --mtn-1 punggung terjauh ... --mtn-4 paling dekat (makin dekat makin pekat). */
-  --mtn-1: var(--c-ice); /* #eaf5fc */
-  --mtn-2: var(--c-ice-strong); /* #bfe3f7 */
-  --mtn-3: #a5d5f2;
-  --mtn-4: #8cc7ee;
-  --mtn-glow: var(--c-gold-soft); /* cahaya emas samar di balik punggung terjauh */
-  --mtn-mist: var(--paper); /* kabut dasar = latar section berikutnya */
-  /* Tinggi area pegunungan; padding bawah hero dihitung dari angka ini. */
-  --mtn-height: clamp(160px, 28vw, 340px);
+  /* Beranda (components/Hero.tsx): tinggi pita lukisan masjid di dasar beranda.
+     Padding bawah isi beranda dihitung dari angka ini, jadi teks tidak pernah menimpa masjid. */
+  --hero-art-h: clamp(340px, 56vw, 1100px);
 }
 
 html[data-contrast="high"] {
@@ -93,11 +92,12 @@ html[data-contrast="high"] {
   --tint: #ffffff;
   --ink: #000000;
   --ink-soft: #000000;
-  --brand: #001a4d;
-  --brand-deep: #00112f;
-  --primary: #0a2f8c;
-  --primary-hover: #001a4d;
-  --accent: #001a4d;
+  --brand: #00223b;
+  --brand-deep: #001426;
+  --toolbar: #000d18;
+  --primary: #003f66;
+  --primary-hover: #00223b;
+  --accent: #00223b;
   --on-brand: #ffffff;
   --on-brand-soft: #ffffff;
   --gold: #ffd23f;
@@ -126,6 +126,7 @@ html[data-contrast="high"] {
   --color-ink-soft: var(--ink-soft);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);
+  --color-toolbar: var(--toolbar);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-accent: var(--accent);
@@ -228,7 +229,7 @@ html[data-contrast="high"] {
   }
 
   ::selection {
-    background: rgb(36 144 219 / 0.28);
+    background: rgb(1 115 185 / 0.24);
   }
 
   /* Saat jendela QRIS terbuka, halaman di belakangnya tidak ikut bergulir. */
@@ -276,22 +277,57 @@ html[data-contrast="high"] {
     animation: toast-in 0.28s ease-out both;
   }
 
-  /* Satu-satunya gerak otomatis di situs: langit fajar di lengkung hero. */
-  .dawn-rise {
-    animation: dawn-rise 3.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
+  /*
+   * Beranda (components/Hero.tsx). Langit: biru malam (sama dengan kepala halaman) di atas,
+   * tetap gelap sepanjang teks, lalu menyatu dengan biru langit di tepi atas lukisan.
+   * Titik warnanya dihitung dari --hero-art-h, jadi selalu pas dengan tinggi pita lukisan.
+   */
+  .hero-sky {
+    --hero-art-top: calc(100% - var(--hero-art-h));
+    background-image: linear-gradient(
+      to bottom,
+      var(--c-night) 0,
+      var(--c-night) 10%,
+      #093d60 calc(var(--hero-art-top) * 0.72),
+      #075582 var(--hero-art-top),
+      var(--c-horizon) calc(100% - var(--hero-art-h) * 0.8)
+    );
   }
-  .dawn-stars {
-    animation: dawn-stars 3.6s ease-in-out 0.3s both;
+  /* Pola bintang delapan hanya di langit malam: muncul pelan di bawah kepala halaman, hilang sebelum lukisan. */
+  .hero-ornament {
+    --hero-ornament-mask: linear-gradient(
+      to bottom,
+      transparent,
+      #000 7rem,
+      transparent calc(100% - var(--hero-art-h))
+    );
+    -webkit-mask-image: var(--hero-ornament-mask);
+    mask-image: var(--hero-ornament-mask);
   }
-
-  /* Kabut di dasar pegunungan hero (MountainBackdrop): bening di atas, pekat di bawah. */
-  .mtn-mist {
+  /* Tepi atas lukisan (langit) memudar ke langit CSS, tanpa garis sambungan. */
+  .hero-art {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%);
+    mask-image: linear-gradient(to bottom, transparent, #000 18%);
+  }
+  /* Kabut pagi di pelataran lukisan: bening di atas, menjadi warna latar section berikutnya. */
+  .hero-mist {
     background-image: linear-gradient(
       to bottom,
       transparent,
-      color-mix(in srgb, var(--mtn-mist) 55%, transparent) 50%,
-      var(--mtn-mist) 86%
+      color-mix(in srgb, var(--paper) 60%, transparent) 55%,
+      var(--paper) 92%
     );
+  }
+
+  /* Satu-satunya gerak otomatis di situs: tirai malam di atas lukisan memudar (fajar menyingsing). */
+  .fajar-veil {
+    background-image: linear-gradient(
+      to bottom,
+      rgb(4 31 51 / 0.62),
+      rgb(6 43 69 / 0.38) 60%,
+      rgb(6 43 69 / 0.18)
+    );
+    animation: fajar-veil 3.6s cubic-bezier(0.33, 0, 0.2, 1) 0.25s both;
   }
 
   /* Pengumuman: panel tab yang baru dipilih muncul pelan (jawaban atas klik tab). */
@@ -329,23 +365,12 @@ html[data-contrast="high"] {
   }
 }
 
-@keyframes dawn-rise {
+@keyframes fajar-veil {
   from {
+    opacity: 1;
+  }
+  to {
     opacity: 0;
-    transform: translateY(28%);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes dawn-stars {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.18;
   }
 }
 

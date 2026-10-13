@@ -47,7 +47,14 @@ export function Section({
       } pb-8 pt-14 md:pb-10 md:pt-20`}
     >
       {dark ? (
-        <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
+        <>
+          <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
+          {/* Garis cahaya fajar tipis di tepi atas, sama dengan kaki halaman. */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-gold to-transparent hc:hidden"
+          />
+        </>
       ) : ornament ? (
         <div aria-hidden="true" className="khatam-pattern-light absolute inset-0" />
       ) : null}

@@ -14,7 +14,7 @@ import { NAV_ITEMS } from "@/data/nav";
  */
 export function SiteHeader() {
   return (
-    <header className="on-dark border-b border-line-dark bg-brand-deep text-on-brand hc:border-b-2">
+    <header className="on-dark bg-brand-deep text-on-brand hc:border-b-2 hc:border-line-dark">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 simple:max-w-3xl">
         <a href="#beranda" className="flex w-fit items-center gap-3 rounded-xl py-4">
           <Logo />

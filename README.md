@@ -262,7 +262,7 @@ Prinsip lain yang diterapkan:
 - Status tidak hanya dengan warna (ada ikon dan tulisan "Hidup"/"Mati", "Hari ini", "Sedang berlangsung", dst.).
 - Bisa dipakai dengan papan ketik (fokus terlihat jelas, tautan "Langsung ke isi halaman", tombol buka-tutup ayat dengan `aria-expanded` dan `aria-controls`, dialog QRIS menangkap fokus dan menutup dengan Esc).
 - Pembaca layar: nama tombol memuat tulisan yang terlihat, kabar penting (notifikasi salin) dibacakan otomatis.
-- Gerakan otomatis hanya satu kali saat halaman dibuka (fajar di hiasan beranda); pegunungan di beranda diam (tanpa animasi kabut dan tanpa parallax). Gerakan lain hanya menjawab tombol yang ditekan (fade tab 180 ms, kartu ayat muncul, equalizer saat murottal diputar). Semua gerakan dimatikan bila perangkat meminta `prefers-reduced-motion`.
+- Gerakan otomatis hanya satu kali saat halaman dibuka (tirai malam di atas lukisan beranda memudar pelan, seperti fajar menyingsing); sesudah itu beranda diam (tanpa parallax). Gerakan lain hanya menjawab tombol yang ditekan (fade tab 180 ms, kartu ayat muncul, equalizer saat murottal diputar). Semua gerakan dimatikan bila perangkat meminta `prefers-reduced-motion`.
 - Zoom peramban tidak dikunci.
 
 Hasil pemeriksaan otomatis saat pembuatan (revisi 4): Lighthouse Accessibility 100 (ponsel dan desktop), CLS 0,001; axe-core 0 pelanggaran (WCAG 2.2 AA) pada 22 keadaan halaman (termasuk murottal diputar/galat, tab Pengumuman kosong, Basmalah, data cadangan); **semua teks minimal 4,5:1** (dihitung per piksel); tidak ada teks yang meluber atau terpotong dan tidak ada gulir mendatar pada tujuh lebar layar (360, 375, 390, 768, 1024, 1280, 1440px) di kelima ukuran tulisan, plus Mode Sederhana dan Kontras Tinggi. Pemeriksaan otomatis tidak menggantikan uji langsung: sebaiknya minta beberapa jamaah lansia mencoba sebelum diumumkan.
@@ -282,7 +282,7 @@ app/admin/      Panel Pengurus: layar masuk, beranda panel, jadwal (hari dan tan
 app/api/admin/  POST /api/admin/foto (izin unggah foto langsung ke Blob, hanya pengurus yang masuk)
 components/     komponen tampilan, satu berkas per bagian halaman. Server Component kecuali bagian
                 interaktif: AyatPekanCard (kartu ayat + murottal) dan AnnouncementTabs (tab) memakai
-                "use client". MountainBackdrop = pegunungan beranda, ProfileIcons = ikon empat pilar
+                "use client". Hero = beranda dengan lukisan masjid, ProfileIcons = ikon empat pilar
 components/ui/  komponen kecil bersama (tombol, lencana, logo, bagian halaman, CardImage, tombol salin,
                 tautan kembali ke menu, rentang jam)
 components/admin/ komponen Panel Pengurus (kerangka, isian, kartu pilihan, dialog konfirmasi, PhotoField,
@@ -302,20 +302,20 @@ lib/validation/ skema zod dan pesan galat berbahasa Indonesia
 proxy.ts        pagar awal untuk /admin (pemeriksaan sebenarnya ada di tiap halaman, aksi, dan endpoint)
 tests/          tes otomatis Vitest (npm test)
 types/          index.ts (semua tipe TypeScript)
-public/         gambar statis (qris-contoh.svg)
+public/         gambar statis (beranda/ lukisan masjid di beranda, qris-contoh.svg, logo.png)
 ```
 
 ## Desain
 
-- **Palet biru** (selaras poster), semuanya variabel CSS di `app/globals.css`: Navy `#0B2559` (header, footer, judul di latar terang), Biru royal `#1F4FB8` (tombol dan tautan), Biru langit `#2490DB` (ikon, gradasi, hover; tidak dipakai untuk teks kecil), Biru es `#EAF5FC` dan `#BFE3F7` (latar section dan kartu), Emas `#D4AF37` dengan tint `#FFF6D9` (garis, border, sorotan), Gading `#FBFAF5` (latar), teks utama `#0F1B33`, teks sekunder `#5A6B85`. Komponen tidak memakai kode warna langsung, melainkan nama peran (mis. `bg-primary`, `text-brand`), jadi mengganti warna cukup di satu blok.
-- Emas hanya untuk aksen, garis, ikon, latar sorotan, atau teks besar di atas navy; tidak untuk teks kecil di atas putih.
-- Kartu `rounded-2xl`, bayangan lembut kebiruan, garis emas tipis di bawah judul setiap bagian.
+- **Palet "Fajar di MRPI"**, diambil langsung dari lukisan Masjid Raya Pondok Indah di beranda, semuanya variabel CSS di `app/globals.css`. Semua biru satu keluarga dengan atap dan langit lukisan: Biru malam `#062B45` (kepala dan kaki halaman, section gelap, judul), Langit tertinggi `#041F33` (bilah Atur Tampilan), Biru atap teduh `#005A92` (tombol dan tautan, 7,3:1 di atas putih), Biru atap `#0173B9` (ikon dan hiasan), Biru kaki langit `#0381AE` (sambungan langit beranda ke lukisan; tidak untuk teks), Kabut pagi `#EBF4F8` (latar section selang-seling, chip). Emas cahaya fajar `#E8AD40` dengan `#FBD982` (teks besar/ikon di atas biru malam) dan tint `#FDF4DC`. Netral dari beton masjid: pelataran `#F6F8F9` (latar halaman), garis kartu `#D7DEE3`, teks utama `#0B2233`, teks sekunder `#4A5E6D`. Komponen tidak memakai kode warna langsung, melainkan nama peran (mis. `bg-primary`, `text-brand`), jadi mengganti warna cukup di satu blok.
+- Emas hanya untuk aksen: tombol utama, garis, bintang, ikon, latar sorotan, atau teks besar di atas biru malam; tidak untuk teks kecil di atas putih. Kartu memakai garis beton yang netral, jadi emas tetap terasa istimewa.
+- Kartu `rounded-2xl`, bayangan lembut biru malam, garis emas tipis di bawah judul setiap bagian. Bagian gelap (Zoom) dan kaki halaman diberi garis cahaya fajar tipis di tepi atas.
 - Ornamen hanya satu motif: bintang segi delapan (khatam) yang sangat halus (opacity 5-8%) di beranda, Profil, Jadwal Sepekan, dan Zoom. Warnanya juga diatur lewat variabel (`--ornament-light`, `--ornament-dark`).
 - **Huruf:** Playfair Display untuk judul (berkas di `app/fonts`, lisensi SIL OFL; disajikan dari situs sendiri lewat `next/font`, jadi tidak ada permintaan ke Google), Atkinson Hyperlegible Next untuk isi dan tombol (dirancang agar huruf mirip mudah dibedakan), Amiri untuk teks Arab. **Tidak ada permintaan ke Google Fonts.**
 - Jam di jadwal memakai huruf judul dengan angka tegak dan tanda pisah panjang ("05.00 – 06.00"); pembaca layar mendengar "05.00 sampai 06.00".
 - Jarak ikut membesar bersama huruf sampai ukuran "Besar", lalu dikunci agar kartu tidak kehabisan ruang di ponsel pada ukuran huruf terbesar.
-- Di ponsel, lengkung beranda dibuat kecil dan tombol utama ("Lihat Jadwal Hari Ini", "Buka Zoom") tampil sebelum paragraf sambutan. Tombol media sosial tersusun 2x2 di ponsel dan satu baris rata tengah di layar lebar; "Gabung Grup WhatsApp" paling menonjol.
-- **Pegunungan biru muda** di dasar beranda (`components/MountainBackdrop.tsx`, SVG inline sekitar 4 KB): empat lapis punggung gunung dari `#EAF5FC` sampai `#8CC7EE` (makin dekat makin pekat), cahaya emas samar di balik puncak terjauh, dan kabut yang memudar tepat ke warna latar section berikutnya. Warna tiap lapis di variabel `--mtn-1` ... `--mtn-4`, `--mtn-glow`, `--mtn-mist`, tinggi di `--mtn-height` (`clamp(160px, 28vw, 340px)`), semuanya di `app/globals.css`. Padding bawah beranda dihitung dari tinggi itu sehingga teks dan tombol tidak pernah menimpa gunung. Disembunyikan pada Kontras Tinggi dan Tampilan Sederhana. Hanya dipakai di satu tempat (beranda); animasi kabut sengaja tidak dibuat agar tenang bagi jamaah lansia dan tidak perlu tombol jeda (WCAG 2.2.2).
+- Di ponsel, tombol utama beranda ("Lihat Jadwal Hari Ini", "Buka Zoom") tampil sebelum paragraf sambutan, dan lukisan masjid dipotong agar masjidnya tampak besar. Tombol media sosial tersusun 2x2 di ponsel dan satu baris rata tengah di layar lebar; "Gabung Grup WhatsApp" paling menonjol.
+- **Beranda "Fajar di MRPI"** (`components/Hero.tsx`): langit beranda menyambung dari kepala halaman (biru malam) lalu memudar ke biru langit lukisan Masjid Raya Pondok Indah (`public/beranda/masjid-raya-pondok-indah.jpg`, dimuat lewat `next/image` dengan `preload` dan pratinjau buram). Tepi atas lukisan memudar ke langit CSS tanpa garis sambungan; pelatarannya memudar ke warna latar section berikutnya seperti kabut pagi. Teks selalu berada di atas langit gelap buatan CSS, bukan di atas lukisan: tinggi pita lukisan diatur di `--hero-art-h` (`clamp(340px, 56vw, 1100px)`) dan padding bawah isi dihitung dari angka itu. Hanya tombol yang boleh turun sedikit ke pucuk langit lukisan (tidak pernah ke menara), dan semua teks beranda diukur minimal 6,7:1 per piksel. Pola bintang delapan hanya di langit malam bagian atas. Pada Kontras Tinggi dan Tampilan Sederhana lukisan dan hiasan disembunyikan. Untuk mengganti lukisan, timpa berkas itu dengan gambar mendatar (rasio sekitar 3:2) yang langit di bagian atasnya biru, lalu sesuaikan `object-[60%_52%]` di `Hero.tsx` bila masjidnya terpotong.
 - Nama hari memakai "Ahad", bukan "Minggu".
 
 ## Privasi

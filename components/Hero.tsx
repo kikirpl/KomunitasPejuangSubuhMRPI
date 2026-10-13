@@ -1,147 +1,138 @@
+import Image from "next/image";
 import { CalendarDays, Video } from "lucide-react";
-import { MountainBackdrop } from "@/components/MountainBackdrop";
+import { StarMark } from "@/components/ui/StarMark";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { COMMUNITY } from "@/data/content";
+import lukisanMasjid from "@/public/beranda/masjid-raya-pondok-indah.jpg";
 
 /**
- * Sapaan komunitas. Latar navy yang beranjak ke biru royal (langit Subuh), dan
- * elemen yang paling diingat: lengkung mihrab berisi langit biru dengan cahaya
- * fajar keemasan. Satu-satunya gerak otomatis di situs ini, dan berhenti total
- * bila pengguna memilih "kurangi gerakan". Warna lengkung memakai variabel palet
- * di app/globals.css (--c-navy, --c-royal, --c-sky, dst.).
+ * Sapaan komunitas: "Fajar di MRPI". Langit beranda menyambung dari kepala halaman
+ * (biru malam) lalu memudar ke biru langit lukisan Masjid Raya Pondok Indah di
+ * dasarnya, jadi kepala halaman, sapaan, dan lukisan terbaca sebagai satu langit Subuh.
  *
- * Di dasar hero ada pegunungan biru muda (MountainBackdrop) setinggi --mtn-height.
- * Padding bawah konten = 88% tinggi itu (puncak tertinggi berada di 83,5%), jadi
- * teks dan tombol tidak pernah menimpa gunung. Pada Kontras Tinggi dan Tampilan
- * Sederhana gunung disembunyikan dan padding kembali seperti semula.
+ * Teks selalu berada di atas langit gelap buatan CSS (kontras terjamin), bukan di atas
+ * lukisan: pita lukisan setinggi --hero-art-h (app/globals.css) dan padding bawah isi
+ * dihitung dari angka itu. Mulai layar 640px (tombol menjadi isi terakhir) pucuk langit
+ * lukisan (15% teratas, tanpa menara) boleh berada di bawah tombol; di ponsel paragraf
+ * sambutan menjadi isi terakhir, jadi seluruh isi tetap di atas lukisan.
+ *
+ * Satu-satunya gerak otomatis di situs ini: tirai malam di atas lukisan memudar pelan
+ * (fajar menyingsing), sekali saat halaman dibuka. Berhenti total
+ * bila pengguna memilih "kurangi gerakan". Pada Kontras Tinggi dan Tampilan Sederhana
+ * lukisan dan hiasan disembunyikan, latar menjadi biru malam polos.
  */
+/** "Komunitas Pejuang Subuh" ditulis dua tingkat: "Komunitas" kecil di atas, "Pejuang Subuh" besar. */
+const AWALAN = /^Komunitas\s+/i;
+const NAMA_INTI = COMMUNITY.name.replace(AWALAN, "");
+const ADA_AWALAN = NAMA_INTI !== COMMUNITY.name;
+
 export function Hero() {
   return (
     <section
       id="beranda"
       aria-labelledby="beranda-judul"
-      className="on-dark relative overflow-hidden bg-brand-deep bg-linear-to-b from-brand-deep from-45% to-primary text-on-brand"
+      className="hero-sky on-dark relative isolate overflow-hidden bg-brand-deep text-on-brand hc:bg-none simple:bg-none"
     >
-      <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
-      {/* Di bawah konten: digambar sebelum konten (urutan DOM), sama seperti pola bintang. */}
-      <MountainBackdrop className="absolute inset-x-0 bottom-0 h-(--mtn-height) w-full hc:hidden simple:hidden" />
-      <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-8 px-5 pt-10 pb-[calc(var(--mtn-height)*0.88)] sm:px-8 sm:pt-14 md:pt-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-12 hc:pb-10 hc:sm:pb-14 hc:md:pb-20 simple:max-w-3xl simple:pb-10 simple:sm:pb-14 simple:md:pb-20 simple:lg:grid-cols-1">
-        <div className="flex flex-col">
-          <p className="font-display text-xl text-gold-soft sm:text-2xl">
-            Assalamualaikum warahmatullahi wabarakatuh
-          </p>
-          <h1
-            id="beranda-judul"
-            className="mt-4 text-[2.5rem] font-semibold leading-[1.1] tracking-tight sm:text-6xl"
-          >
-            {COMMUNITY.name}
-          </h1>
-          <p className="mt-3 font-display text-2xl text-on-brand-soft sm:text-3xl">
-            {COMMUNITY.mosque} ({COMMUNITY.mosqueShort})
-          </p>
-          {/* Di ponsel, tombol tampil lebih dulu dari paragraf sambutan (order), supaya terlihat tanpa menggulir. */}
-          <p className="mt-6 max-w-xl text-xl leading-relaxed text-on-brand-soft max-sm:order-2">
-            Selamat datang, Bapak dan Ibu. Di sini Anda bisa melihat jadwal kajian,
-            membaca ayat hari ini, ikut kajian lewat Zoom, dan berinfak untuk masjid.
-          </p>
-          <div className="mt-9 flex flex-col gap-4 max-sm:order-1 sm:flex-row sm:flex-wrap">
-            <a href="#jadwal-hari-ini" className={buttonClass("gold", "xl", "w-full sm:w-auto")}>
-              <CalendarDays aria-hidden className="size-8" />
-              Lihat Jadwal Hari Ini
-            </a>
-            <a href="#zoom" className={buttonClass("outlineOnDark", "xl", "w-full sm:w-auto")}>
-              <Video aria-hidden className="size-8" />
-              Buka Zoom
-            </a>
+      {/* Pola bintang delapan, hanya di langit malam bagian atas (memudar sebelum lukisan). */}
+      <div aria-hidden="true" className="hero-ornament absolute inset-0 hc:hidden simple:hidden">
+        <div className="khatam-pattern absolute inset-0" />
+      </div>
+
+      <div className="hero-art absolute inset-x-0 bottom-0 h-(--hero-art-h) hc:hidden simple:hidden">
+        <Image
+          src={lukisanMasjid}
+          alt="Lukisan Masjid Raya Pondok Indah: atap limas biru bersusun tiga dan menara runcing, berlatar langit fajar."
+          fill
+          preload
+          placeholder="blur"
+          sizes="(max-width: 640px) 125vw, 100vw"
+          className="object-cover object-[60%_52%]"
+        />
+        {/* Tirai malam yang memudar saat halaman dibuka: fajar menyingsing di atas masjid. */}
+        <div aria-hidden="true" className="fajar-veil absolute inset-0" />
+        {/* Kabut pagi di pelataran: memudar tepat ke warna latar section berikutnya. */}
+        <div aria-hidden="true" className="hero-mist absolute inset-x-0 bottom-0 h-[24%]" />
+      </div>
+
+      {/* hc:huge:xl: dan simple:huge:xl: perlu: Tailwind mengeluarkan varian huge sesudah hc dan simple, jadi tanpa itu
+          padding setinggi lukisan tetap terpakai saat lukisan disembunyikan (Kontras Tinggi/Sederhana + tulisan besar). */}
+      <div className="relative mx-auto w-full max-w-6xl px-5 pt-10 pb-[calc(var(--hero-art-h)+1.25rem)] sm:px-8 sm:pt-14 sm:pb-[calc(var(--hero-art-h)*0.85)] md:pt-16 xl:pt-12 xl:pb-(--hero-art-h) huge:xl:pt-16 huge:xl:pb-[calc(var(--hero-art-h)*0.85)] hc:pb-12 hc:sm:pb-16 hc:lg:pb-20 hc:xl:pb-20 hc:huge:xl:pb-20 simple:max-w-3xl simple:pb-12 simple:sm:pb-16 simple:lg:pb-20 simple:xl:pb-20 simple:huge:xl:pb-20">
+        <div className="grid grid-cols-1 gap-y-7 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-end xl:gap-x-14 huge:xl:grid-cols-1 simple:xl:grid-cols-1">
+          <div>
+            <p className="font-display text-xl text-gold-soft sm:text-2xl">
+              Assalamualaikum warahmatullahi wabarakatuh
+            </p>
+            <h1
+              id="beranda-judul"
+              className="mt-5 font-semibold leading-[1.02] tracking-tight"
+            >
+              {ADA_AWALAN ? (
+                <>
+                  <span className="block text-2xl font-medium tracking-normal text-on-brand-soft sm:text-3xl">
+                    Komunitas
+                  </span>{" "}
+                </>
+              ) : null}
+              <span className="mt-1 block text-[2.9rem] sm:text-7xl xl:text-[4.6rem] huge:max-sm:text-[2.4rem]">
+                {NAMA_INTI}
+              </span>
+            </h1>
+            <p className="mt-4 font-display text-2xl text-on-brand-soft sm:text-3xl">
+              {COMMUNITY.mosque} ({COMMUNITY.mosqueShort})
+            </p>
+            <Pemisah className="mt-6" />
+          </div>
+
+          {/*
+            Di ponsel, tombol tampil lebih dulu dari paragraf sambutan (order), supaya terlihat tanpa menggulir.
+            Tombol boleh berada di atas langit lukisan yang terang, jadi saat fokus papan ketik cincin emasnya
+            diberi bingkai biru malam (shadow 11px) agar tetap kontras dengan langit di sekitarnya.
+            Layar lebar (dua kolom): margin bawah negatif membuat hanya kolom ini (tombol) yang turun ke pucuk
+            langit lukisan; kolom judul tetap berakhir tepat di tepi atas lukisan.
+          */}
+          <div className="flex flex-col gap-7 xl:-mb-[calc(var(--hero-art-h)*0.15)] huge:xl:mb-0 hc:xl:mb-0 simple:xl:mb-0">
+            <p className="max-w-xl text-xl leading-relaxed text-on-brand max-sm:order-2">
+              Selamat datang, Bapak dan Ibu. Di sini Anda bisa melihat jadwal kajian,
+              membaca ayat hari ini, ikut kajian lewat Zoom, dan berinfak untuk masjid.
+            </p>
+            <div className="flex flex-col gap-4 max-sm:order-1 sm:flex-row sm:flex-wrap xl:max-w-md xl:flex-col xl:flex-nowrap huge:xl:max-w-none huge:xl:flex-row huge:xl:flex-wrap simple:xl:max-w-none simple:xl:flex-row">
+              <a
+                href="#jadwal-hari-ini"
+                className={buttonClass(
+                  "gold",
+                  "xl",
+                  "w-full shadow-[0_14px_30px_-14px_rgb(232_173_64/0.75)] focus-visible:shadow-[0_0_0_11px_var(--c-night)] sm:w-auto xl:w-full huge:xl:w-auto hc:shadow-none simple:xl:w-auto",
+                )}
+              >
+                <CalendarDays aria-hidden className="size-8" />
+                Lihat Jadwal Hari Ini
+              </a>
+              <a
+                href="#zoom"
+                className={buttonClass(
+                  "outlineOnDark",
+                  "xl",
+                  "w-full backdrop-blur-[2px] focus-visible:shadow-[0_0_0_11px_var(--c-night)] sm:w-auto xl:w-full huge:xl:w-auto simple:xl:w-auto",
+                )}
+              >
+                <Video aria-hidden className="size-8" />
+                Buka Zoom
+              </a>
+            </div>
           </div>
         </div>
-
-        {/*
-          Hiasan, bukan isi: di ponsel dan tablet dibuat kecil (ukuran piksel tetap, tidak ikut
-          membesar bersama tulisan) supaya Menu Utama tidak terdorong sampai dua layar ke bawah.
-        */}
-        <FajrArch className="mx-auto w-full max-w-[220px] drop-shadow-[0_24px_40px_rgba(4,14,40,0.45)] sm:max-w-[260px] lg:max-w-[22rem] simple:hidden" />
       </div>
     </section>
   );
 }
 
-const STARS: ReadonlyArray<readonly [number, number, number]> = [
-  [84, 150, 2],
-  [126, 104, 1.8],
-  [152, 72, 1.5],
-  [172, 150, 1.4],
-  [200, 60, 1.4],
-  [256, 128, 1.6],
-  [300, 176, 2],
-  [118, 196, 1.6],
-  [292, 232, 1.5],
-  [66, 240, 1.4],
-];
-
-function FajrArch({ className = "" }: { className?: string }) {
+/** Pemisah hias rata kiri: garis emas pendek, bintang delapan, garis emas yang memudar. */
+function Pemisah({ className = "" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 360 440"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <defs>
-        {/* Langit Subuh: navy, biru royal, biru langit, lalu cahaya fajar keemasan di kaki langit. */}
-        <linearGradient id="fajr-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" style={{ stopColor: "var(--c-navy)" }} />
-          <stop offset="0.4" style={{ stopColor: "var(--c-royal)" }} />
-          <stop offset="0.7" style={{ stopColor: "var(--c-sky)" }} />
-          <stop offset="0.88" style={{ stopColor: "var(--c-ice-strong)" }} />
-          <stop offset="1" style={{ stopColor: "var(--c-gold-tint)" }} />
-        </linearGradient>
-        <radialGradient id="fajr-glow" cx="0.5" cy="1" r="0.75">
-          <stop offset="0" style={{ stopColor: "var(--c-gold-soft)", stopOpacity: 0.95 }} />
-          <stop offset="0.5" style={{ stopColor: "var(--c-gold)", stopOpacity: 0.4 }} />
-          <stop offset="1" style={{ stopColor: "var(--c-gold)", stopOpacity: 0 }} />
-        </radialGradient>
-        <clipPath id="fajr-clip">
-          <path d="M34 430V190a146 146 0 0 1 292 0v240z" />
-        </clipPath>
-        <mask id="fajr-moon">
-          <rect width="360" height="440" fill="#fff" />
-          <circle cx="222" cy="93" r="21" fill="#000" />
-        </mask>
-      </defs>
-
-      <path
-        d="M20 430V190a160 160 0 0 1 320 0v240z"
-        fill="none"
-        style={{ stroke: "var(--c-gold)" }}
-        strokeWidth="2"
-      />
-      <path d="M34 430V190a146 146 0 0 1 292 0v240z" fill="url(#fajr-sky)" />
-
-      <g clipPath="url(#fajr-clip)">
-        <g className="dawn-stars" style={{ fill: "var(--c-gold-tint)" }}>
-          {STARS.map(([x, y, r]) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r={r} />
-          ))}
-          <circle cx="210" cy="100" r="24" mask="url(#fajr-moon)" />
-        </g>
-
-        <g className="dawn-rise">
-          <ellipse cx="180" cy="430" rx="190" ry="120" fill="url(#fajr-glow)" />
-        </g>
-
-        {/* Siluet masjid: kubah biru royal, menara dan lantai navy. */}
-        <path d="M116 430v-26a64 64 0 0 1 128 0v26z" style={{ fill: "var(--c-royal)" }} />
-        <g style={{ fill: "var(--c-navy)" }}>
-          <rect x="178.5" y="322" width="3" height="18" />
-          <circle cx="180" cy="319" r="4" />
-          <rect x="270" y="352" width="12" height="78" />
-          <path d="M268 352h16l-8-22z" />
-          <rect x="78" y="372" width="12" height="58" />
-          <path d="M76 372h16l-8-20z" />
-          <rect x="34" y="412" width="292" height="18" />
-        </g>
-      </g>
-    </svg>
+    <span aria-hidden="true" className={`flex items-center gap-3 text-gold ${className}`}>
+      <span className="h-px w-8 bg-gold" />
+      <StarMark className="size-5" />
+      <span className="h-px w-28 bg-linear-to-r from-gold to-transparent" />
+    </span>
   );
 }

@@ -1,16 +1,32 @@
+import { Logo } from "@/components/ui/Logo";
 import { COMMUNITY } from "@/data/content";
 import { NAV_ITEMS } from "@/data/nav";
 
+/**
+ * Kaki halaman: kembali ke langit malam yang sama dengan kepala halaman, dengan garis
+ * cahaya fajar tipis di tepi atas (gema kaki langit lukisan beranda) dan pola bintang
+ * delapan yang sangat halus.
+ */
 export function Footer() {
   return (
-    <footer className="on-dark bg-brand-deep text-on-brand">
-      <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 simple:max-w-3xl">
+    <footer className="on-dark relative overflow-hidden bg-brand-deep text-on-brand">
+      <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-gold to-transparent hc:h-0.5 hc:bg-gold hc:bg-none"
+      />
+      <div className="relative mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 md:py-16 simple:max-w-3xl">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] simple:md:grid-cols-1">
           <div>
-            <p className="font-display text-3xl font-semibold">{COMMUNITY.name}</p>
-            <p className="mt-1 text-xl text-on-brand-soft">
-              {COMMUNITY.mosque} ({COMMUNITY.mosqueShort})
-            </p>
+            <div className="flex items-center gap-4">
+              <Logo className="size-16" />
+              <div className="min-w-0">
+                <p className="font-display text-3xl font-semibold leading-tight">{COMMUNITY.name}</p>
+                <p className="mt-1 text-xl text-on-brand-soft">
+                  {COMMUNITY.mosque} ({COMMUNITY.mosqueShort})
+                </p>
+              </div>
+            </div>
             <p className="mt-5 max-w-md text-lg text-on-brand-soft">
               Semoga setiap langkah menuju masjid di waktu Subuh menjadi keberkahan
               bagi kita semua.

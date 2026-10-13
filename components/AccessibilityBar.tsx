@@ -41,7 +41,7 @@ export function AccessibilityBar() {
     <section
       id="atas"
       aria-label="Pengaturan tampilan"
-      className="on-dark border-b-2 border-gold bg-primary text-on-brand"
+      className="on-dark border-b border-line-dark bg-toolbar text-on-brand hc:border-b-2"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-[24px] gap-y-[12px] px-5 py-[12px] sm:px-8 simple:max-w-3xl">
         <div className="flex w-full flex-wrap items-center gap-x-[24px] gap-y-[12px] sm:w-auto">

@@ -24,8 +24,10 @@ const sizes: Record<ButtonSize, string> = {
 
 /*
  * Warna tombol mengikuti peran di app/globals.css:
- * primary = biru royal (navy saat disentuh), gold = sorotan emas dengan teks gelap,
- * outline = garis royal di latar terang (garis biru langit saat disentuh),
+ * primary = biru atap (biru malam saat disentuh), gold = cahaya fajar dengan teks gelap,
+ * outline = garis biru atap di latar terang (garis biru atap terang saat disentuh),
+ * outlineOnDark = garis putih di latar gelap; isinya biru malam tembus pandang, jadi tulisan tetap
+ * terbaca walau tombol berada di atas langit lukisan beranda,
  * danger = garis merah di latar kartu (tombol hapus yang membuka konfirmasi),
  * dangerSolid = isi merah dengan teks putih ("Ya, hapus" di dalam konfirmasi).
  */
@@ -37,7 +39,7 @@ const variants: Record<ButtonVariant, string> = {
     "border-primary bg-card text-primary hover:border-accent hover:bg-tint active:bg-tint",
   light: "border-card bg-card text-primary hover:border-tint hover:bg-tint",
   outlineOnDark:
-    "border-on-brand bg-transparent text-on-brand hover:bg-on-brand hover:text-brand active:bg-on-brand active:text-brand",
+    "border-on-brand bg-brand-deep/55 text-on-brand hover:bg-on-brand hover:text-brand active:bg-on-brand active:text-brand",
   danger: "border-danger bg-card text-danger hover:bg-danger-tint active:bg-danger-tint",
   dangerSolid: "border-danger bg-danger text-on-danger hover:brightness-90 active:brightness-75",
 };
