@@ -12,3 +12,4 @@ export function Logo({ className = "size-14" }: { className?: string }) {
     />
   );
 }
+

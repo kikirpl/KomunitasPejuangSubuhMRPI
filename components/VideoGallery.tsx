@@ -11,12 +11,12 @@ import { VIDEO } from "@/data/content";
  * ========================================================================== */
 const SOCIAL_LINKS = {
   // TODO: isi alamat akun TikTok Pejuang Subuh MRPI, contoh "https://www.tiktok.com/@namaakun"
-  tiktok: "#",
+  tiktok: "https://www.tiktok.com/@pejuangsubuh.digital2?",
   // TODO: isi alamat akun Instagram Pejuang Subuh MRPI, contoh "https://www.instagram.com/namaakun"
-  instagram: "#",
+  instagram: "https://instagram.com/pejuangsubuh_mrpi?",
   youtube: "https://www.youtube.com/@pejuangsubuhmrpi",
   // TODO: isi tautan undangan Grup WhatsApp, contoh "https://chat.whatsapp.com/xxxxxxxx"
-  grupWhatsapp: "#",
+  grupWhatsapp: "https://bit.ly/infokajian-PSMRPI19",
 } as const;
 
 interface SocialButton {
