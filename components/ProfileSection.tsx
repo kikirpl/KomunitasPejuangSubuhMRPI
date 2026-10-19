@@ -2,6 +2,7 @@ import { PillarIconSvg } from "@/components/ProfileIcons";
 import { MasjidSiluet } from "@/components/ui/MasjidSiluet";
 import { Rosette } from "@/components/ui/Rosette";
 import { Section } from "@/components/ui/Section";
+import { BelahKetupat } from "@/components/ui/BelahKetupat";
 import { StarMark } from "@/components/ui/StarMark";
 import { PROFILE } from "@/data/profile";
 
@@ -11,12 +12,16 @@ const subjudul = "text-2xl font-semibold text-brand sm:text-[1.75rem]";
  * Section "Tentang Kami" (id="profil"). Server Component; seluruh teks diambil
  * dari data/profile.ts. Empat blok: Sekilas Profil, Visi & Misi,
  * Empat Pilar Pergerakan, dan Divisi Operasional.
+ *
+ * Tiap blok punya bentuknya sendiri (bukan deret kartu yang sama): angka dalam prasasti
+ * berbingkai, Visi di panel langit malam, Misi sebagai daftar bernomor rosette bergaris emas,
+ * Empat Pilar sebagai satu panel berbingkai yang dibagi garis emas, Divisi sebagai daftar bergaris.
  */
 export function ProfileSection() {
   const { sekilas, visi, misi, pilar, divisi } = PROFILE;
 
   return (
-    <Section id="profil" title="Tentang Kami" ornament>
+    <Section id="profil" title="Tentang Kami" ornament kepala="ringan">
       {/* Blok 1: Sekilas Profil + angka sorotan */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,19rem)] lg:gap-14 huge:lg:grid-cols-1 simple:lg:grid-cols-1">
         <div className="max-w-[68ch]">
@@ -51,7 +56,7 @@ export function ProfileSection() {
         </ul>
       </div>
 
-      {/* Blok 2: Visi (kartu navy selebar konten) lalu Misi (4 kartu bernomor, 2x2) */}
+      {/* Blok 2: Visi (panel langit malam selebar konten) lalu Misi (daftar bernomor rosette, bergaris emas) */}
       <div className="mt-14 md:mt-16">
         <div className="bingkai on-dark relative overflow-hidden rounded-card bg-brand-deep px-6 py-9 text-on-brand shadow-elev-2 sm:px-11 sm:py-11 hc:border-4 hc:border-gold">
           <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
@@ -67,8 +72,8 @@ export function ProfileSection() {
               className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-10 huge:md:grid-cols-1 simple:md:grid-cols-1"
             >
               {visi.poin.map((teks) => (
-                <li key={teks.slice(0, 24)} className="flex gap-3 text-xl leading-relaxed">
-                  <StarMark className="mt-2 size-4 shrink-0 text-gold" />
+                <li key={teks.slice(0, 24)} className="flex gap-3.5 text-xl leading-relaxed">
+                  <BelahKetupat className="mt-[0.7em] text-gold" />
                   <span className="min-w-0">{teks}</span>
                 </li>
               ))}
@@ -76,17 +81,14 @@ export function ProfileSection() {
           </div>
         </div>
 
-        <h3 className={`mt-10 ${subjudul}`}>{misi.judul}</h3>
+        <h3 className={`mt-12 ${subjudul}`}>{misi.judul}</h3>
         <ol
           role="list"
-          className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 huge:md:grid-cols-1 simple:md:grid-cols-1"
+          className="mt-4 grid grid-cols-1 border-b border-gilt/35 md:grid-cols-2 md:gap-x-12 huge:md:grid-cols-1 simple:md:grid-cols-1 hc:border-line"
         >
           {misi.poin.map((m, i) => (
-            <li
-              key={m.judul}
-              className="flex gap-4 rounded-card border border-line bg-card p-5 shadow-card transition-shadow duration-(--dur-state) hover:shadow-elev-2 sm:p-6 hc:border-2 hc:border-line"
-            >
-              <Rosette className="size-12 text-xl">{i + 1}</Rosette>
+            <li key={m.judul} className="flex gap-4 border-t border-gilt/35 py-5 sm:gap-5 sm:py-6 hc:border-line">
+              <Rosette className="size-11 text-lg sm:size-12 sm:text-xl">{i + 1}</Rosette>
               <div className="min-w-0">
                 <h4 className="text-xl font-semibold text-brand">{m.judul}</h4>
                 <p className="mt-1.5 text-lg text-ink-soft">{m.isi}</p>
@@ -96,18 +98,18 @@ export function ProfileSection() {
         </ol>
       </div>
 
-      {/* Blok 3: Empat Pilar Pergerakan (2x2 di layar lebar agar teks tidak terlalu sempit) */}
+      {/*
+        Blok 3: Empat Pilar Pergerakan: satu panel berbingkai iluminasi, dibagi empat oleh garis emas
+        tipis (celah 1px di atas latar emas), 2x2 di layar lebar.
+      */}
       <div className="mt-14 md:mt-16">
         <h3 className={subjudul}>{pilar.judul}</h3>
         <ul
           role="list"
-          className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6 simple:md:grid-cols-1"
+          className="bingkai mt-6 grid grid-cols-1 gap-px overflow-clip rounded-card bg-gilt/30 shadow-card md:grid-cols-2 simple:md:grid-cols-1 hc:gap-0.5 hc:bg-ink"
         >
           {pilar.poin.map((p) => (
-            <li
-              key={p.judul}
-              className="rounded-card border border-line bg-card p-6 shadow-card sm:p-7 hc:border-2"
-            >
+            <li key={p.judul} className="bg-card p-6 sm:p-8">
               <div className="flex items-center gap-4">
                 <span className="grid size-14 shrink-0 place-items-center rounded-full bg-tint text-primary ring-1 ring-gilt/40 ring-offset-4 ring-offset-card">
                   <PillarIconSvg name={p.ikon} className="size-8" />
@@ -117,10 +119,10 @@ export function ProfileSection() {
                   <p className="mt-0.5 text-base font-bold text-primary">{p.bidang}</p>
                 </div>
               </div>
-              <ul role="list" className="mt-5 space-y-3 border-t border-line pt-5">
+              <ul role="list" className="mt-5 space-y-3">
                 {p.poin.map((teks) => (
-                  <li key={teks.slice(0, 24)} className="flex gap-3 text-lg leading-relaxed text-ink">
-                    <StarMark className="mt-2 size-3.5 shrink-0 text-gilt hc:text-ink" />
+                  <li key={teks.slice(0, 24)} className="flex gap-3.5 text-lg leading-relaxed text-ink">
+                    <BelahKetupat className="mt-[0.75em] size-1.5 text-gilt hc:text-ink" />
                     <span className="min-w-0">{teks}</span>
                   </li>
                 ))}
@@ -130,20 +132,20 @@ export function ProfileSection() {
         </ul>
       </div>
 
-      {/* Blok 4: Divisi Operasional (kartu ringkas, rapi di ponsel tanpa perlu dibuka-tutup) */}
+      {/* Blok 4: Divisi Operasional: daftar bergaris emas, dua kolom di layar lebar, tanpa dibuka-tutup */}
       <div className="mt-14 md:mt-16">
         <h3 className={subjudul}>{divisi.judul}</h3>
-        <ul role="list" className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 simple:md:grid-cols-1">
+        <ul
+          role="list"
+          className="mt-4 grid grid-cols-1 border-b border-gilt/35 md:grid-cols-2 md:gap-x-12 simple:md:grid-cols-1 hc:border-line"
+        >
           {divisi.poin.map((d) => (
-            <li
-              key={d.judul}
-              className="rounded-card border border-line bg-paper-2 px-5 py-4 hc:border-2 hc:border-line"
-            >
-              <h4 className="flex items-center gap-2.5 text-xl font-semibold text-brand">
-                <StarMark className="size-4 shrink-0 text-gilt hc:text-ink" />
+            <li key={d.judul} className="border-t border-gilt/35 py-4 sm:py-5 hc:border-line">
+              <h4 className="flex items-center gap-3 text-xl font-semibold text-brand">
+                <BelahKetupat className="text-gilt hc:text-ink" />
                 {d.judul}
               </h4>
-              <p className="mt-1.5 text-lg text-ink-soft">{d.isi}</p>
+              <p className="mt-1.5 pl-5 text-lg text-ink-soft">{d.isi}</p>
             </li>
           ))}
         </ul>

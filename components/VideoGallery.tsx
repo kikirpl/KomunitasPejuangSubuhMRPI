@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Camera, Music2, Play, SquarePlay, Users, type LucideIcon } from "lucide-react";
-import { MasjidSiluet } from "@/components/ui/MasjidSiluet";
 import { Section } from "@/components/ui/Section";
 import { VIDEO } from "@/data/content";
 
@@ -84,6 +83,7 @@ export function VideoGallery() {
   return (
     <Section
       id="video"
+      kepala="ringan"
       title="Rekaman Kajian"
       intro="Ketinggalan kajian? Tonton ulang kapan saja, dari rumah."
       isSample={VIDEO.isSample}
@@ -109,7 +109,6 @@ export function VideoGallery() {
               className="group/video on-dark langit-subuh absolute inset-0 grid place-items-center overflow-hidden text-on-brand"
             >
               <span aria-hidden className="khatam-pattern absolute inset-0" />
-              <MasjidSiluet className="pointer-events-none absolute -bottom-px right-[6%] h-[52%] w-auto text-brand-deep/70 hc:hidden simple:hidden" />
               <span className="relative flex flex-col items-center gap-3 px-6 text-center">
                 <span className="grid size-24 place-items-center rounded-full border-2 border-gilt bg-gold text-on-gold shadow-elev-3 transition-transform duration-(--dur-state) ease-out-expo group-hover/video:scale-105">
                   <Play aria-hidden className="ms-1 size-12" fill="currentColor" />
@@ -120,7 +119,6 @@ export function VideoGallery() {
           ) : (
             <div className="on-dark langit-subuh relative grid min-h-80 w-full place-items-center overflow-hidden py-10 text-on-brand">
               <span aria-hidden className="khatam-pattern absolute inset-0" />
-              <MasjidSiluet className="pointer-events-none absolute -bottom-px right-[6%] h-[48%] w-auto text-brand-deep/70 hc:hidden simple:hidden" />
               <div className="relative flex flex-col items-center gap-3 px-6 text-center">
                 <span
                   aria-hidden

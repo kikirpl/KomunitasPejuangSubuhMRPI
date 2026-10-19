@@ -526,6 +526,70 @@ html[data-contrast="high"] {
   }
 
   /*
+   * Kartus kepala surat (components/ui/Section.tsx): plakat berujung runcing berisi judul bagian
+   * inti, kertas keemasan dengan garis daun emas tipis. Dua lapis clip-path yang sama bentuknya:
+   * ::before = garis, ::after (masuk 1,5px) = isi. Ujungnya tetap 1,5rem berapa pun tinggi judul.
+   * Pada Kontras Tinggi dan Tampilan Sederhana kartus menjadi judul polos.
+   */
+  .kartus {
+    --kartus-ujung: 1.1rem;
+    --kartus-garis: color-mix(in srgb, var(--gilt) 75%, transparent);
+    --kartus-isi: color-mix(in srgb, var(--gold-tint) 72%, var(--card));
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    padding: 0.5rem calc(var(--kartus-ujung) + 0.75rem);
+  }
+  .kartus::before,
+  .kartus::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    clip-path: polygon(
+      var(--kartus-ujung) 0,
+      calc(100% - var(--kartus-ujung)) 0,
+      100% 50%,
+      calc(100% - var(--kartus-ujung)) 100%,
+      var(--kartus-ujung) 100%,
+      0 50%
+    );
+  }
+  .kartus::before {
+    background: var(--kartus-garis);
+  }
+  .kartus::after {
+    inset: 1.5px;
+    background: var(--kartus-isi);
+  }
+  @media (min-width: 40rem) {
+    .kartus {
+      --kartus-ujung: 1.5rem;
+    }
+  }
+  .kartus--gelap {
+    --kartus-garis: color-mix(in srgb, var(--gold-soft) 55%, transparent);
+    --kartus-isi: color-mix(in srgb, var(--langit-2) 70%, var(--brand-deep));
+  }
+  html[data-contrast="high"] .kartus::before,
+  html[data-contrast="high"] .kartus::after,
+  html[data-simple="true"] .kartus::before,
+  html[data-simple="true"] .kartus::after {
+    content: none;
+  }
+  html[data-contrast="high"] .kartus,
+  html[data-simple="true"] .kartus {
+    padding-inline: 0;
+  }
+
+  /* Pola girih latar section terang: memudar di tepi atas dan bawah, tanpa garis awal pola. */
+  .ornamen-pudar {
+    --ornamen-pudar: linear-gradient(to bottom, transparent, #000 9rem, #000 calc(100% - 9rem), transparent);
+    -webkit-mask-image: var(--ornamen-pudar);
+    mask-image: var(--ornamen-pudar);
+  }
+
+  /*
    * Kepala bagian bergaya kepala surat (components/ui/Section.tsx): garis daun emas berbentuk
    * baji yang meruncing ke luar, bintang delapan di ujung dalamnya.
    */

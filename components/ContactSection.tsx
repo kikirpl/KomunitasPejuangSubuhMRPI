@@ -15,6 +15,7 @@ export function ContactSection() {
   return (
     <Section
       id="kontak"
+      kepala="ringan"
       title="Hubungi Admin"
       intro="Bingung soal jadwal atau informasi masjid? Silakan bertanya."
       isSample={CONTACT.isSample}

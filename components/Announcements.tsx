@@ -28,6 +28,7 @@ export function Announcements({ data }: { data: AnnouncementData }) {
   return (
     <Section
       id="pengumuman"
+      kepala="ringan"
       title="Pengumuman Kegiatan"
       intro="Kegiatan dan pengumuman terbaru dari Masjid Raya Pondok Indah."
       isSample={data.isSample}
@@ -95,7 +96,7 @@ export function AnnouncementCard({ item }: { item: AnnouncementItem }) {
         </div>
 
         <h3 className="mt-3 text-2xl font-semibold text-brand [overflow-wrap:anywhere]">{item.title}</h3>
-        <p className="mt-2 line-clamp-3 text-lg text-ink [overflow-wrap:anywhere]">{item.excerpt}</p>
+        <p className="mt-2 line-clamp-3 text-lg text-ink [overflow-wrap:anywhere] huge:line-clamp-none">{item.excerpt}</p>
 
         {item.href ? (
           <div className="mt-auto pt-4">
