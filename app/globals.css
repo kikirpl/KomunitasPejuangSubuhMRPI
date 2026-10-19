@@ -492,9 +492,13 @@ html[data-contrast="high"] {
     position: absolute;
     inset: 0;
   }
-  /* Parallax penunjuk: --mx/--my (-1..1) diisi HeroParallax; tiap lapis bergeser sesuai jaraknya. */
+  /*
+   * Parallax penunjuk: --mx/--my (-1..1) diisi HeroParallax; tiap lapis bergeser sesuai jaraknya.
+   * translate 2D (bukan translate3d) agar keempat lapisan besar tidak dipaksa menjadi lapisan GPU
+   * saat diam; peramban mempromosikannya sendiri hanya selama bergerak.
+   */
   .hero-layer {
-    transform: translate3d(calc(var(--mx, 0) * var(--px)), calc(var(--my, 0) * var(--py)), 0);
+    transform: translate(calc(var(--mx, 0) * var(--px)), calc(var(--my, 0) * var(--py)));
     transition: transform 1.4s var(--ease-out-expo);
   }
   .hero-layer--langit {
@@ -533,15 +537,25 @@ html[data-contrast="high"] {
     }
   }
 
-  /* Momen fajar saat halaman dibuka: cahaya menguat dan partikel berkelip, selesai di bawah 5 detik. */
-  .scene-glow {
-    animation: scene-glow 2.8s var(--ease-out-expo) 0.15s both;
-  }
+  /*
+   * Momen fajar saat halaman dibuka: cahaya menguat dan partikel berkelip, selesai di bawah 5 detik.
+   * Hanya di layar >= 1024px, tempat masjid terlihat di layar pertama. Di ponsel dan tablet adegan
+   * berada di bawah lipatan, jadi animasinya akan selesai sebelum terlihat dan hanya membebani CPU
+   * saat halaman dimuat (animasi di dalam SVG dilukis ulang setiap frame); di sana adegan langsung
+   * tampil dalam keadaan akhirnya.
+   */
   .scene-motes circle {
     opacity: 0.85;
     transform-box: fill-box;
     transform-origin: center;
-    animation: scene-mote 3.2s ease-in-out both;
+  }
+  @media (min-width: 64rem) {
+    .scene-glow {
+      animation: scene-glow 2.8s var(--ease-out-expo) 0.15s both;
+    }
+    .scene-motes circle {
+      animation: scene-mote 3.2s ease-in-out both;
+    }
   }
 
   /*

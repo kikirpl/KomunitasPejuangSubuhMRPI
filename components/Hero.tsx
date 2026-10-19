@@ -22,9 +22,9 @@ import { COMMUNITY } from "@/data/content";
  * - Tulisan "Lebih besar"/"Terbesar" di layar lebar: kembali bertumpuk seperti tablet.
  * - Kontras Tinggi dan Tampilan Sederhana: adegan dan hiasan disembunyikan, latar biru malam polos.
  *
- * Gerak (dimatikan oleh "kurangi gerakan"): cahaya fajar menguat dan partikel cahaya berkelip
- * sekali saat halaman dibuka (selesai di bawah 5 detik), lapisan bergeser berbeda saat digulir
- * (CSS scroll-driven) dan mengikuti mouse di desktop (HeroParallax).
+ * Gerak (dimatikan oleh "kurangi gerakan"): di layar lebar cahaya fajar menguat dan partikel cahaya
+ * berkelip sekali saat halaman dibuka (selesai di bawah 5 detik), lapisan bergeser berbeda saat
+ * digulir (CSS scroll-driven) dan mengikuti mouse di desktop (HeroParallax).
  */
 
 /** "Komunitas Pejuang Subuh" ditulis dua tingkat: "Komunitas" kecil di atas, "Pejuang Subuh" besar. */
@@ -129,7 +129,7 @@ export function Hero() {
                 className={buttonClass(
                   "outlineOnDark",
                   "xl",
-                  "w-full backdrop-blur-[2px] focus-visible:shadow-[0_0_0_11px_var(--brand-deep)] sm:w-auto lg:min-h-16 lg:px-6 lg:text-xl pendek:min-h-14 pendek:px-4 pendek:py-3 pendek:text-lg huge:lg:min-h-20 huge:lg:px-4",
+                  "w-full focus-visible:shadow-[0_0_0_11px_var(--brand-deep)] sm:w-auto lg:min-h-16 lg:px-6 lg:text-xl pendek:min-h-14 pendek:px-4 pendek:py-3 pendek:text-lg huge:lg:min-h-20 huge:lg:px-4",
                 )}
               >
                 <Video aria-hidden className="size-8" />
