@@ -5,6 +5,9 @@
 @custom-variant simple (&:where([data-simple="true"] *));
 /* Ukuran tulisan "Lebih besar" dan "Terbesar" (level 3 dan 4): tata letak diperlonggar. */
 @custom-variant huge (&:where([data-text-scale="3"] *, [data-text-scale="4"] *));
+/* Layar lebar tetapi pendek (laptop 1366x768, 1280x720): beranda dipadatkan agar tombol utama
+   dan masjid tetap terlihat tanpa menggulir. */
+@custom-variant pendek (@media (min-width: 64rem) and (max-height: 52rem));
 
 /* ==========================================================================
    Tipografi
@@ -115,12 +118,19 @@
   --elev-2: 0 1px 2px rgb(7 29 44 / 0.05), 0 18px 36px -22px rgb(7 29 44 / 0.34);
   --elev-3: 0 4px 10px rgb(7 29 44 / 0.12), 0 32px 64px -24px rgb(7 29 44 / 0.45);
   --card-shadow: var(--elev-2);
+  /* Pendar emas di bawah tombol utama beranda (tombol di atas langit malam). */
+  --glow-emas: 0 14px 30px -14px color-mix(in srgb, var(--emas-400) 70%, transparent);
   --dur-hover: 160ms;
   --dur-state: 240ms;
   --dur-reveal: 640ms;
   --dur-scene: 1100ms;
   --section-y: clamp(3.25rem, 2rem + 4vw, 6rem);
   --girih: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='1'%3E%3Cpath d='M64.00 32.00 L54.63 41.37 L54.63 54.63 L41.37 54.63 L32.00 64.00 L22.63 54.63 L9.37 54.63 L9.37 41.37 L0.00 32.00 L9.37 22.63 L9.37 9.37 L22.63 9.37 L32.00 0.00 L41.37 9.37 L54.63 9.37 L54.63 22.63 Z'/%3E%3Cpath d='M54.63 41.37 L41.37 54.63 L22.63 54.63 L9.37 41.37 L9.37 22.63 L22.63 9.37 L41.37 9.37 L54.63 22.63 Z'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* Langit beranda dan panel langit Subuh: biru malam yang makin terang ke cakrawala. */
+  --langit-1: #0a2a41;
+  --langit-2: #0d3a58;
+  --langit-3: #10476b;
 
   /* Adegan beranda (components/hero/MasjidScene.tsx): warna MRPI saat fajar. */
   --scene-glow-core: #fde7b0;
@@ -155,6 +165,9 @@
   --scene-tree-far: #12384a;
   --scene-gate: var(--genteng-400);
   --scene-sign: #eef3f2;
+  /* Pelataran batu di kaki dinding: bayang di kaki dinding, lalu memudar ke dasar halaman. */
+  --scene-pelataran-bayang: #b4c0bc;
+  --scene-pelataran: #d6dedb;
 }
 
 html[data-contrast="high"] {
@@ -189,6 +202,7 @@ html[data-contrast="high"] {
   --elev-1: none;
   --elev-2: none;
   --elev-3: none;
+  --glow-emas: none;
   --ornament-light: transparent;
   --ornament-dark: transparent;
 }
@@ -223,6 +237,7 @@ html[data-contrast="high"] {
   --shadow-elev-1: var(--elev-1);
   --shadow-elev-2: var(--elev-2);
   --shadow-elev-3: var(--elev-3);
+  --shadow-glow-emas: var(--glow-emas);
   --radius-control: var(--radius-control);
   --radius-card: var(--radius-card);
 }
@@ -379,13 +394,15 @@ html[data-contrast="high"] {
    * terang ke arah cakrawala; cahaya fajar emasnya ada di dalam adegan, di belakang masjid.
    */
   .hero-sky {
+    /* Tinggi pita pelataran di dasar beranda (lihat .hero-pelataran). */
+    --pelataran-h: clamp(40px, 24px + 3vw, 88px);
     background-image: linear-gradient(
       to bottom,
       var(--genteng-950) 0,
       var(--genteng-950) 14%,
-      #0a2a41 46%,
-      #0d3a58 78%,
-      #10476b 100%
+      var(--langit-1) 46%,
+      var(--langit-2) 78%,
+      var(--langit-3) 100%
     );
   }
   /* Langit Subuh untuk panel gelap kecil (poster video, gambar pengganti, ajakan infak): biru malam
@@ -394,7 +411,7 @@ html[data-contrast="high"] {
     background-color: var(--brand-deep);
     background-image:
       radial-gradient(ellipse 60% 48% at 78% 104%, color-mix(in srgb, var(--scene-glow) 38%, transparent), transparent 72%),
-      linear-gradient(to bottom, var(--genteng-950), #0a2a41 55%, #10476b);
+      linear-gradient(to bottom, var(--genteng-950), var(--langit-1) 55%, var(--langit-3));
   }
   html[data-contrast="high"] .langit-subuh {
     background-image: none;
@@ -407,13 +424,14 @@ html[data-contrast="high"] {
   }
 
   /*
-   * Adegan masjid: kotak dengan rasio viewBox (2000:760) di dasar beranda. Ponsel menampilkan
-   * menara dan masjid utuh (lebar 200%), tablet sedikit lebih lebar (154%), layar lebar seluruh
-   * adegan dengan masjid di kanan. Padding bawah isi di Hero.tsx memakai angka yang sama.
+   * Adegan masjid: kotak dengan rasio viewBox (2000:760) di atas pita pelataran di dasar beranda.
+   * Ponsel menampilkan menara dan masjid utuh (lebar 200%), tablet sedikit lebih kecil (120%, masjid
+   * di tengah) agar atapnya terlihat di layar pertama, layar lebar (mulai 1024px) seluruh adegan
+   * dengan masjid di kanan. Padding bawah isi di Hero.tsx memakai angka yang sama.
    */
   .hero-scene {
     position: absolute;
-    bottom: 0;
+    bottom: var(--pelataran-h);
     left: -96%;
     width: 200%;
     aspect-ratio: 2000 / 760;
@@ -421,15 +439,34 @@ html[data-contrast="high"] {
   }
   @media (min-width: 48rem) {
     .hero-scene {
-      left: -54%;
-      width: 154%;
+      left: -37.6%;
+      width: 120%;
     }
   }
-  @media (min-width: 80rem) {
+  @media (min-width: 64rem) {
     .hero-scene {
       left: 4%;
       width: 96%;
     }
+  }
+  /*
+   * Pelataran: dinding batu berdiri di atas pita pelataran yang memudar dari bayang batu di kaki
+   * dinding ke warna dasar halaman, jadi beranda berakhir tanpa garis potong dan section berikutnya
+   * terasa sebagai lanjutan pelataran masjid.
+   */
+  .hero-pelataran {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: var(--pelataran-h);
+    pointer-events: none;
+    background-image: linear-gradient(
+      to bottom,
+      var(--scene-pelataran) 0,
+      color-mix(in srgb, var(--scene-pelataran) 62%, var(--paper)) 30%,
+      color-mix(in srgb, var(--scene-pelataran) 26%, var(--paper)) 62%,
+      var(--paper) 100%
+    );
   }
   .hero-layer,
   .hero-drift {

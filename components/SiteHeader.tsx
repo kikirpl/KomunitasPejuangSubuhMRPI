@@ -16,7 +16,7 @@ export function SiteHeader() {
   return (
     <header className="on-dark bg-brand-deep text-on-brand hc:border-b-2 hc:border-line-dark">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 simple:max-w-3xl">
-        <a href="#beranda" className="flex w-fit items-center gap-3 rounded-control py-3">
+        <a href="#beranda" className="flex w-fit items-center gap-3 rounded-control py-3 pendek:py-2">
           <Logo />
           <span className="flex flex-col leading-tight">
             <span className="font-display text-2xl font-semibold text-on-brand">
@@ -28,16 +28,16 @@ export function SiteHeader() {
 
         <nav
           aria-label="Menu utama"
-          className="hidden border-t border-line-dark py-1.5 xl:block simple:hidden hc:border-t-2 hc:border-white"
+          className="hidden border-t border-line-dark py-1.5 xl:block pendek:py-1 simple:hidden hc:border-t-2 hc:border-white"
         >
           <ul className="grid grid-cols-[repeat(7,auto)] justify-between gap-1 huge:grid-cols-3">
             {NAV_ITEMS.map(({ id, label, href, icon: Icon }) => (
               <li key={id}>
                 <a
                   href={href}
-                  className="group/nav relative flex h-full min-h-14 flex-col items-center justify-center gap-1 rounded-control px-3 py-1.5 text-center text-lg font-bold leading-tight text-on-brand transition-colors duration-(--dur-hover) hover:bg-white/8 active:bg-white/12"
+                  className="group/nav relative flex h-full min-h-14 flex-col items-center justify-center gap-1 rounded-control px-3 py-1.5 pendek:min-h-12 pendek:gap-0.5 pendek:py-1 text-center text-lg font-bold leading-tight text-on-brand transition-colors duration-(--dur-hover) hover:bg-white/8 active:bg-white/12"
                 >
-                  <Icon aria-hidden className="size-6 text-gold" />
+                  <Icon aria-hidden className="size-6 text-gold pendek:size-5" />
                   <span className="[overflow-wrap:anywhere]">{label}</span>
                   {/* Garis emas tipis yang tumbuh dari tengah saat disorot. */}
                   <span
