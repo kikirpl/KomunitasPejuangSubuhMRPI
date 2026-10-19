@@ -22,3 +22,6 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# impeccable: tangkapan layar review (besar, bisa dibuat ulang)
+/.impeccable/review/

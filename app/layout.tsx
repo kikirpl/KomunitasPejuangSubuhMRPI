@@ -7,15 +7,16 @@ import { ToastProvider } from "@/components/ToastProvider";
 import { ACCESSIBILITY_INIT_SCRIPT } from "@/lib/accessibility";
 
 /**
- * Huruf judul: Playfair Display (Google Fonts, lisensi SIL OFL, lihat app/fonts/OFL-PlayfairDisplay.txt).
- * Berkasnya disimpan di proyek dan disajikan dari situs sendiri lewat next/font,
- * jadi tidak menambah paket dan tidak ada permintaan ke server Google.
+ * Huruf judul: Alegreya (Huerta Tipografica, lisensi SIL OFL, lihat app/fonts/OFL-Alegreya.txt).
+ * Serif berakar goresan pena lebar, serumpun dengan naskh Amiri pada teks Arab. Subset Latin
+ * (43 KB) disimpan di proyek dan disajikan dari situs sendiri lewat next/font, jadi tidak ada
+ * permintaan ke server Google dan ukuran huruf cadangannya disetel agar tata letak tidak bergeser.
  */
-const playfair = localFont({
-  src: "./fonts/PlayfairDisplay-wght.woff2",
+const alegreya = localFont({
+  src: "./fonts/Alegreya-wght.woff2",
   weight: "400 900",
   style: "normal",
-  variable: "--font-playfair",
+  variable: "--font-alegreya",
   display: "swap",
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
@@ -59,7 +60,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#041F33",
+  themeColor: "#04121C",
 };
 
 export default function RootLayout({
@@ -68,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={playfair.variable}
+      className={alegreya.variable}
       data-text-scale="1"
       data-contrast="normal"
       data-simple="false"
