@@ -2,6 +2,7 @@ import { CircleAlert, LogIn } from "lucide-react";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { masukPengembang } from "@/app/admin/actions/sesi";
+import { Pemisah } from "@/components/ui/Pemisah";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { getAdmin, isAuthConfigured } from "@/lib/auth/guard";
 
@@ -29,6 +30,7 @@ export default async function MasukPage({
   return (
     <div className="mx-auto max-w-xl rounded-card border border-line bg-card p-8 shadow-card hc:border-2">
       <h1 className="font-display text-4xl font-semibold text-brand">Panel Pengurus</h1>
+      <Pemisah className="mt-4" />
 
       {pesan ? (
         <div

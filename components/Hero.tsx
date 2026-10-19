@@ -1,7 +1,7 @@
 import { CalendarDays, Video } from "lucide-react";
 import { HeroParallax } from "@/components/hero/HeroParallax";
 import { LangitFajar, LatarDepan, Masjid, PepohonanJauh } from "@/components/hero/MasjidScene";
-import { StarMark } from "@/components/ui/StarMark";
+import { Pemisah } from "@/components/ui/Pemisah";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { COMMUNITY } from "@/data/content";
 
@@ -93,7 +93,7 @@ export function Hero() {
           <p className="mt-3 font-display text-2xl leading-snug text-on-brand-soft sm:text-3xl xl:text-[1.75rem]">
             {COMMUNITY.mosque} ({COMMUNITY.mosqueShort})
           </p>
-          <Pemisah className="mt-5" />
+          <Pemisah tone="dark" className="mt-5" />
 
           {/* Di ponsel, tombol tampil lebih dulu dari paragraf sambutan (order), supaya terlihat tanpa menggulir. */}
           <div className="mt-6 flex flex-col gap-6">
@@ -133,16 +133,5 @@ export function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-/** Pemisah iluminasi rata kiri: garis emas pendek, bintang delapan, garis emas yang memudar. */
-function Pemisah({ className = "" }: { className?: string }) {
-  return (
-    <span aria-hidden="true" className={`flex items-center gap-3 text-gold ${className}`}>
-      <span className="h-px w-8 bg-gold" />
-      <StarMark className="size-5" />
-      <span className="h-px w-28 bg-linear-to-r from-gold to-transparent" />
-    </span>
   );
 }
