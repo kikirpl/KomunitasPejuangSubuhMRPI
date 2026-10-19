@@ -122,11 +122,39 @@
   --section-y: clamp(3.25rem, 2rem + 4vw, 6rem);
   --girih: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='1'%3E%3Cpath d='M64.00 32.00 L54.63 41.37 L54.63 54.63 L41.37 54.63 L32.00 64.00 L22.63 54.63 L9.37 54.63 L9.37 41.37 L0.00 32.00 L9.37 22.63 L9.37 9.37 L22.63 9.37 L32.00 0.00 L41.37 9.37 L54.63 9.37 L54.63 22.63 Z'/%3E%3Cpath d='M54.63 41.37 L41.37 54.63 L22.63 54.63 L9.37 41.37 L9.37 22.63 L22.63 9.37 L41.37 9.37 L54.63 22.63 Z'/%3E%3C/g%3E%3C/svg%3E");
 
-  /* Kompatibilitas untuk beranda lama sampai fase beranda baru (dihapus di fase 2). */
-  --c-night: var(--genteng-950);
-  --c-horizon: var(--genteng-600);
-  --c-dawn-soft: var(--emas-300);
-  --hero-art-h: clamp(340px, 56vw, 1100px);
+  /* Adegan beranda (components/hero/MasjidScene.tsx): warna MRPI saat fajar. */
+  --scene-glow-core: #fde7b0;
+  --scene-glow: #f0b55a;
+  --scene-glow-far: #d9894a;
+  --scene-rim: var(--emas-300);
+  --scene-roof-hi: #5ab8e0;
+  --scene-roof: #2389c0;
+  --scene-roof-lo: #0f5a8a;
+  --scene-tile-line: rgb(255 255 255 / 0.16);
+  --scene-fascia: #0a2f47;
+  --scene-soffit: #0a2132;
+  --scene-col: #d6dfe1;
+  --scene-col-shade: #8fa2a8;
+  --scene-opening: #0a2230;
+  --scene-concrete-hi: #d3dcde;
+  --scene-concrete: #a3b3b8;
+  --scene-concrete-lo: #5f7583;
+  --scene-concrete-joint: rgb(7 29 44 / 0.18);
+  --scene-stone: #6f827e;
+  --scene-stone-2: #627571;
+  --scene-stone-3: #7d8f8a;
+  --scene-stone-line: #43534f;
+  --scene-stone-hi: #b3c1bd;
+  --scene-eave: #e3ecee;
+  --scene-stair: #33423f;
+  --scene-stair-edge: #5b6d6a;
+  --scene-palm: #163f37;
+  --scene-palm-back: #0f2e29;
+  --scene-palm-trunk: #2c3b37;
+  --scene-tree: #0b2632;
+  --scene-tree-far: #12384a;
+  --scene-gate: var(--genteng-400);
+  --scene-sign: #eef3f2;
 }
 
 html[data-contrast="high"] {
@@ -347,56 +375,103 @@ html[data-contrast="high"] {
   }
 
   /*
-   * Beranda (components/Hero.tsx). Langit: biru malam (sama dengan kepala halaman) di atas,
-   * tetap gelap sepanjang teks, lalu menyatu dengan biru langit di tepi atas lukisan.
-   * Titik warnanya dihitung dari --hero-art-h, jadi selalu pas dengan tinggi pita lukisan.
+   * Beranda (components/Hero.tsx). Langit: biru malam yang sama dengan kepala halaman, makin
+   * terang ke arah cakrawala; cahaya fajar emasnya ada di dalam adegan, di belakang masjid.
    */
   .hero-sky {
-    --hero-art-top: calc(100% - var(--hero-art-h));
     background-image: linear-gradient(
       to bottom,
-      var(--c-night) 0,
-      var(--c-night) 10%,
-      #093d60 calc(var(--hero-art-top) * 0.72),
-      #075582 var(--hero-art-top),
-      var(--c-horizon) calc(100% - var(--hero-art-h) * 0.8)
+      var(--genteng-950) 0,
+      var(--genteng-950) 14%,
+      #0a2a41 46%,
+      #0d3a58 78%,
+      #10476b 100%
     );
   }
-  /* Pola bintang delapan hanya di langit malam: muncul pelan di bawah kepala halaman, hilang sebelum lukisan. */
+  /* Pola girih hanya di langit malam: muncul pelan di bawah kepala halaman, hilang sebelum cakrawala. */
   .hero-ornament {
-    --hero-ornament-mask: linear-gradient(
-      to bottom,
-      transparent,
-      #000 7rem,
-      transparent calc(100% - var(--hero-art-h))
-    );
+    --hero-ornament-mask: linear-gradient(to bottom, transparent, #000 6rem, transparent 58%);
     -webkit-mask-image: var(--hero-ornament-mask);
     mask-image: var(--hero-ornament-mask);
   }
-  /* Tepi atas lukisan (langit) memudar ke langit CSS, tanpa garis sambungan. */
-  .hero-art {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%);
-    mask-image: linear-gradient(to bottom, transparent, #000 18%);
+
+  /*
+   * Adegan masjid: kotak dengan rasio viewBox (2000:760) di dasar beranda. Ponsel menampilkan
+   * menara dan masjid utuh (lebar 200%), tablet sedikit lebih lebar (154%), layar lebar seluruh
+   * adegan dengan masjid di kanan. Padding bawah isi di Hero.tsx memakai angka yang sama.
+   */
+  .hero-scene {
+    position: absolute;
+    bottom: 0;
+    left: -96%;
+    width: 200%;
+    aspect-ratio: 2000 / 760;
+    pointer-events: none;
   }
-  /* Kabut pagi di pelataran lukisan: bening di atas, menjadi warna latar section berikutnya. */
-  .hero-mist {
-    background-image: linear-gradient(
-      to bottom,
-      transparent,
-      color-mix(in srgb, var(--paper) 60%, transparent) 55%,
-      var(--paper) 92%
-    );
+  @media (min-width: 48rem) {
+    .hero-scene {
+      left: -54%;
+      width: 154%;
+    }
+  }
+  @media (min-width: 80rem) {
+    .hero-scene {
+      left: 4%;
+      width: 96%;
+    }
+  }
+  .hero-layer,
+  .hero-drift {
+    position: absolute;
+    inset: 0;
+  }
+  /* Parallax penunjuk: --mx/--my (-1..1) diisi HeroParallax; tiap lapis bergeser sesuai jaraknya. */
+  .hero-layer {
+    transform: translate3d(calc(var(--mx, 0) * var(--px)), calc(var(--my, 0) * var(--py)), 0);
+    transition: transform 1.4s var(--ease-out-expo);
+  }
+  .hero-layer--langit {
+    --px: 6px;
+    --py: 4px;
+    --drift: 20vh;
+  }
+  .hero-layer--jauh {
+    --px: 10px;
+    --py: 4px;
+    --drift: 13vh;
+  }
+  .hero-layer--masjid {
+    --px: 16px;
+    --py: 6px;
+    --drift: 8vh;
+  }
+  .hero-layer--dekat {
+    --px: 24px;
+    --py: 0px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      /* Parallax gulir: lapisan jauh tertinggal, masjid perlahan turun di balik dinding batu. */
+      .hero-drift {
+        animation: hero-drift linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100vh;
+      }
+    }
+    .hero-layer {
+      will-change: transform;
+    }
   }
 
-  /* Satu-satunya gerak otomatis di situs: tirai malam di atas lukisan memudar (fajar menyingsing). */
-  .fajar-veil {
-    background-image: linear-gradient(
-      to bottom,
-      rgb(4 31 51 / 0.62),
-      rgb(6 43 69 / 0.38) 60%,
-      rgb(6 43 69 / 0.18)
-    );
-    animation: fajar-veil 3.6s cubic-bezier(0.33, 0, 0.2, 1) 0.25s both;
+  /* Momen fajar saat halaman dibuka: cahaya menguat dan partikel berkelip, selesai di bawah 5 detik. */
+  .scene-glow {
+    animation: scene-glow 2.8s var(--ease-out-expo) 0.15s both;
+  }
+  .scene-motes circle {
+    opacity: 0.85;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: scene-mote 3.2s ease-in-out both;
   }
 
   /* Pengumuman: panel tab yang baru dipilih muncul pelan (jawaban atas klik tab). */
@@ -434,12 +509,38 @@ html[data-contrast="high"] {
   }
 }
 
-@keyframes fajar-veil {
+@keyframes hero-drift {
   from {
-    opacity: 1;
+    transform: translateY(0);
   }
   to {
+    transform: translateY(var(--drift, 0));
+  }
+}
+
+@keyframes scene-glow {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scene-mote {
+  0% {
     opacity: 0;
+    transform: translateY(8px) scale(0.6);
+  }
+  45% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0.85;
+    transform: none;
   }
 }
 
