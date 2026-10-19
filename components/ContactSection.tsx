@@ -20,7 +20,7 @@ export function ContactSection() {
       isSample={CONTACT.isSample}
       tone="alt"
     >
-      <div className="muncul-anak grid grid-cols-1 gap-6 lg:grid-cols-2 simple:lg:grid-cols-1">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 simple:lg:grid-cols-1">
         <article className={`${card} flex flex-col`}>
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold text-brand">
             <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">

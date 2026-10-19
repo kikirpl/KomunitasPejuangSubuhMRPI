@@ -58,7 +58,7 @@ function DaftarKartu({ jenis, items }: { jenis: AnnouncementType; items: Announc
   return (
     <ul
       role="list"
-      className="muncul-anak grid grid-cols-1 gap-6 md:grid-cols-2 huge:md:grid-cols-1 simple:md:grid-cols-1"
+      className="grid grid-cols-1 gap-6 md:grid-cols-2 huge:md:grid-cols-1 simple:md:grid-cols-1"
     >
       {items.map((item) => (
         <li key={item.id}>

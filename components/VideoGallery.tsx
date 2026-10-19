@@ -88,7 +88,7 @@ export function VideoGallery() {
       intro="Ketinggalan kajian? Tonton ulang kapan saja, dari rumah."
       isSample={VIDEO.isSample}
     >
-      <div className="muncul mx-auto max-w-4xl overflow-hidden rounded-card border border-line bg-card shadow-card hc:border-2">
+      <div className="mx-auto max-w-4xl overflow-hidden rounded-card border border-line bg-card shadow-card hc:border-2">
         {/* Video asli: rasio 16:9. Kotak contoh berisi catatan, jadi tingginya mengikuti isi. */}
         <div className={`relative bg-brand-deep ${playable ? "aspect-video" : ""}`}>
           {playing && playable ? (

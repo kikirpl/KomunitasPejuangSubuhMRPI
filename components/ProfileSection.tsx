@@ -79,7 +79,7 @@ export function ProfileSection() {
         <h3 className={`mt-10 ${subjudul}`}>{misi.judul}</h3>
         <ol
           role="list"
-          className="muncul-anak mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 huge:md:grid-cols-1 simple:md:grid-cols-1"
+          className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 huge:md:grid-cols-1 simple:md:grid-cols-1"
         >
           {misi.poin.map((m, i) => (
             <li
@@ -101,7 +101,7 @@ export function ProfileSection() {
         <h3 className={subjudul}>{pilar.judul}</h3>
         <ul
           role="list"
-          className="muncul-anak mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6 simple:md:grid-cols-1"
+          className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6 simple:md:grid-cols-1"
         >
           {pilar.poin.map((p) => (
             <li
@@ -133,7 +133,7 @@ export function ProfileSection() {
       {/* Blok 4: Divisi Operasional (kartu ringkas, rapi di ponsel tanpa perlu dibuka-tutup) */}
       <div className="mt-14 md:mt-16">
         <h3 className={subjudul}>{divisi.judul}</h3>
-        <ul role="list" className="muncul-anak mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 simple:md:grid-cols-1">
+        <ul role="list" className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 simple:md:grid-cols-1">
           {divisi.poin.map((d) => (
             <li
               key={d.judul}

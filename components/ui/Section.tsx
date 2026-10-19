@@ -19,7 +19,7 @@ interface SectionProps {
 const toneClass: Record<SectionTone, string> = {
   paper: "bg-paper",
   alt: "bg-paper-2",
-  dark: "on-dark relative overflow-hidden bg-brand-deep text-on-brand",
+  dark: "on-dark relative overflow-clip bg-brand-deep text-on-brand",
 };
 
 /**
@@ -45,7 +45,7 @@ export function Section({
       id={id}
       aria-labelledby={headingId}
       className={`${toneClass[tone]} ${
-        ornament && !dark ? "relative overflow-hidden" : ""
+        ornament && !dark ? "relative overflow-clip" : ""
       } pt-(--section-y) pb-[calc(var(--section-y)*0.55)]`}
     >
       {dark ? (

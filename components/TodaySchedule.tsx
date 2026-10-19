@@ -83,7 +83,7 @@ export function TodayContent({ now, schedule }: { now: WibParts; schedule: Sched
   const finishedOrNone = !today || sessionStatus(today, now) === "finished";
 
   return (
-    <div className="muncul-anak space-y-6">
+    <div className="space-y-6">
       {today ? (
         <TodayCard
           session={today}

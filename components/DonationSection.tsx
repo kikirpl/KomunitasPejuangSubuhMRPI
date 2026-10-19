@@ -28,7 +28,7 @@ export function DonationSection() {
       isSample={isSample}
       tone="alt"
     >
-      <div className="muncul-anak grid grid-cols-1 gap-6 lg:grid-cols-2 simple:lg:grid-cols-1">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 simple:lg:grid-cols-1">
         <article className={card}>
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold text-brand">
             <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
@@ -107,7 +107,7 @@ export function DonationSection() {
       </div>
 
       {/* Penutup infak: langit Subuh berbingkai dengan siluet MRPI di depan cahaya fajar. */}
-      <div className="muncul bingkai on-dark langit-subuh relative mt-8 overflow-hidden rounded-card px-6 pt-8 pb-36 text-on-brand shadow-elev-2 sm:px-10 sm:pb-40 md:py-10 md:pr-[42%] hc:border-2 hc:pb-8 simple:pb-8 simple:md:pr-10">
+      <div className="bingkai on-dark langit-subuh relative mt-8 overflow-clip rounded-card px-6 pt-8 pb-36 text-on-brand shadow-elev-2 sm:px-10 sm:pb-40 md:py-10 md:pr-[42%] hc:border-2 hc:pb-8 simple:pb-8 simple:md:pr-10">
         <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
         <MasjidSiluet className="terbit pointer-events-none absolute -bottom-px right-4 h-32 w-auto text-brand-deep sm:h-36 md:right-8 md:h-[88%] hc:hidden simple:hidden" />
         <p className="relative max-w-2xl text-xl leading-relaxed">
