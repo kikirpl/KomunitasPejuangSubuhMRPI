@@ -501,25 +501,30 @@ html[data-contrast="high"] {
   .hero-layer--langit {
     --px: 6px;
     --py: 4px;
-    --drift: 20vh;
+    --drift: 10vh;
   }
   .hero-layer--jauh {
     --px: 10px;
     --py: 4px;
-    --drift: 13vh;
+    --drift: 6vh;
   }
   .hero-layer--masjid {
     --px: 16px;
     --py: 6px;
-    --drift: 8vh;
+    --drift: 3vh;
   }
   .hero-layer--dekat {
     --px: 24px;
     --py: 0px;
   }
-  @media (prefers-reduced-motion: no-preference) {
+  /*
+   * Parallax gulir: lapisan jauh tertinggal sedikit saat beranda digulir. Hanya di layar >= 1024px,
+   * tempat masjid terlihat sejak awal. Di ponsel dan tablet masjid baru tampil setelah halaman
+   * digulir, jadi efek ini akan selalu sudah selesai dan masjid tampak tenggelam di balik dinding.
+   * Pergeseran masjid dibatasi 3vh agar deret tiangnya tidak pernah tertutup dinding batu.
+   */
+  @media (prefers-reduced-motion: no-preference) and (min-width: 64rem) {
     @supports (animation-timeline: scroll()) {
-      /* Parallax gulir: lapisan jauh tertinggal, masjid perlahan turun di balik dinding batu. */
       .hero-drift {
         animation: hero-drift linear both;
         animation-timeline: scroll(root block);

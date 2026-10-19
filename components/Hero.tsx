@@ -22,9 +22,10 @@ import { COMMUNITY } from "@/data/content";
  * - Tulisan "Lebih besar"/"Terbesar" di layar lebar: kembali bertumpuk seperti tablet.
  * - Kontras Tinggi dan Tampilan Sederhana: adegan dan hiasan disembunyikan, latar biru malam polos.
  *
- * Gerak (dimatikan oleh "kurangi gerakan"): di layar lebar cahaya fajar menguat dan partikel cahaya
- * berkelip sekali saat halaman dibuka (selesai di bawah 5 detik), lapisan bergeser berbeda saat
- * digulir (CSS scroll-driven) dan mengikuti mouse di desktop (HeroParallax).
+ * Gerak (dimatikan oleh "kurangi gerakan"), hanya di layar lebar tempat masjid terlihat sejak awal:
+ * cahaya fajar menguat dan partikel cahaya berkelip sekali saat halaman dibuka (selesai di bawah
+ * 5 detik), lapisan bergeser sedikit berbeda saat digulir (CSS scroll-driven) dan mengikuti mouse
+ * (HeroParallax). Di ponsel dan tablet adegan diam.
  */
 
 /** "Komunitas Pejuang Subuh" ditulis dua tingkat: "Komunitas" kecil di atas, "Pejuang Subuh" besar. */
