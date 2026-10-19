@@ -34,7 +34,6 @@
 
   /* Gerak: satu keluarga kurva dan durasi untuk seluruh situs. */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ==========================================================================
@@ -129,8 +128,6 @@
   --glow-emas: 0 14px 30px -14px color-mix(in srgb, var(--emas-400) 70%, transparent);
   --dur-hover: 160ms;
   --dur-state: 240ms;
-  --dur-reveal: 640ms;
-  --dur-scene: 1100ms;
   --section-y: clamp(3.25rem, 2rem + 4vw, 6rem);
   --girih: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='1'%3E%3Cpath d='M64.00 32.00 L54.63 41.37 L54.63 54.63 L41.37 54.63 L32.00 64.00 L22.63 54.63 L9.37 54.63 L9.37 41.37 L0.00 32.00 L9.37 22.63 L9.37 9.37 L22.63 9.37 L32.00 0.00 L41.37 9.37 L54.63 9.37 L54.63 22.63 Z'/%3E%3Cpath d='M54.63 41.37 L41.37 54.63 L22.63 54.63 L9.37 41.37 L9.37 22.63 L22.63 9.37 L41.37 9.37 L54.63 22.63 Z'/%3E%3C/g%3E%3C/svg%3E");
 

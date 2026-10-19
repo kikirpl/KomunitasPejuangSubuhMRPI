@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T11:32:08.359846+00:00",
+  "title": "Design System: Pejuang Subuh MRPI",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Biru Genteng",
+        "tonalRamp": [
+          "#071d2c",
+          "#0a304a",
+          "#0b466a",
+          "#0b5c89",
+          "#0d72a8",
+          "#1b8bc4",
+          "#6fb8de",
+          "#d4eaf4"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Genteng Bayang",
+        "tonalRamp": [
+          "#071d2c",
+          "#0a304a",
+          "#0b466a",
+          "#0b5c89",
+          "#0d72a8",
+          "#1b8bc4",
+          "#6fb8de",
+          "#d4eaf4"
+        ]
+      },
+      "brand": {
+        "role": "primary",
+        "displayName": "Biru Judul",
+        "tonalRamp": [
+          "#071d2c",
+          "#0a304a",
+          "#0b466a",
+          "#0b5c89",
+          "#0d72a8",
+          "#1b8bc4",
+          "#6fb8de",
+          "#d4eaf4"
+        ]
+      },
+      "brand-deep": {
+        "role": "primary",
+        "displayName": "Langit Malam",
+        "tonalRamp": [
+          "#04121c",
+          "#071d2c",
+          "#0a2a41",
+          "#0d3a58",
+          "#10476b",
+          "#1b5e86",
+          "#3d7ea3",
+          "#a8c7da"
+        ]
+      },
+      "toolbar": {
+        "role": "primary",
+        "displayName": "Malam Terdalam",
+        "tonalRamp": [
+          "#04121c",
+          "#071d2c",
+          "#0a2a41",
+          "#0d3a58",
+          "#10476b",
+          "#1b5e86",
+          "#3d7ea3",
+          "#a8c7da"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Genteng Tersinari",
+        "tonalRamp": [
+          "#071d2c",
+          "#0a304a",
+          "#0b466a",
+          "#0b5c89",
+          "#0d72a8",
+          "#1b8bc4",
+          "#6fb8de",
+          "#d4eaf4"
+        ]
+      },
+      "tint": {
+        "role": "neutral",
+        "displayName": "Kabut Genteng",
+        "tonalRamp": [
+          "#071d2c",
+          "#0a304a",
+          "#0b466a",
+          "#0b5c89",
+          "#0d72a8",
+          "#1b8bc4",
+          "#6fb8de",
+          "#d4eaf4"
+        ]
+      },
+      "on-brand-soft": {
+        "role": "primary",
+        "displayName": "Genteng Muda",
+        "tonalRamp": [
+          "#071d2c",
+          "#0a304a",
+          "#0b466a",
+          "#0b5c89",
+          "#0d72a8",
+          "#1b8bc4",
+          "#6fb8de",
+          "#d4eaf4"
+        ]
+      },
+      "langit-1": {
+        "role": "primary",
+        "displayName": "Langit Subuh 1",
+        "tonalRamp": [
+          "#04121c",
+          "#071d2c",
+          "#0a2a41",
+          "#0d3a58",
+          "#10476b",
+          "#1b5e86",
+          "#3d7ea3",
+          "#a8c7da"
+        ]
+      },
+      "langit-2": {
+        "role": "primary",
+        "displayName": "Langit Subuh 2",
+        "tonalRamp": [
+          "#04121c",
+          "#071d2c",
+          "#0a2a41",
+          "#0d3a58",
+          "#10476b",
+          "#1b5e86",
+          "#3d7ea3",
+          "#a8c7da"
+        ]
+      },
+      "langit-3": {
+        "role": "primary",
+        "displayName": "Langit Subuh 3",
+        "tonalRamp": [
+          "#04121c",
+          "#071d2c",
+          "#0a2a41",
+          "#0d3a58",
+          "#10476b",
+          "#1b5e86",
+          "#3d7ea3",
+          "#a8c7da"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Emas Fajar",
+        "tonalRamp": [
+          "#4a3510",
+          "#6e5019",
+          "#9a7224",
+          "#c9972f",
+          "#e9b44c",
+          "#f6d78b",
+          "#f9e5b2",
+          "#fbf1d8"
+        ]
+      },
+      "gold-soft": {
+        "role": "secondary",
+        "displayName": "Emas Lembut",
+        "tonalRamp": [
+          "#4a3510",
+          "#6e5019",
+          "#9a7224",
+          "#c9972f",
+          "#e9b44c",
+          "#f6d78b",
+          "#f9e5b2",
+          "#fbf1d8"
+        ]
+      },
+      "gilt": {
+        "role": "secondary",
+        "displayName": "Daun Emas",
+        "tonalRamp": [
+          "#4a3510",
+          "#6e5019",
+          "#9a7224",
+          "#c9972f",
+          "#e9b44c",
+          "#f6d78b",
+          "#f9e5b2",
+          "#fbf1d8"
+        ]
+      },
+      "gold-tint": {
+        "role": "secondary",
+        "displayName": "Kertas Emas",
+        "tonalRamp": [
+          "#4a3510",
+          "#6e5019",
+          "#9a7224",
+          "#c9972f",
+          "#e9b44c",
+          "#f6d78b",
+          "#f9e5b2",
+          "#fbf1d8"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Pelataran Batu",
+        "tonalRamp": [
+          "#283432",
+          "#384744",
+          "#495a57",
+          "#5d716d",
+          "#7d908b",
+          "#a8b7b3",
+          "#ccd6d3",
+          "#f3f6f5"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Kertas Putih",
+        "tonalRamp": [
+          "#283432",
+          "#384744",
+          "#495a57",
+          "#5d716d",
+          "#7d908b",
+          "#a8b7b3",
+          "#ccd6d3",
+          "#f3f6f5"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Garis Batu",
+        "tonalRamp": [
+          "#283432",
+          "#384744",
+          "#495a57",
+          "#5d716d",
+          "#7d908b",
+          "#a8b7b3",
+          "#ccd6d3",
+          "#f3f6f5"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "tonalRamp": [
+          "#06121a",
+          "#0c1f29",
+          "#1d3240",
+          "#33495a",
+          "#4f6677",
+          "#7a8f9d",
+          "#b0c0ca",
+          "#e2eaef"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Batu Tua",
+        "tonalRamp": [
+          "#283432",
+          "#384744",
+          "#495a57",
+          "#5d716d",
+          "#7d908b",
+          "#a8b7b3",
+          "#ccd6d3",
+          "#f3f6f5"
+        ]
+      },
+      "danger": {
+        "role": "error",
+        "displayName": "Merah Bata",
+        "tonalRamp": [
+          "#3d0d0a",
+          "#5e1511",
+          "#861c16",
+          "#b3261e",
+          "#d4544c",
+          "#e8908a",
+          "#f5c7c3",
+          "#fdecea"
+        ]
+      },
+      "danger-tint": {
+        "role": "error",
+        "displayName": "Merah Pucat",
+        "tonalRamp": [
+          "#3d0d0a",
+          "#5e1511",
+          "#861c16",
+          "#b3261e",
+          "#d4544c",
+          "#e8908a",
+          "#f5c7c3",
+          "#fdecea"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Nama komunitas di beranda; 2.9rem di ponsel, 4.5rem mulai 40rem (3.75rem di 64rem, 4.5rem di 80rem)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Judul bagian kepala surat: 1.75rem, 2.25rem mulai 40rem, 2.75rem mulai 48rem."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Judul kartu dan sub-bagian."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Teks isi pada dasar 18px; intro bagian 1.25rem."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Chip, lencana, label tebal."
+      },
+      "arabic": {
+        "displayName": "Arab",
+        "purpose": "Ayat Al-Qur'an, minimal 32px."
+      }
+    },
+    "shadows": [
+      {
+        "name": "elev-1",
+        "value": "0 1px 2px rgb(7 29 44 / 0.06), 0 2px 8px -2px rgb(7 29 44 / 0.08)",
+        "purpose": "Tombol diam, chip emas."
+      },
+      {
+        "name": "elev-2",
+        "value": "0 1px 2px rgb(7 29 44 / 0.05), 0 18px 36px -22px rgb(7 29 44 / 0.34)",
+        "purpose": "Kartu (--card-shadow), panel bingkai, tombol saat hover."
+      },
+      {
+        "name": "elev-3",
+        "value": "0 4px 10px rgb(7 29 44 / 0.12), 0 32px 64px -24px rgb(7 29 44 / 0.45)",
+        "purpose": "Tombol putar video di atas poster."
+      },
+      {
+        "name": "glow-emas",
+        "value": "0 14px 30px -14px color-mix(in srgb, var(--emas-400) 70%, transparent)",
+        "purpose": "Hanya di bawah tombol emas beranda di atas langit malam."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 4px solid var(--focus); outline-offset: 3px",
+        "purpose": "Fokus papan ketik global; --focus menjadi emas lembut di dalam .on-dark."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Kurva standar transisi kontrol, parallax, dan cahaya fajar."
+      },
+      {
+        "name": "dur-hover",
+        "value": "160ms",
+        "purpose": "Hover dan tekan tombol."
+      },
+      {
+        "name": "dur-state",
+        "value": "240ms",
+        "purpose": "Perubahan status: garis nav, lingkaran ikon menu, chevron."
+      },
+      {
+        "name": "garis-tumbuh",
+        "value": "scroll-driven view(), entry 5% cover 35%, scaleX 0 ke 1",
+        "purpose": "Garis kepala surat tergambar dari judul ke luar."
+      },
+      {
+        "name": "terbit",
+        "value": "scroll-driven view(), entry 10% cover 40%, translateY 32% ke 0",
+        "purpose": "Siluet MRPI naik dari balik cakrawala di panel infak dan kaki halaman."
+      },
+      {
+        "name": "hero-parallax",
+        "value": "gulir: drift 20vh/13vh/8vh; penunjuk: 6-24px, transform 1.4s ease-out-expo",
+        "purpose": "Empat lapis adegan beranda."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "xl",
+        "value": "80rem"
+      },
+      {
+        "name": "pendek",
+        "value": "(min-width: 64rem) and (max-height: 52rem), tampilan biasa saja"
+      },
+      {
+        "name": "huge",
+        "value": "[data-text-scale=\"3\"], [data-text-scale=\"4\"]"
+      },
+      {
+        "name": "hc",
+        "value": "[data-contrast=\"high\"]"
+      },
+      {
+        "name": "simple",
+        "value": "[data-simple=\"true\"]"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Tombol Biru Genteng",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tindakan biasa di latar terang; minimal 64px (lg).",
+      "html": "<button class=\"ds-btn-primary\">Simpan Jadwal</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;min-height:4rem;padding:.875rem 1.75rem;font:700 1.25rem/1.25 var(--font-sans);color:var(--on-brand);background:var(--primary);border:2px solid var(--primary);border-radius:var(--radius-control);box-shadow:var(--elev-1);transition:background-color 160ms cubic-bezier(.16,1,.3,1),box-shadow 160ms cubic-bezier(.16,1,.3,1),transform 160ms cubic-bezier(.16,1,.3,1)}.ds-btn-primary:hover{background:var(--primary-hover);border-color:var(--primary-hover);box-shadow:var(--elev-2)}.ds-btn-primary:active{transform:translateY(1px);box-shadow:none}.ds-btn-primary:focus-visible{outline:4px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Tombol Emas Fajar",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "Satu tindakan utama per layar, di beranda di atas langit malam.",
+      "html": "<div class=\"ds-dark\"><a class=\"ds-btn-gold\" href=\"#\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 2v4\"/><path d=\"M16 2v4\"/><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/><path d=\"M3 10h18\"/></svg>Lihat Jadwal Hari Ini</a></div>",
+      "css": ".ds-dark{background:var(--brand-deep);padding:2rem}.ds-btn-gold{display:inline-flex;align-items:center;gap:.75rem;min-height:5rem;padding:1rem 2rem;font:800 1.5rem/1.25 var(--font-sans);color:var(--on-gold);background:var(--gold);border:2px solid var(--gilt);border-radius:var(--radius-control);box-shadow:var(--glow-emas);text-decoration:none;transition:filter 160ms cubic-bezier(.16,1,.3,1),transform 160ms cubic-bezier(.16,1,.3,1)}.ds-btn-gold:hover{filter:brightness(1.06)}.ds-btn-gold:active{filter:brightness(.95);transform:translateY(1px)}.ds-btn-gold:focus-visible{outline:4px solid var(--focus-on-dark);outline-offset:3px;box-shadow:0 0 0 11px var(--brand-deep)}"
+    },
+    {
+      "name": "Tombol Garis di Langit",
+      "kind": "button",
+      "refersTo": "button-outline-on-dark",
+      "description": "Tindakan kedua di atas biru malam.",
+      "html": "<div class=\"ds-dark2\"><a class=\"ds-btn-ondark\" href=\"#\">Buka Zoom</a></div>",
+      "css": ".ds-dark2{background:var(--brand-deep);padding:2rem}.ds-btn-ondark{display:inline-flex;align-items:center;min-height:5rem;padding:1rem 2rem;font:800 1.5rem/1.25 var(--font-sans);color:var(--on-brand);background:color-mix(in srgb,var(--brand-deep) 55%,transparent);border:2px solid var(--on-brand);border-radius:var(--radius-control);text-decoration:none;transition:background-color 160ms cubic-bezier(.16,1,.3,1),color 160ms cubic-bezier(.16,1,.3,1)}.ds-btn-ondark:hover{background:var(--on-brand);color:var(--brand)}.ds-btn-ondark:focus-visible{outline:4px solid var(--focus-on-dark);outline-offset:3px}"
+    },
+    {
+      "name": "Tombol Garis",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Tindakan sekunder di latar terang.",
+      "html": "<button class=\"ds-btn-outline\">Salin Nomor</button>",
+      "css": ".ds-btn-outline{min-height:3.5rem;padding:.75rem 1.25rem;font:700 1.125rem/1.25 var(--font-sans);color:var(--primary);background:var(--card);border:2px solid var(--primary);border-radius:var(--radius-control);transition:background-color 160ms cubic-bezier(.16,1,.3,1)}.ds-btn-outline:hover{background:var(--tint)}.ds-btn-outline:focus-visible{outline:4px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Isian Formulir",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Isian panel pengurus: label terlihat di atas, minimal 56px, garis 3:1.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-i\">Nama ustadz <span>(wajib)</span></label><input id=\"ds-i\" class=\"ds-input\" value=\"Ustadz Abdullah\"></div>",
+      "css": ".ds-field label{display:block;font:700 1.25rem/1.5 var(--font-sans);color:var(--ink)}.ds-field label span{font-weight:400;color:var(--ink-soft)}.ds-input{display:block;width:100%;margin-top:.5rem;min-height:3.5rem;padding:.5rem 1rem;font:400 1.25rem/1.5 var(--font-sans);color:var(--ink);background:var(--card);border:2px solid var(--ink-soft);border-radius:var(--radius-control)}.ds-input:focus-visible{outline:4px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Lencana status dan mode; versi emas untuk 'hari ini'.",
+      "html": "<span class=\"ds-chip\">Offline di masjid</span> <span class=\"ds-chip-gold\">Hari ini</span>",
+      "css": ".ds-chip,.ds-chip-gold{display:inline-flex;align-items:center;border-radius:9999px;padding:.375rem .875rem;font:700 1rem/1.5 var(--font-sans)}.ds-chip{color:var(--brand);background:var(--tint);border:1px solid var(--line-soft)}.ds-chip-gold{color:var(--on-gold);background:var(--gold);border:1px solid var(--gilt);box-shadow:var(--elev-1)}"
+    },
+    {
+      "name": "Kartu",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Wadah isi: kertas putih, garis batu, Elev 2, ikon di lingkaran kabut genteng.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-card-ico\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg></span><div><h3>Kajian Subuh</h3><p>Ba'da Subuh sampai 06.00 di ruang utama.</p></div></div>",
+      "css": ".ds-card{display:flex;gap:1.25rem;align-items:flex-start;padding:2rem;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-card);box-shadow:var(--card-shadow);color:var(--ink);font:400 1.125rem/1.7 var(--font-sans)}.ds-card h3{margin:0;font:600 1.5rem/1.2 var(--font-display);color:var(--brand)}.ds-card p{margin:.25rem 0 0;color:var(--ink-soft)}.ds-card-ico{display:grid;place-items:center;flex-shrink:0;width:3.5rem;height:3.5rem;border-radius:9999px;background:var(--tint);color:var(--accent);box-shadow:0 0 0 1px color-mix(in srgb,var(--gilt) 35%,transparent)}"
+    },
+    {
+      "name": "Kepala Surat (Kartus)",
+      "kind": "custom",
+      "refersTo": "kartus",
+      "description": "Kepala bagian inti: judul di kartus berujung runcing diapit garis baji daun emas dan bintang delapan.",
+      "html": "<header class=\"ds-surat\"><span class=\"ds-garis ds-kiri\"><i></i><svg viewBox=\"0 0 32 32\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\"/><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\" transform=\"rotate(45 16 16)\"/></svg></span><div class=\"ds-kartus\"><h2>Jadwal Hari Ini</h2></div><span class=\"ds-garis ds-kanan\"><svg viewBox=\"0 0 32 32\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\"/><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\" transform=\"rotate(45 16 16)\"/></svg><i></i></span></header>",
+      "css": ".ds-surat{display:flex;align-items:center;justify-content:center;gap:1rem;color:var(--gilt)}.ds-garis{display:flex;flex:1 1 0;align-items:center;gap:.5rem;min-width:1.75rem;max-width:11rem}.ds-garis i{flex:1 1 auto;height:3px;background:currentColor;clip-path:polygon(0 50%,100% 0,100% 100%)}.ds-kanan i{clip-path:polygon(0 0,100% 50%,0 100%)}.ds-kartus{--u:1.5rem;position:relative;isolation:isolate;padding:.5rem calc(var(--u) + .75rem)}.ds-kartus::before,.ds-kartus::after{content:'';position:absolute;inset:0;z-index:-1;clip-path:polygon(var(--u) 0,calc(100% - var(--u)) 0,100% 50%,calc(100% - var(--u)) 100%,var(--u) 100%,0 50%)}.ds-kartus::before{background:color-mix(in srgb,var(--gilt) 75%,transparent)}.ds-kartus::after{inset:1.5px;background:color-mix(in srgb,var(--gold-tint) 72%,var(--card))}.ds-kartus h2{margin:0;font:600 2.75rem/1.12 var(--font-display);font-feature-settings:'lnum' 1;color:var(--brand)}"
+    },
+    {
+      "name": "Bingkai Iluminasi",
+      "kind": "custom",
+      "refersTo": "card-dark",
+      "description": "Panel istimewa (ayat, visi, donasi): langit malam dengan garis ganda daun emas.",
+      "html": "<div class=\"ds-bingkai\"><p>Visi komunitas: memakmurkan Subuh berjamaah di Masjid Raya Pondok Indah.</p></div>",
+      "css": ".ds-bingkai{position:relative;padding:2.25rem 1.5rem;background:var(--brand-deep);color:var(--on-brand);border:1px solid color-mix(in srgb,var(--gold-soft) 55%,transparent);border-radius:var(--radius-card);box-shadow:var(--elev-2);font:400 1.25rem/1.7 var(--font-sans)}.ds-bingkai::before{content:'';position:absolute;inset:5px;border:1px solid color-mix(in srgb,var(--gold-soft) 26%,transparent);border-radius:inherit;pointer-events:none}.ds-bingkai p{margin:0}"
+    },
+    {
+      "name": "Butir Navigasi",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Navigasi atas di biru malam: ikon emas di atas label, garis emas tumbuh saat hover.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M8 2v4\"/><path d=\"M16 2v4\"/><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/><path d=\"M3 10h18\"/></svg><span>Jadwal</span></a><a href=\"#\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11\"/><rect x=\"2\" y=\"6\" width=\"14\" height=\"12\" rx=\"2\"/></svg><span>Zoom</span></a></nav>",
+      "css": ".ds-nav{display:flex;gap:.25rem;background:var(--brand-deep);padding:.375rem 1rem;border-top:1px solid var(--line-dark)}.ds-nav a{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;min-height:3.5rem;padding:.375rem .75rem;border-radius:var(--radius-control);color:var(--on-brand);font:700 1.125rem/1.25 var(--font-sans);text-decoration:none}.ds-nav svg{color:var(--gold)}.ds-nav a::after{content:'';position:absolute;left:1rem;right:1rem;bottom:2px;height:2px;border-radius:9999px;background:var(--gold);transform:scaleX(0);transition:transform 240ms cubic-bezier(.16,1,.3,1)}.ds-nav a:hover::after,.ds-nav a:focus-visible::after{transform:scaleX(1)}.ds-nav a:focus-visible{outline:4px solid var(--focus-on-dark);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Iluminasi Biru",
+    "overview": "Situs ini dibaca seperti halaman iluminasi dari Masjid Biru. Warnanya diambil dari Masjid Raya Pondok Indah sendiri: genteng glasir biru atap limasnya, batu andesit pucat di pelataran, dan beton menaranya. Emas bukan warna bangunan, melainkan daun emas iluminasi mushaf dan cahaya fajar: ia hadir sebagai garis tipis, bintang delapan, dan satu tombol utama, tidak pernah sebagai bidang luas. Beranda dibuka seperti frontispiece: langit malam yang menyambung dari bilah atas turun ke cahaya fajar di belakang siluet MRPI, lalu pelataran batu memudar menjadi dasar halaman, sehingga section berikutnya terasa sebagai lanjutan pelataran.\n\nKepadatan sengaja longgar karena pembacanya lansia di ponsel. Ukuran dasar huruf 18px (html 112,5%), tombol dan isian setinggi minimal 56px, dan seluruh jarak dihitung dalam rem sehingga ikut membesar bersama bilah \"Atur tampilan\" (lima ukuran: 100%, 112,5%, 125%, 143,75%, 162,5%). Pada dua ukuran terbesar jarak dikunci di 5px per langkah dan hanya hurufnya yang terus membesar. Hiasan selalu dapat dilepas: Kontras Tinggi dan Tampilan Sederhana mematikan girih, kartus, adegan masjid, dan bayangan tanpa merusak tata letak.\n\nSetiap bagian dibuka seperti kepala surat. Bagian inti memakai kartus berujung runcing diapit garis daun emas yang meruncing; bagian pendukung memakai kepala ringan rata kiri dengan bintang dan garis emas yang memudar, seperti daftar isi mushaf. Sistem ini menolak slider foto, hijau-emas generik, dan deret kartu seragam sebagai struktur halaman.",
+    "keyCharacteristics": [
+      "Tiga lapis token: primitif (genteng, batu, emas, tinta), peran semantik, dan token komponen; komponen hanya memakai peran.",
+      "Biru genteng sebagai bidang dan tindakan, batu pucat sebagai dasar, emas hanya sebagai garis, ornamen, dan satu tombol fajar.",
+      "Satu ornamen berulang: bintang delapan (khatam), dalam bentuk StarMark, Rosette, dan pola girih 4-7%.",
+      "Alegreya dengan angka tegak untuk judul, Atkinson Hyperlegible Next untuk isi, Amiri minimal 32px untuk Arab.",
+      "Gerak hanya pada momen yang dirancang: parallax berlapis di beranda dan garis kepala surat yang tergambar saat digulir.",
+      "Mode Kontras Tinggi dan Tampilan Sederhana adalah bagian sistem, bukan tambalan."
+    ],
+    "rules": [
+      {
+        "name": "The Daun Emas Rule",
+        "body": "Emas di latar terang adalah garis dan ornamen (gilt), tidak pernah teks. Teks emas hanya ada di atas biru malam (gold-soft). Bidang emas hanya ada pada satu tombol utama per layar dan chip status kecil.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lewat Peran Rule",
+        "body": "Komponen tidak menulis kode warna langsung; mereka memakai peran semantik (`--primary`, `--ink`, `--gilt`, ...). Kontras Tinggi bekerja dengan menimpa peran itu di `html[data-contrast=\"high\"]` (putih, hitam, biru #003f66, kuning #ffd23f), jadi warna baru yang tidak lewat peran akan lolos dari mode itu.",
+        "section": "colors"
+      },
+      {
+        "name": "The Langit Menyambung Rule",
+        "body": "Bilah atas, kepala halaman, dan langit beranda memakai biru malam yang sama sehingga tidak ada tepi di antaranya; langit makin terang ke cakrawala, tidak sebaliknya.",
+        "section": "colors"
+      },
+      {
+        "name": "The Angka Tegak Rule",
+        "body": "Huruf judul selalu memakai angka tegak (`\"lnum\" 1`); angka dalam jadwal, Rosette, dan nomor rekening memakai `tabular-nums`.",
+        "section": "typography"
+      },
+      {
+        "name": "The 32px Arab Rule",
+        "body": "Teks Arab tidak pernah di bawah 32px, berapa pun ukuran layarnya.",
+        "section": "typography"
+      },
+      {
+        "name": "The Judul Bicara Sendiri Rule",
+        "body": "Judul tidak diberi label kecil di atasnya. Hierarki datang dari ukuran, ketebalan, dan kepala surat.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tekan Turun Rule",
+        "body": "Saat ditekan tombol turun 1px dan bayangannya hilang; saat hover bayangan naik satu tingkat. Tidak ada animasi panjang pada kontrol.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Ornamen Berbisik Rule",
+        "body": "Pola girih bintang delapan hanya 4-7% opacity (`--ornament-light`, `--ornament-dark`), memudar di tepi atas dan bawah bagian, dan hilang total di Kontras Tinggi dan Tampilan Sederhana.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Bingkai Langka Rule",
+        "body": "Bingkai garis ganda hanya untuk panel istimewa (ayat, visi, donasi), tidak pernah pada setiap kartu.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** pakai peran semantik dari `app/globals.css` untuk setiap warna baru, dan tambahkan nilainya di blok Kontras Tinggi.",
+      "**Do** jaga tinggi minimal 56px untuk tombol, isian, dan tautan berbentuk tombol.",
+      "**Do** tulis ukuran dalam rem agar ikut lima ukuran Atur Tampilan, dan uji di ukuran Terbesar (162,5%) di ponsel.",
+      "**Do** beri setiap hiasan baru jalan keluar di Kontras Tinggi dan Tampilan Sederhana (`hc:hidden`, `simple:hidden`).",
+      "**Do** pakai kepala \"surat\" untuk bagian inti dan kepala \"ringan\" untuk bagian pendukung.",
+      "**Do** pakai `--dur-hover` (160ms), `--dur-state` (240ms), dan `--ease-out-expo` untuk transisi kontrol; gerak lain hormati \"kurangi gerakan\".",
+      "**Do** pakai `overflow: clip`, bukan `hidden`, pada pembungkus bagian yang punya gerak scroll-driven."
+    ],
+    "donts": [
+      "**Don't** pakai emas (gilt atau gold) sebagai warna teks di latar terang.",
+      "**Don't** pasang bingkai iluminasi atau Rosette pada setiap kartu; keduanya hanya untuk panel istimewa dan urutan bermakna.",
+      "**Don't** naikkan opacity pola girih di atas 7%.",
+      "**Don't** beri animasi masuk pada kartu dan isi; isi selalu tampil utuh, gerak gulir hanya untuk garis kepala surat dan siluet terbit.",
+      "**Don't** taruh label kecil atau eyebrow di atas judul bagian.",
+      "**Don't** pakai slider foto, hijau-emas generik, atau deret kartu seragam sebagai struktur halaman."
+    ]
+  }
+}
