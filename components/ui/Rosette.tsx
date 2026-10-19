@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 /**
  * Rosette penanda, meniru penanda akhir ayat pada mushaf: bintang delapan dalam lingkaran
  * bergaris daun emas, dengan angka atau ikon di tengahnya. Dipakai untuk urutan yang memang
- * bermakna (langkah bergabung Zoom, butir misi) dan sebagai butir daftar.
+ * bermakna (langkah bergabung Zoom, butir misi). Butir daftar biasa memakai BelahKetupat.
  */
 export function Rosette({
   children,

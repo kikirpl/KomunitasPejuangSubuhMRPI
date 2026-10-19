@@ -17,8 +17,8 @@ import { COMMUNITY } from "@/data/content";
  * - Ponsel dan tablet: teks di atas langit gelap, masjid utuh di bawahnya. Padding bawah isi
  *   dihitung dari tinggi adegan (persen lebar), jadi teks tidak pernah menimpa menara atau atap.
  * - Layar lebar (lg, mulai 1024px): teks di kolom kiri, masjid di kanan; padding bawah hanya setinggi
- *   dinding batu dan pelataran. Laptop berlayar pendek (varian pendek:, mis. 1366x768) dipadatkan agar
- *   tombol utama dan masjid terlihat tanpa menggulir.
+ *   dinding batu dan pelataran. Laptop berlayar pendek (varian pendek:, mis. 1366x768, 1280x720,
+ *   1024x768) dipadatkan agar kedua tombol dan masjid utuh terlihat tanpa menggulir.
  * - Tulisan "Lebih besar"/"Terbesar" di layar lebar: kembali bertumpuk seperti tablet.
  * - Kontras Tinggi dan Tampilan Sederhana: adegan dan hiasan disembunyikan, latar biru malam polos.
  *
@@ -37,14 +37,14 @@ const ADA_AWALAN = NAMA_INTI !== COMMUNITY.name;
  * (lihat .hero-scene dan .hero-pelataran di globals.css).
  */
 const RUANG_ADEGAN =
-  "pb-[calc(71%+var(--pelataran-h))] md:pb-[calc(43%+var(--pelataran-h))] lg:pb-[calc(6.2%+0.75rem+var(--pelataran-h))] huge:lg:pb-[calc(34%+var(--pelataran-h))] hc:pb-12 hc:sm:pb-16 hc:md:pb-16 hc:lg:pb-20 hc:huge:lg:pb-20 simple:pb-12 simple:sm:pb-16 simple:md:pb-16 simple:lg:pb-20 simple:huge:lg:pb-20";
+  "pb-[calc(71%+var(--pelataran-h))] md:pb-[calc(43%+var(--pelataran-h))] lg:pb-[calc(5.2%+0.75rem+var(--pelataran-h))] xl:pb-[calc(6.2%+0.75rem+var(--pelataran-h))] huge:lg:pb-[calc(29%+var(--pelataran-h))] huge:xl:pb-[calc(34%+var(--pelataran-h))] hc:pb-12 hc:sm:pb-16 hc:md:pb-16 hc:lg:pb-20 hc:xl:pb-20 hc:huge:lg:pb-20 hc:huge:xl:pb-20 simple:pb-12 simple:sm:pb-16 simple:md:pb-16 simple:lg:pb-20 simple:xl:pb-20 simple:huge:lg:pb-20 simple:huge:xl:pb-20";
 
 export function Hero() {
   return (
     <section
       id="beranda"
       aria-labelledby="beranda-judul"
-      className="hero-sky on-dark relative isolate overflow-hidden bg-brand-deep text-on-brand lg:min-h-[calc(36.5vw+2rem+var(--pelataran-h))] huge:lg:min-h-0 hc:bg-none hc:lg:min-h-0 simple:bg-none simple:lg:min-h-0"
+      className="hero-sky on-dark relative isolate overflow-hidden bg-brand-deep text-on-brand lg:min-h-[calc(30.4vw+2rem+var(--pelataran-h))] xl:min-h-[calc(36.5vw+2rem+var(--pelataran-h))] pendek:min-h-[calc(28.9vw+var(--pelataran-h))] pendek:xl:min-h-[calc(34.7vw+var(--pelataran-h))] huge:lg:min-h-0 huge:xl:min-h-0 hc:bg-none hc:lg:min-h-0 hc:xl:min-h-0 simple:bg-none simple:lg:min-h-0 simple:xl:min-h-0"
     >
       {/* Pola girih, hanya di langit malam bagian atas, memudar sebelum cakrawala. */}
       <div aria-hidden="true" className="hero-ornament absolute inset-0 hc:hidden simple:hidden">
@@ -79,32 +79,32 @@ export function Hero() {
       <HeroParallax />
 
       <div
-        className={`relative mx-auto w-full max-w-6xl px-5 pt-10 sm:px-8 sm:pt-14 md:pt-12 lg:pt-12 pendek:pt-6 simple:max-w-3xl ${RUANG_ADEGAN}`}
+        className={`relative mx-auto w-full max-w-6xl px-5 pt-10 sm:px-8 sm:pt-14 md:pt-12 lg:pt-12 pendek:pt-4 simple:max-w-3xl ${RUANG_ADEGAN}`}
       >
-        <div className="lg:max-w-[min(37rem,48%)] huge:lg:max-w-none simple:lg:max-w-none">
-          <p className="font-display text-xl leading-snug text-gold-soft sm:text-2xl lg:text-[1.375rem] pendek:text-xl">
+        <div className="lg:max-w-[min(37rem,56%)] xl:max-w-[min(37rem,48%)] huge:lg:max-w-none huge:xl:max-w-none simple:lg:max-w-none simple:xl:max-w-none">
+          <p className="font-display text-xl leading-snug text-gold-soft sm:text-2xl lg:text-[1.375rem] pendek:text-lg">
             Assalamualaikum warahmatullahi wabarakatuh
           </p>
           <h1 id="beranda-judul" className="mt-4 font-semibold leading-[1.02] tracking-tight pendek:mt-2">
             {ADA_AWALAN ? (
               <>
-                <span className="block text-2xl font-medium tracking-normal text-on-brand-soft sm:text-3xl">
+                <span className="block text-2xl font-medium tracking-normal text-on-brand-soft sm:text-3xl pendek:text-2xl">
                   Komunitas
                 </span>{" "}
               </>
             ) : null}
-            <span className="mt-1 block text-[2.9rem] sm:text-7xl lg:text-[3.75rem] xl:text-[4.5rem] pendek:text-[3.75rem] huge:max-sm:text-[2.4rem]">
+            <span className="mt-1 block text-[2.9rem] sm:text-7xl lg:text-[3.75rem] xl:text-[4.5rem] pendek:text-[3.25rem] huge:max-sm:text-[2.4rem]">
               {NAMA_INTI}
             </span>
           </h1>
-          <p className="mt-3 font-display text-2xl leading-snug text-on-brand-soft sm:text-3xl lg:text-[1.75rem] pendek:mt-1.5">
+          <p className="mt-3 font-display text-2xl leading-snug text-on-brand-soft sm:text-3xl lg:text-[1.75rem] pendek:mt-1 pendek:text-2xl">
             {COMMUNITY.mosque} ({COMMUNITY.mosqueShort})
           </p>
-          <Pemisah tone="dark" className="mt-5 pendek:mt-3" />
+          <Pemisah tone="dark" className="mt-5 pendek:hidden" />
 
           {/* Di ponsel, tombol tampil lebih dulu dari paragraf sambutan (order), supaya terlihat tanpa menggulir. */}
           <div className="mt-6 flex flex-col gap-6 pendek:mt-4 pendek:gap-4">
-            <p className="max-w-xl text-xl leading-relaxed text-on-brand max-sm:order-2">
+            <p className="max-w-xl text-xl leading-relaxed text-on-brand max-sm:order-2 pendek:text-lg">
               Selamat datang, Bapak dan Ibu. Di sini Anda bisa melihat jadwal kajian,
               membaca ayat hari ini, ikut kajian lewat Zoom, dan berinfak untuk masjid.
             </p>
@@ -118,7 +118,7 @@ export function Hero() {
                 className={buttonClass(
                   "gold",
                   "xl",
-                  "w-full shadow-glow-emas focus-visible:shadow-[0_0_0_11px_var(--brand-deep)] sm:w-auto lg:min-h-16 lg:px-6 lg:text-xl pendek:min-h-14 pendek:py-3 huge:lg:min-h-20 huge:lg:px-4 hc:shadow-none",
+                  "w-full shadow-glow-emas focus-visible:shadow-[0_0_0_11px_var(--brand-deep)] sm:w-auto lg:min-h-16 lg:px-6 lg:text-xl pendek:min-h-14 pendek:px-4 pendek:py-3 pendek:text-lg huge:lg:min-h-20 huge:lg:px-4 hc:shadow-none",
                 )}
               >
                 <CalendarDays aria-hidden className="size-8" />
@@ -129,7 +129,7 @@ export function Hero() {
                 className={buttonClass(
                   "outlineOnDark",
                   "xl",
-                  "w-full backdrop-blur-[2px] focus-visible:shadow-[0_0_0_11px_var(--brand-deep)] sm:w-auto lg:min-h-16 lg:px-6 lg:text-xl pendek:min-h-14 pendek:py-3 huge:lg:min-h-20 huge:lg:px-4",
+                  "w-full backdrop-blur-[2px] focus-visible:shadow-[0_0_0_11px_var(--brand-deep)] sm:w-auto lg:min-h-16 lg:px-6 lg:text-xl pendek:min-h-14 pendek:px-4 pendek:py-3 pendek:text-lg huge:lg:min-h-20 huge:lg:px-4",
                 )}
               >
                 <Video aria-hidden className="size-8" />

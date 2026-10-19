@@ -5,9 +5,16 @@
 @custom-variant simple (&:where([data-simple="true"] *));
 /* Ukuran tulisan "Lebih besar" dan "Terbesar" (level 3 dan 4): tata letak diperlonggar. */
 @custom-variant huge (&:where([data-text-scale="3"] *, [data-text-scale="4"] *));
-/* Layar lebar tetapi pendek (laptop 1366x768, 1280x720): beranda dipadatkan agar tombol utama
-   dan masjid tetap terlihat tanpa menggulir. */
-@custom-variant pendek (@media (min-width: 64rem) and (max-height: 52rem));
+/* Layar lebar tetapi pendek (laptop 1366x768, 1280x720, 1024x768): beranda dipadatkan agar kedua
+   tombol utama dan masjid utuh terlihat tanpa menggulir. Hanya pada tampilan biasa: Kontras Tinggi,
+   Tampilan Sederhana, dan tulisan Lebih besar/Terbesar memakai tata letak masing-masing. */
+@custom-variant pendek {
+  @media (min-width: 64rem) and (max-height: 52rem) {
+    &:where(:root:not([data-contrast="high"], [data-simple="true"], [data-text-scale="3"], [data-text-scale="4"]) *) {
+      @slot;
+    }
+  }
+}
 
 /* ==========================================================================
    Tipografi
@@ -426,8 +433,8 @@ html[data-contrast="high"] {
   /*
    * Adegan masjid: kotak dengan rasio viewBox (2000:760) di atas pita pelataran di dasar beranda.
    * Ponsel menampilkan menara dan masjid utuh (lebar 200%), tablet sedikit lebih kecil (120%, masjid
-   * di tengah) agar atapnya terlihat di layar pertama, layar lebar (mulai 1024px) seluruh adegan
-   * dengan masjid di kanan. Padding bawah isi di Hero.tsx memakai angka yang sama.
+   * di tengah) agar atapnya terlihat di layar pertama, layar lebar seluruh adegan dengan masjid di
+   * kanan (80% mulai 1024px, 96% mulai 1280px). Padding bawah isi di Hero.tsx memakai angka yang sama.
    */
   .hero-scene {
     position: absolute;
@@ -443,10 +450,22 @@ html[data-contrast="high"] {
       width: 120%;
     }
   }
+  /* 1024-1279px: adegan sedikit lebih kecil dan ke kanan agar kolom teks cukup lebar untuk dua tombol. */
   @media (min-width: 64rem) {
+    .hero-scene {
+      left: 20%;
+      width: 80%;
+    }
+  }
+  @media (min-width: 80rem) {
     .hero-scene {
       left: 4%;
       width: 96%;
+    }
+  }
+  @media (min-width: 64rem) and (max-height: 52rem) {
+    :root:not([data-contrast="high"], [data-simple="true"], [data-text-scale="3"], [data-text-scale="4"]) .hero-sky {
+      --pelataran-h: 44px;
     }
   }
   /*
