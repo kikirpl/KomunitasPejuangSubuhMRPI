@@ -4,7 +4,7 @@ import { buttonClass } from "@/components/ui/buttonStyles";
 import { CONTACT } from "@/data/content";
 
 const card =
-  "rounded-2xl border border-line bg-card p-6 shadow-card md:p-8 hc:border-2";
+  "rounded-card border border-line bg-card p-6 shadow-card md:p-8 hc:border-2";
 
 /** Kontak admin (WhatsApp hanya untuk bertanya) serta alamat dan telepon masjid. */
 export function ContactSection() {
@@ -23,7 +23,9 @@ export function ContactSection() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 simple:lg:grid-cols-1">
         <article className={`${card} flex flex-col`}>
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold text-brand">
-            <MessageCircle aria-hidden className="size-8 shrink-0" />
+            <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
+              <MessageCircle className="size-6" />
+            </span>
             Tanya lewat WhatsApp
           </h3>
           <p className="mb-7 mt-4 text-xl">
@@ -46,7 +48,9 @@ export function ContactSection() {
 
         <article className={card}>
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold text-brand">
-            <MapPin aria-hidden className="size-8 shrink-0" />
+            <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
+              <MapPin className="size-6" />
+            </span>
             Alamat dan Telepon
           </h3>
           <address className="mt-4 text-xl not-italic">

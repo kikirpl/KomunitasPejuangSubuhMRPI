@@ -1,5 +1,6 @@
 import { Clock, Video } from "lucide-react";
 import { CopyButton } from "@/components/ui/CopyButton";
+import { Rosette } from "@/components/ui/Rosette";
 import { Section } from "@/components/ui/Section";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { ZOOM } from "@/data/content";
@@ -64,26 +65,23 @@ export function ZoomSection() {
             {JOIN_STEPS.map((step, index) => (
               <li
                 key={step}
-                className="flex items-start gap-4 rounded-2xl border border-line-dark bg-white/5 p-5 hc:border-2 lg:flex-col lg:p-6 simple:lg:flex-row huge:lg:flex-row"
+                className="flex items-start gap-4 rounded-card border border-line-dark bg-white/5 p-5 hc:border-2 lg:flex-col lg:p-6 simple:lg:flex-row huge:lg:flex-row"
               >
-                <span
-                  aria-hidden="true"
-                  className="grid size-12 shrink-0 place-items-center rounded-full bg-gold font-display text-2xl font-semibold leading-none text-on-gold"
-                >
+                <Rosette dark className="size-14 text-2xl">
                   {index + 1}
-                </span>
+                </Rosette>
                 <p className="min-w-0 text-xl">{step}</p>
               </li>
             ))}
           </ol>
         </div>
 
-        <div className="rounded-2xl border border-line-dark bg-white/5 p-6 md:p-8 hc:border-2 lg:order-2 simple:lg:order-none">
+        <div className="bingkai rounded-card bg-white/5 p-6 md:p-8 hc:border-2 lg:order-2 simple:lg:order-none">
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold">
             <Clock aria-hidden className="size-7 shrink-0 text-gold" />
             Jadwal Sesi Daring
           </h3>
-          <dl className="mt-4 divide-y divide-white/20">
+          <dl className="mt-4 divide-y divide-line-dark">
             {ZOOM.slots.map((slot) => (
               <div
                 key={slot.label}

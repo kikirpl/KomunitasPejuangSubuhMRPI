@@ -8,27 +8,29 @@ type SectionTone = "paper" | "alt" | "dark";
 interface SectionProps {
   id: string;
   title: ReactNode;
-  /** Label kecil di atas judul, mis. "Profil" di atas "Tentang Kami". */
-  label?: string;
   intro?: string;
   isSample?: boolean;
   tone?: SectionTone;
-  /** Pola bintang delapan yang sangat halus di latar (hanya untuk beberapa bagian). */
+  /** Pola girih bintang delapan yang sangat halus di latar (hanya untuk beberapa bagian). */
   ornament?: boolean;
   children: ReactNode;
 }
 
 const toneClass: Record<SectionTone, string> = {
-  paper: "",
+  paper: "bg-paper",
   alt: "bg-paper-2",
   dark: "on-dark relative overflow-hidden bg-brand-deep text-on-brand",
 };
 
-/** Kerangka seragam setiap bagian halaman: judul besar, penjelasan singkat, isi. */
+/**
+ * Kerangka seragam setiap bagian halaman. Kepala bagian meniru kepala surat pada mushaf:
+ * judul di tengah, diapit garis daun emas yang meruncing ke luar dengan bintang delapan
+ * di ujung dalamnya. Garis itu "tergambar" dari judul ke luar saat bagian masuk layar
+ * (CSS scroll-driven; tanpa dukungan peramban atau dengan "kurangi gerakan", garis langsung utuh).
+ */
 export function Section({
   id,
   title,
-  label,
   intro,
   isSample,
   tone = "paper",
@@ -44,7 +46,7 @@ export function Section({
       aria-labelledby={headingId}
       className={`${toneClass[tone]} ${
         ornament && !dark ? "relative overflow-hidden" : ""
-      } pb-8 pt-14 md:pb-10 md:pt-20`}
+      } pt-(--section-y) pb-[calc(var(--section-y)*0.55)]`}
     >
       {dark ? (
         <>
@@ -59,31 +61,29 @@ export function Section({
         <div aria-hidden="true" className="khatam-pattern-light absolute inset-0" />
       ) : null}
       <div className="relative mx-auto w-full max-w-6xl px-5 sm:px-8 simple:max-w-3xl">
-        <header className="mb-8 max-w-3xl md:mb-10">
-          {label ? (
-            <p
-              className={`mb-2 text-lg font-bold ${dark ? "text-gold-soft" : "text-primary"}`}
-            >
-              {label}
-            </p>
-          ) : null}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <StarMark className="size-8 shrink-0 text-gold" />
+        <header className="kepala-bagian mb-9 text-center md:mb-12">
+          <div className="flex items-center justify-center gap-3 sm:gap-5">
+            <span aria-hidden="true" className={`kepala-garis kepala-garis--kiri ${dark ? "text-gold" : "text-gilt"}`}>
+              <span className="kepala-garis__garis" />
+              <StarMark className="size-5 shrink-0 sm:size-6" />
+            </span>
             <h2
               id={headingId}
-              className={`min-w-0 text-3xl font-semibold sm:text-4xl huge:max-sm:text-2xl ${
+              className={`min-w-0 text-[2rem] font-semibold leading-[1.12] sm:text-4xl md:text-[2.75rem] huge:max-sm:text-2xl ${
                 dark ? "text-on-brand" : "text-brand"
               }`}
             >
               {title}
             </h2>
-            {isSample ? <SampleBadge /> : null}
+            <span aria-hidden="true" className={`kepala-garis kepala-garis--kanan ${dark ? "text-gold" : "text-gilt"}`}>
+              <StarMark className="size-5 shrink-0 sm:size-6" />
+              <span className="kepala-garis__garis" />
+            </span>
           </div>
-          {/* Garis emas tipis di bawah judul. */}
-          <span aria-hidden="true" className="mt-4 block h-0.5 w-16 rounded-full bg-gold" />
+          {isSample ? <SampleBadge className="mt-4" /> : null}
           {intro ? (
             <p
-              className={`mt-3 text-xl ${dark ? "text-on-brand-soft" : "text-ink-soft"}`}
+              className={`mx-auto mt-4 max-w-2xl text-xl leading-relaxed ${dark ? "text-on-brand-soft" : "text-ink-soft"}`}
             >
               {intro}
             </p>

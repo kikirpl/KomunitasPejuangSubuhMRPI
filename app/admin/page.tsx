@@ -28,7 +28,7 @@ function KartuMenu({
 }) {
   const isi: ReactNode = (
     <>
-      <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-brand-deep text-gold huge:hidden">
+      <span className="grid size-16 shrink-0 place-items-center rounded-control bg-brand-deep text-gold huge:hidden">
         <IkonKartu aria-hidden className="size-9" />
       </span>
       <span className="min-w-0 flex-1">
@@ -40,7 +40,7 @@ function KartuMenu({
       {aktif ? <ChevronRight aria-hidden className="size-8 shrink-0 text-primary huge:hidden" /> : null}
     </>
   );
-  const dasar = "flex items-center gap-5 rounded-2xl border-2 bg-card p-6 shadow-card hc:border-black";
+  const dasar = "flex items-center gap-5 rounded-card border-2 bg-card p-6 shadow-card hc:border-black";
 
   // next/link (bukan <a>): perpindahan terjadi di peramban dan kerangka pemuat (loading.tsx) tampil seketika.
   return aktif ? (
@@ -73,7 +73,7 @@ export default async function AdminHome({
       {hasil === "siap" && aktif ? (
         <p
           role="status"
-          className="mt-6 flex items-center gap-3 rounded-xl border-2 border-primary bg-tint px-5 py-4 text-xl font-bold text-brand hc:border-black"
+          className="mt-6 flex items-center gap-3 rounded-control border-2 border-primary bg-tint px-5 py-4 text-xl font-bold text-brand hc:border-black"
         >
           <CircleCheck aria-hidden className="size-7 shrink-0" />
           Database sudah disiapkan. Silakan pilih yang ingin diubah.
@@ -87,7 +87,7 @@ export default async function AdminHome({
       {galat === "setup" ? (
         <p
           role="alert"
-          className="mt-6 flex items-start gap-3 rounded-xl border-2 border-gold bg-gold-tint px-5 py-4 text-xl font-bold text-ink hc:border-black"
+          className="mt-6 flex items-start gap-3 rounded-control border-2 border-gold bg-gold-tint px-5 py-4 text-xl font-bold text-ink hc:border-black"
         >
           <CircleAlert aria-hidden className="mt-0.5 size-7 shrink-0 text-brand" />
           Database belum berhasil disiapkan. Periksa sambungan, lalu coba lagi; bila terulang, hubungi pengelola web.

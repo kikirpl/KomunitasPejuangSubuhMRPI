@@ -6,7 +6,7 @@ export function ErrorBanner({ children }: { children: ReactNode }) {
   return (
     <p
       role="alert"
-      className="mt-6 flex items-start gap-3 rounded-xl border-2 border-danger bg-danger-tint px-5 py-4 text-xl font-bold text-danger"
+      className="mt-6 flex items-start gap-3 rounded-control border-2 border-danger bg-danger-tint px-5 py-4 text-xl font-bold text-danger"
     >
       <CircleAlert aria-hidden className="mt-0.5 size-7 shrink-0" />
       {children}

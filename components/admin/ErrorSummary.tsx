@@ -39,7 +39,7 @@ export function ErrorSummary({
       id="ringkasan-galat"
       tabIndex={-1}
       role="alert"
-      className="rounded-2xl border-2 border-danger bg-danger-tint p-5"
+      className="rounded-card border-2 border-danger bg-danger-tint p-5"
     >
       {butir.length > 0 ? (
         <>

@@ -388,6 +388,17 @@ html[data-contrast="high"] {
       #10476b 100%
     );
   }
+  /* Langit Subuh untuk panel gelap kecil (poster video, gambar pengganti, ajakan infak): biru malam
+     yang menghangat ke kaki langit, dengan cahaya fajar samar di kanan bawah. */
+  .langit-subuh {
+    background-color: var(--brand-deep);
+    background-image:
+      radial-gradient(ellipse 60% 48% at 78% 104%, color-mix(in srgb, var(--scene-glow) 38%, transparent), transparent 72%),
+      linear-gradient(to bottom, var(--genteng-950), #0a2a41 55%, #10476b);
+  }
+  html[data-contrast="high"] .langit-subuh {
+    background-image: none;
+  }
   /* Pola girih hanya di langit malam: muncul pelan di bawah kepala halaman, hilang sebelum cakrawala. */
   .hero-ornament {
     --hero-ornament-mask: linear-gradient(to bottom, transparent, #000 6rem, transparent 58%);
@@ -474,6 +485,68 @@ html[data-contrast="high"] {
     animation: scene-mote 3.2s ease-in-out both;
   }
 
+  /*
+   * Kepala bagian bergaya kepala surat (components/ui/Section.tsx): garis daun emas berbentuk
+   * baji yang meruncing ke luar, bintang delapan di ujung dalamnya.
+   */
+  .kepala-garis {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 1.75rem;
+    max-width: 11rem;
+  }
+  .kepala-garis__garis {
+    flex: 1 1 auto;
+    height: 3px;
+    background: currentColor;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  }
+  .kepala-garis--kanan .kepala-garis__garis {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /* Garis "tergambar" dari judul ke luar saat kepala bagian masuk layar. */
+      .kepala-garis__garis {
+        animation: garis-tumbuh linear both;
+        animation-timeline: view();
+        animation-range: entry 5% cover 35%;
+      }
+      .kepala-garis--kiri .kepala-garis__garis {
+        transform-origin: right center;
+      }
+      .kepala-garis--kanan .kepala-garis__garis {
+        transform-origin: left center;
+      }
+    }
+  }
+
+  /*
+   * Bingkai iluminasi: garis ganda tipis berwarna daun emas, seperti bingkai halaman mushaf.
+   * Dipakai hanya pada panel yang istimewa (ayat, visi, donasi), bukan pada setiap kartu.
+   */
+  .bingkai {
+    --bingkai-luar: color-mix(in srgb, var(--gilt) 60%, transparent);
+    --bingkai-dalam: color-mix(in srgb, var(--gilt) 32%, transparent);
+    position: relative;
+    border: 1px solid var(--bingkai-luar);
+  }
+  .bingkai::before {
+    content: "";
+    position: absolute;
+    inset: var(--frame-gap);
+    border: 1px solid var(--bingkai-dalam);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .on-dark .bingkai,
+  .bingkai.on-dark {
+    --bingkai-luar: color-mix(in srgb, var(--gold-soft) 55%, transparent);
+    --bingkai-dalam: color-mix(in srgb, var(--gold-soft) 26%, transparent);
+  }
+
   /* Pengumuman: panel tab yang baru dipilih muncul pelan (jawaban atas klik tab). */
   .tab-fade {
     animation: tab-fade 0.18s ease-out both;
@@ -544,6 +617,17 @@ html[data-contrast="high"] {
   }
 }
 
+@keyframes garis-tumbuh {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
 @keyframes tab-fade {
   from {
     opacity: 0;
@@ -579,6 +663,15 @@ html[data-contrast="high"] .khatam-pattern-light,
 html[data-simple="true"] .khatam-pattern,
 html[data-simple="true"] .khatam-pattern-light {
   display: none;
+}
+
+html[data-contrast="high"] .bingkai {
+  --bingkai-luar: #000000;
+  --bingkai-dalam: transparent;
+}
+html[data-contrast="high"] .on-dark .bingkai,
+html[data-contrast="high"] .bingkai.on-dark {
+  --bingkai-luar: #ffd23f;
 }
 
 html[data-contrast="high"] a {

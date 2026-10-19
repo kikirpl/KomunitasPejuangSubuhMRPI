@@ -35,13 +35,13 @@ export function QrisDialog({ open, onClose }: QrisDialogProps) {
         if (event.target === event.currentTarget) onClose();
       }}
       aria-labelledby="qris-dialog-judul"
-      className="m-auto w-[min(94vw,36rem)] rounded-2xl border-2 border-gold bg-paper p-0 text-ink shadow-2xl backdrop:bg-brand-deep/80"
+      className="bingkai m-auto w-[min(94vw,36rem)] rounded-card bg-paper p-0 text-ink shadow-elev-3 backdrop:bg-brand-deep/85 backdrop:backdrop-blur-[2px] hc:border-2 hc:border-black"
     >
       <div className="p-5 sm:p-7">
         <h2 id="qris-dialog-judul" className="text-2xl font-semibold text-brand">
           Kode QRIS Donasi
         </h2>
-        <div className="mt-4 rounded-2xl bg-white p-3">
+        <div className="mt-4 rounded-card bg-white p-3">
           <Image
             src={qris.imageSrc}
             alt={qris.imageAlt}

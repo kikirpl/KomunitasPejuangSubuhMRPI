@@ -82,7 +82,7 @@ export default function RootLayout({
       <body>
         <a
           href="#utama"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-xl focus:bg-gold focus:px-6 focus:py-4 focus:text-xl focus:font-bold focus:text-on-gold"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-control focus:bg-gold focus:px-6 focus:py-4 focus:text-xl focus:font-bold focus:text-on-gold"
         >
           Langsung ke isi halaman
         </a>

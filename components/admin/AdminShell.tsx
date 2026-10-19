@@ -27,7 +27,7 @@ export function AdminShell({ admin, children }: { admin: AdminSession | null; ch
     <>
       <header className="on-dark border-b border-line-dark bg-brand-deep text-on-brand hc:border-b-2">
         <div className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-4 sm:px-8 simple:max-w-3xl">
-          <a href="/admin" className="flex w-fit items-center gap-3 rounded-xl">
+          <a href="/admin" className="flex w-fit items-center gap-3 rounded-control">
             <Logo />
             <span className="flex flex-col leading-tight">
               <span className="font-display text-2xl font-semibold text-on-brand">Panel Pengurus</span>

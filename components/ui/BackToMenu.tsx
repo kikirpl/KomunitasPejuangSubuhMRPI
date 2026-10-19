@@ -10,10 +10,10 @@ import { ArrowUp } from "lucide-react";
  * Hanya satu tautan yang tampil pada satu waktu (yang tersembunyi tidak ikut dibaca).
  */
 export function BackToMenu({ dark = false }: { dark?: boolean }) {
-  const link = `inline-flex min-h-14 items-center gap-3 text-lg font-bold underline decoration-2 underline-offset-4 [&_svg]:shrink-0 ${
+  const link = `group/kembali inline-flex min-h-14 items-center gap-3 text-lg font-bold underline decoration-2 underline-offset-4 transition-colors duration-(--dur-hover) [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-(--dur-state) [&_svg]:ease-out-expo hover:[&_svg]:-translate-y-1 ${
     dark
       ? "text-on-brand decoration-gold hover:text-gold-soft"
-      : "text-primary decoration-accent hover:text-brand"
+      : "text-primary decoration-gilt/70 hover:text-brand hover:decoration-gilt"
   }`;
 
   return (

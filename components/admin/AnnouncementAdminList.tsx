@@ -19,7 +19,7 @@ export function AnnouncementAdminList({
   if (items.length === 0) {
     const Ikon = jenis === "kegiatan" ? CalendarDays : Megaphone;
     return (
-      <div className="flex flex-col items-center gap-4 rounded-2xl border-2 border-dashed border-line bg-card px-6 py-10 text-center">
+      <div className="flex flex-col items-center gap-4 rounded-card border-2 border-dashed border-line bg-card px-6 py-10 text-center">
         <Ikon aria-hidden className="size-10 text-accent" strokeWidth={1.75} />
         <p className="text-xl font-bold text-brand">{PESAN_KOSONG[jenis]}</p>
         <Link href={`/admin/pengumuman/baru?jenis=${jenis}`} className={buttonClass("outline", "lg", "w-full sm:w-auto")}>
@@ -35,7 +35,7 @@ export function AnnouncementAdminList({
       {items.map((item) => (
         <li
           key={item.id}
-          className="flex flex-col gap-4 rounded-2xl border border-line bg-card p-4 shadow-card hc:border-2"
+          className="flex flex-col gap-4 rounded-card border border-line bg-card p-4 shadow-card hc:border-2"
         >
           <div className="flex gap-4">
             <div className="w-28 shrink-0 huge:hidden simple:hidden">
@@ -45,7 +45,7 @@ export function AnnouncementAdminList({
                 alt=""
                 position={item.imagePosition}
                 sizes="112px"
-                className="rounded-xl"
+                className="rounded-control"
               />
             </div>
             <div className="min-w-0 flex-1">

@@ -30,8 +30,8 @@ export function useToast(): ToastApi {
 }
 
 const toneStyles: Record<ToastTone, string> = {
-  success: "bg-brand-deep text-on-brand border-gold",
-  error: "bg-[#7a1f1f] text-white border-white",
+  success: "bg-brand-deep text-on-brand border-gilt",
+  error: "bg-danger text-on-danger border-white",
   info: "bg-brand-deep text-on-brand border-line-dark",
 };
 
@@ -80,7 +80,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toast && Icon ? (
           <div
             key={toast.id}
-            className={`toast-in pointer-events-auto flex w-full max-w-xl items-center gap-4 rounded-2xl border-2 px-5 py-4 shadow-2xl ${toneStyles[toast.tone]}`}
+            className={`toast-in pointer-events-auto flex w-full max-w-xl items-center gap-4 rounded-card border-2 px-5 py-4 shadow-elev-3 ${toneStyles[toast.tone]}`}
           >
             <Icon aria-hidden className="size-9 shrink-0" strokeWidth={2.25} />
             <p className="flex-1 text-xl font-bold leading-snug">{toast.text}</p>
@@ -88,7 +88,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               type="button"
               onClick={dismiss}
               aria-label="Tutup pemberitahuan"
-              className="grid size-12 shrink-0 place-items-center rounded-xl border-2 border-current/40 hover:bg-white/10"
+              className="grid size-12 shrink-0 place-items-center rounded-control border-2 border-current/40 hover:bg-white/10"
             >
               <X aria-hidden className="size-6" />
             </button>

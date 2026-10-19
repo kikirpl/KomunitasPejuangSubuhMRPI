@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 /** Kelas bersama isian teks, jam, dan tanggal: tinggi minimal 56 px dan garis yang cukup kontras (3:1). */
 export function inputClass(adaGalat: boolean): string {
-  return `block w-full min-h-14 rounded-xl border-2 bg-card px-4 py-2 text-xl text-ink ${
+  return `block w-full min-h-14 rounded-control border-2 bg-card px-4 py-2 text-xl text-ink ${
     adaGalat ? "border-danger" : "border-ink-soft"
   }`;
 }

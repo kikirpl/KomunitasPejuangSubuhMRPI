@@ -11,7 +11,7 @@ export function StoreNotice({ state }: { state: "missing" | "not-ready" }) {
   return (
     <section
       aria-labelledby="pemberitahuan-database"
-      className="mt-6 rounded-2xl border-2 border-gold bg-gold-tint p-6 hc:border-black"
+      className="mt-6 rounded-card border-2 border-gold bg-gold-tint p-6 hc:border-black"
     >
       <h2 id="pemberitahuan-database" className="flex items-start gap-3 text-2xl font-bold text-brand">
         <Database aria-hidden className="mt-0.5 size-8 shrink-0" />

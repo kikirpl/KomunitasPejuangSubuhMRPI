@@ -12,6 +12,7 @@ import {
   Play,
   RefreshCw,
 } from "lucide-react";
+import { StarMark } from "@/components/ui/StarMark";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { QARI, SUMBER_CADANGAN } from "@/data/ayatPekan";
 import { useAyahAudio, type StatusAudio } from "@/hooks/useAyahAudio";
@@ -42,7 +43,7 @@ export function AyatPekanCard() {
       {tanggalUji ? (
         <p
           role="note"
-          className="mb-6 flex items-start gap-3 rounded-2xl border-2 border-dashed border-gold bg-gold-tint px-5 py-3 text-lg text-brand hc:border-black"
+          className="mb-6 flex items-start gap-3 rounded-card border-2 border-dashed border-gold bg-gold-tint px-5 py-3 text-lg text-brand hc:border-black"
         >
           <FlaskConical aria-hidden className="mt-1 size-5 shrink-0" />
           <span>
@@ -101,7 +102,7 @@ function DaftarAyat({ pekan, ayat, sumber, terjemahan, pesan }: DaftarAyatProps)
       {sumber === "cadangan" ? (
         <p
           role="status"
-          className="mb-6 flex items-start gap-3 rounded-2xl border border-line-soft bg-tint px-5 py-4 text-lg text-ink hc:border-2 hc:border-line"
+          className="mb-6 flex items-start gap-3 rounded-card border border-line-soft bg-tint px-5 py-4 text-lg text-ink hc:border-2 hc:border-line"
         >
           <Info aria-hidden className="mt-1 size-5 shrink-0 text-primary" />
           <span>
@@ -177,21 +178,20 @@ function KartuAyat({ ayat, index, pekan, terbuka, statusAudio, onAudio }: KartuA
       className={terbuka && !awal ? "ayat-muncul" : undefined}
       style={terbuka && !awal ? { animationDelay: `${urutanMuncul * 90}ms` } : undefined}
     >
+      {/* Kartu ayat berbingkai iluminasi seperti halaman mushaf; ayat hari ini di atas kertas keemasan. */}
       <article
-        className={`rounded-2xl p-6 shadow-card md:p-8 ${
-          hariIni
-            ? "border-2 border-gold bg-gold-tint hc:border-4 hc:border-black"
-            : "border border-line bg-card hc:border-2"
+        className={`bingkai rounded-card p-6 shadow-card sm:p-8 md:p-10 ${
+          hariIni ? "bg-gold-tint hc:border-4 hc:border-black" : "bg-card hc:border-2"
         } ${diputar ? "ring-4 ring-accent/55 ring-offset-2 ring-offset-paper" : ""}`}
       >
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
           <p className="flex flex-wrap items-center gap-2">
             {hariIni ? (
-              <span className="rounded-full bg-gold px-3.5 py-1 text-base font-bold text-on-gold hc:border-2 hc:border-black">
+              <span className="rounded-full border border-gilt bg-gold px-3.5 py-1 text-base font-bold text-on-gold hc:border-2 hc:border-black">
                 Hari ini · {hari}
               </span>
             ) : (
-              <span className="rounded-full border border-line-soft bg-tint px-3.5 py-1 text-base font-bold text-brand hc:border-2">
+              <span className="rounded-full border border-line bg-tint px-3.5 py-1 text-base font-bold text-brand hc:border-2">
                 {hari}
               </span>
             )}
@@ -221,7 +221,13 @@ function KartuAyat({ ayat, index, pekan, terbuka, statusAudio, onAudio }: KartuA
           />
         ) : null}
 
-        <p className="mt-6 border-t border-line pt-5 text-xl leading-relaxed text-ink">
+        {/* Pemisah antara ayat dan terjemahan: garis daun emas dengan bintang delapan di tengah. */}
+        <div aria-hidden="true" className="mt-7 flex items-center gap-3 text-gilt hc:text-ink">
+          <span className="h-px flex-1 bg-linear-to-r from-transparent to-current" />
+          <StarMark className="size-4 shrink-0" />
+          <span className="h-px flex-1 bg-linear-to-l from-transparent to-current" />
+        </div>
+        <p className="mt-5 text-xl leading-relaxed text-ink">
           {ayat.terjemahan}
         </p>
       </article>
@@ -263,7 +269,7 @@ function TombolMurottal({
         type="button"
         onClick={onClick}
         aria-label={`${AKSI_ARIA[status]} murottal ${label}`}
-        className={`inline-flex min-h-12 items-center gap-2.5 rounded-full border-2 px-5 py-2 text-lg font-bold transition-colors ${
+        className={`inline-flex min-h-12 items-center gap-2.5 rounded-full border-2 px-5 py-2 text-lg font-bold transition-[background-color,border-color,color,transform] duration-(--dur-hover) ease-out-expo active:translate-y-px ${
           aktif
             ? "border-primary bg-primary text-on-brand hover:border-primary-hover hover:bg-primary-hover"
             : "border-primary bg-card text-primary hover:bg-tint"
@@ -356,10 +362,12 @@ function KotakGagal({
   return (
     <div
       role="alert"
-      className="rounded-2xl border border-line bg-card p-6 shadow-card md:p-8 hc:border-2"
+      className="rounded-card border border-line bg-card p-6 shadow-card md:p-8 hc:border-2"
     >
-      <p className="flex items-start gap-3 text-xl">
-        <CircleAlert aria-hidden className="mt-1 size-6 shrink-0 text-accent" />
+      <p className="flex items-start gap-4 text-xl">
+        <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
+          <CircleAlert className="size-6" />
+        </span>
         <span>
           <strong className="text-brand">Maaf, ayat pekan ini belum bisa ditampilkan.</strong>{" "}
           {pesan}{" "}
@@ -381,14 +389,14 @@ function KerangkaMemuat() {
   return (
     <div
       role="status"
-      className="rounded-2xl border border-line bg-card p-6 shadow-card md:p-8 hc:border-2"
+      className="bingkai rounded-card bg-card p-6 shadow-card md:p-10 hc:border-2"
     >
       <p className="text-xl text-ink-soft">Memuat ayat pekan ini...</p>
       <div aria-hidden className="mt-6 space-y-4">
-        <div className="ms-auto h-10 w-11/12 animate-pulse rounded-lg bg-tint" />
-        <div className="ms-auto h-10 w-3/4 animate-pulse rounded-lg bg-tint" />
-        <div className="mt-8 h-6 w-full animate-pulse rounded bg-tint" />
-        <div className="h-6 w-2/3 animate-pulse rounded bg-tint" />
+        <div className="ms-auto h-10 w-11/12 animate-pulse rounded-control bg-tint" />
+        <div className="ms-auto h-10 w-3/4 animate-pulse rounded-control bg-tint" />
+        <div className="mt-8 h-6 w-full animate-pulse rounded-control bg-tint" />
+        <div className="h-6 w-2/3 animate-pulse rounded-control bg-tint" />
       </div>
     </div>
   );

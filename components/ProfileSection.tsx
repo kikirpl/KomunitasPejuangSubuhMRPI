@@ -1,4 +1,6 @@
 import { PillarIconSvg } from "@/components/ProfileIcons";
+import { MasjidSiluet } from "@/components/ui/MasjidSiluet";
+import { Rosette } from "@/components/ui/Rosette";
 import { Section } from "@/components/ui/Section";
 import { StarMark } from "@/components/ui/StarMark";
 import { PROFILE } from "@/data/profile";
@@ -14,7 +16,7 @@ export function ProfileSection() {
   const { sekilas, visi, misi, pilar, divisi } = PROFILE;
 
   return (
-    <Section id="profil" label="Profil" title="Tentang Kami" ornament>
+    <Section id="profil" title="Tentang Kami" ornament>
       {/* Blok 1: Sekilas Profil + angka sorotan */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,19rem)] lg:gap-14 huge:lg:grid-cols-1 simple:lg:grid-cols-1">
         <div className="max-w-[68ch]">
@@ -29,13 +31,17 @@ export function ProfileSection() {
           ))}
         </div>
 
+        {/* Prasasti: tiga angka dalam bingkai iluminasi, dipisah garis daun emas tipis. */}
         <ul
           role="list"
           aria-label="Sekilas dalam angka"
-          className="grid grid-cols-1 gap-6 self-center sm:grid-cols-3 lg:grid-cols-1 huge:sm:grid-cols-1 simple:sm:grid-cols-1"
+          className="bingkai grid grid-cols-1 self-center rounded-card bg-card px-6 py-2 shadow-card sm:grid-cols-3 sm:px-2 lg:grid-cols-1 lg:px-7 huge:sm:grid-cols-1 simple:sm:grid-cols-1"
         >
           {sekilas.sorotan.map((s) => (
-            <li key={s.nilai} className="border-l-4 border-gold py-1 pl-5 hc:border-line">
+            <li
+              key={s.nilai}
+              className="border-line py-5 not-last:border-b sm:not-last:border-b-0 sm:not-last:border-r sm:px-5 lg:not-last:border-r-0 lg:not-last:border-b lg:px-0 huge:sm:not-last:border-r-0 huge:sm:not-last:border-b simple:sm:not-last:border-r-0 simple:sm:not-last:border-b"
+            >
               <p className="font-display text-5xl font-semibold leading-none text-brand">
                 {s.nilai}
               </p>
@@ -47,9 +53,10 @@ export function ProfileSection() {
 
       {/* Blok 2: Visi (kartu navy selebar konten) lalu Misi (4 kartu bernomor, 2x2) */}
       <div className="mt-14 md:mt-16">
-        <div className="on-dark relative overflow-hidden rounded-3xl bg-brand-deep px-6 py-8 text-on-brand shadow-card sm:px-10 sm:py-10 hc:border-4 hc:border-gold">
+        <div className="bingkai on-dark relative overflow-hidden rounded-card bg-brand-deep px-6 py-9 text-on-brand shadow-elev-2 sm:px-11 sm:py-11 hc:border-4 hc:border-gold">
           <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
-          <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-gold" />
+          {/* Tanda air: siluet MRPI dalam garis cahaya fajar, sangat samar di sudut kanan bawah. */}
+          <MasjidSiluet className="pointer-events-none absolute -right-6 bottom-0 h-[78%] w-auto max-w-[60%] text-gold/10 hc:hidden simple:hidden" />
           <div className="relative">
             <h3 className="flex items-center gap-3 text-3xl font-semibold text-gold-soft">
               <StarMark className="size-7 shrink-0 text-gold" />
@@ -77,14 +84,9 @@ export function ProfileSection() {
           {misi.poin.map((m, i) => (
             <li
               key={m.judul}
-              className="flex gap-4 rounded-2xl border border-line-soft bg-card p-5 shadow-card hc:border-2 hc:border-line"
+              className="flex gap-4 rounded-card border border-line bg-card p-5 shadow-card transition-shadow duration-(--dur-state) hover:shadow-elev-2 sm:p-6 hc:border-2 hc:border-line"
             >
-              <span
-                aria-hidden="true"
-                className="grid size-11 shrink-0 place-items-center rounded-full border-2 border-gold bg-gold-tint font-display text-xl font-semibold text-brand hc:border-line"
-              >
-                {i + 1}
-              </span>
+              <Rosette className="size-12 text-xl">{i + 1}</Rosette>
               <div className="min-w-0">
                 <h4 className="text-xl font-semibold text-brand">{m.judul}</h4>
                 <p className="mt-1.5 text-lg text-ink-soft">{m.isi}</p>
@@ -104,10 +106,10 @@ export function ProfileSection() {
           {pilar.poin.map((p) => (
             <li
               key={p.judul}
-              className="rounded-2xl border border-line bg-card p-6 shadow-card sm:p-7 hc:border-2"
+              className="rounded-card border border-line bg-card p-6 shadow-card sm:p-7 hc:border-2"
             >
               <div className="flex items-center gap-4">
-                <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-tint text-primary ring-1 ring-line-soft">
+                <span className="grid size-14 shrink-0 place-items-center rounded-full bg-tint text-primary ring-1 ring-gilt/40 ring-offset-4 ring-offset-card">
                   <PillarIconSvg name={p.ikon} className="size-8" />
                 </span>
                 <div className="min-w-0">
@@ -115,13 +117,10 @@ export function ProfileSection() {
                   <p className="mt-0.5 text-base font-bold text-primary">{p.bidang}</p>
                 </div>
               </div>
-              <ul role="list" className="mt-5 space-y-3 border-t border-line-soft pt-5">
+              <ul role="list" className="mt-5 space-y-3 border-t border-line pt-5">
                 {p.poin.map((teks) => (
                   <li key={teks.slice(0, 24)} className="flex gap-3 text-lg leading-relaxed text-ink">
-                    <span
-                      aria-hidden="true"
-                      className="mt-3 size-1.5 shrink-0 rotate-45 bg-gold hc:bg-line"
-                    />
+                    <StarMark className="mt-2 size-3.5 shrink-0 text-gilt hc:text-ink" />
                     <span className="min-w-0">{teks}</span>
                   </li>
                 ))}
@@ -138,9 +137,12 @@ export function ProfileSection() {
           {divisi.poin.map((d) => (
             <li
               key={d.judul}
-              className="rounded-r-2xl border-l-4 border-gold bg-paper-2 px-5 py-4 hc:border-2 hc:border-l-4 hc:border-line"
+              className="rounded-card border border-line bg-paper-2 px-5 py-4 hc:border-2 hc:border-line"
             >
-              <h4 className="text-xl font-semibold text-brand">{d.judul}</h4>
+              <h4 className="flex items-center gap-2.5 text-xl font-semibold text-brand">
+                <StarMark className="size-4 shrink-0 text-gilt hc:text-ink" />
+                {d.judul}
+              </h4>
               <p className="mt-1.5 text-lg text-ink-soft">{d.isi}</p>
             </li>
           ))}
