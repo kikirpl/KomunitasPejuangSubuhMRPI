@@ -19,7 +19,7 @@ export function OverrideList({
 }) {
   if (overrides.length === 0) {
     return (
-      <p className="mt-4 rounded-2xl border-2 border-dashed border-line-soft bg-card p-5 text-xl text-ink-soft hc:border-black">
+      <p className="mt-4 rounded-card border-2 border-dashed border-line-soft bg-card p-5 text-xl text-ink-soft hc:border-black">
         Belum ada perubahan tanggal. Gunakan tombol di bawah bila kajian libur atau diganti pada tanggal
         tertentu.
       </p>

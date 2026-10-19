@@ -62,10 +62,10 @@ export function CardImage({
       ) : (
         <div
           aria-hidden="true"
-          className="on-dark absolute inset-0 grid place-items-center bg-linear-to-br from-brand-deep to-primary"
+          className="on-dark langit-subuh absolute inset-0 grid place-items-center"
         >
           <div className="khatam-pattern absolute inset-0" />
-          <span className="relative grid size-20 place-items-center rounded-full border border-gold/60 bg-brand-deep/40 sm:size-24 hc:border-2 hc:border-gold">
+          <span className="relative grid size-20 place-items-center rounded-full border border-gold-soft/50 bg-brand-deep/45 ring-1 ring-gold-soft/20 ring-offset-4 ring-offset-transparent sm:size-24 hc:border-2 hc:border-gold">
             <Ikon className="size-10 text-gold-soft sm:size-12" strokeWidth={1.5} />
           </span>
         </div>

@@ -15,7 +15,7 @@ const UKURAN_FOTO = "(min-width: 1296px) 604px, (min-width: 768px) 50vw, 100vw";
 
 const lencana: Record<AnnouncementType, string> = {
   kegiatan: "border-line-soft bg-tint",
-  pengumuman: "border-gold bg-gold-tint",
+  pengumuman: "border-gilt bg-gold-tint",
 };
 
 /**
@@ -28,6 +28,7 @@ export function Announcements({ data }: { data: AnnouncementData }) {
   return (
     <Section
       id="pengumuman"
+      kepala="ringan"
       title="Pengumuman Kegiatan"
       intro="Kegiatan dan pengumuman terbaru dari Masjid Raya Pondok Indah."
       isSample={data.isSample}
@@ -46,8 +47,10 @@ function DaftarKartu({ jenis, items }: { jenis: AnnouncementType; items: Announc
   if (items.length === 0) {
     const Ikon = jenis === "kegiatan" ? CalendarDays : Megaphone;
     return (
-      <div className="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-line bg-card px-6 py-12 text-center">
-        <Ikon aria-hidden className="size-10 text-accent" strokeWidth={1.75} />
+      <div className="flex flex-col items-center gap-4 rounded-card border-2 border-dashed border-line bg-card px-6 py-12 text-center">
+        <span aria-hidden="true" className="grid size-16 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
+          <Ikon className="size-8" strokeWidth={1.75} />
+        </span>
         <p className="text-xl font-bold text-brand">{PESAN_KOSONG[jenis]}</p>
       </div>
     );
@@ -72,7 +75,7 @@ export function AnnouncementCard({ item }: { item: AnnouncementItem }) {
   const eksternal = item.href ? /^https?:\/\//.test(item.href) : false;
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-card hc:border-2">
+    <article className="flex h-full flex-col overflow-hidden rounded-card border border-line bg-card shadow-card transition-shadow duration-(--dur-state) ease-out-expo hover:shadow-elev-2 hc:border-2">
       <CardImage
         type={item.type}
         imageUrl={item.imageUrl}
@@ -93,7 +96,7 @@ export function AnnouncementCard({ item }: { item: AnnouncementItem }) {
         </div>
 
         <h3 className="mt-3 text-2xl font-semibold text-brand [overflow-wrap:anywhere]">{item.title}</h3>
-        <p className="mt-2 line-clamp-3 text-lg text-ink [overflow-wrap:anywhere]">{item.excerpt}</p>
+        <p className="mt-2 line-clamp-3 text-lg text-ink [overflow-wrap:anywhere] huge:line-clamp-none">{item.excerpt}</p>
 
         {item.href ? (
           <div className="mt-auto pt-4">

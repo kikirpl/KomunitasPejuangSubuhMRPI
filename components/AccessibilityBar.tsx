@@ -16,7 +16,8 @@ import {
 const control =
   "inline-flex min-h-[56px] items-center justify-center gap-[8px] rounded-[12px] border-2 py-[6px] text-[18px] font-bold leading-tight transition-colors disabled:opacity-45";
 const idle = "border-on-brand/70 bg-transparent text-on-brand hover:bg-white/15";
-const active = "border-gold bg-gold text-on-gold";
+/* Terpilih: isi putih bertulisan gelap. Isi emas disimpan untuk tombol tindakan (Lihat Jadwal, Buka Zoom). */
+const active = "border-on-brand bg-on-brand text-brand-deep";
 
 /**
  * Bilah pengaturan tampilan di bagian paling atas halaman, selalu terlihat:

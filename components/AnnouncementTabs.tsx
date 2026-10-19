@@ -16,10 +16,10 @@ interface AnnouncementTabsProps {
  * sejajar bila muat, bertumpuk bila tulisan diperbesar, tanpa label yang meluber.
  */
 const tabBase =
-  "inline-flex min-h-14 min-w-0 select-none items-center justify-center rounded-xl border-2 px-3 py-3 text-center text-base font-bold leading-tight transition-colors sm:min-w-44 sm:px-5 sm:text-lg";
+  "inline-flex min-h-14 min-w-0 select-none items-center justify-center rounded-control border-2 px-3 py-3 text-center text-base font-bold leading-tight transition-[background-color,border-color,color,box-shadow] duration-(--dur-state) ease-out-expo sm:min-w-44 sm:px-5 sm:text-lg";
 const tabAktif =
-  "border-primary bg-primary text-on-brand hover:border-primary-hover hover:bg-primary-hover";
-const tabLain = "border-primary bg-card text-primary hover:border-accent hover:bg-tint";
+  "border-primary bg-primary text-on-brand shadow-elev-1 hover:border-primary-hover hover:bg-primary-hover";
+const tabLain = "border-transparent bg-transparent text-primary hover:bg-tint hc:border-primary";
 
 const tabId = (jenis: AnnouncementType) => `pengumuman-tab-${jenis}`;
 const panelId = (jenis: AnnouncementType) => `pengumuman-panel-${jenis}`;
@@ -74,7 +74,7 @@ export function AnnouncementTabs({ panels, initial = "kegiatan" }: AnnouncementT
       <div
         role="tablist"
         aria-label="Pilih jenis informasi"
-        className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,8.5rem),1fr))] gap-3 sm:flex sm:flex-wrap"
+        className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,8.5rem),1fr))] gap-1.5 rounded-card border border-line bg-card p-1.5 shadow-elev-1 sm:inline-flex sm:flex-wrap hc:border-2"
       >
         {JENIS_PENGUMUMAN.map((jenis) => {
           const terpilih = jenis === aktif;
@@ -108,7 +108,7 @@ export function AnnouncementTabs({ panels, initial = "kegiatan" }: AnnouncementT
           aria-labelledby={tabId(jenis)}
           tabIndex={0}
           hidden={jenis !== aktif}
-          className={`mt-8 rounded-2xl ${sudahPindah ? "tab-fade" : ""}`}
+          className={`mt-8 rounded-card ${sudahPindah ? "tab-fade" : ""}`}
         >
           {panels[jenis]}
         </div>

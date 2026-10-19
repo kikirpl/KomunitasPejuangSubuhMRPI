@@ -6,7 +6,7 @@
 export function SampleBadge({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`inline-flex items-center rounded-[1.25rem] border-2 border-dashed border-gold bg-gold-tint px-3.5 py-1 text-base font-bold text-brand hc:border-black hc:bg-white hc:text-black ${className}`}
+      className={`inline-flex items-center rounded-full border-2 border-dashed border-gilt bg-gold-tint px-3.5 py-1 text-base font-bold text-brand hc:border-black hc:bg-white hc:text-black ${className}`}
       title="Bagian ini masih memakai data contoh. Pengurus dapat menandainya resmi di Panel Pengurus."
     >
       Contoh data, belum resmi

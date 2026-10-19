@@ -26,7 +26,7 @@ export function SampleStatus({
     return (
       <section
         aria-labelledby={judulId}
-        className="mt-6 rounded-2xl border-2 border-gold bg-gold-tint p-5 hc:border-black"
+        className="mt-6 rounded-card border-2 border-gold bg-gold-tint p-5 hc:border-black"
       >
         <h2 id={judulId} className="flex items-start gap-3 text-xl font-bold text-ink">
           <Info aria-hidden className="mt-0.5 size-6 shrink-0 text-brand huge:hidden" />

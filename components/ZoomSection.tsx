@@ -1,5 +1,6 @@
 import { Clock, Video } from "lucide-react";
 import { CopyButton } from "@/components/ui/CopyButton";
+import { Rosette } from "@/components/ui/Rosette";
 import { Section } from "@/components/ui/Section";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { ZOOM } from "@/data/content";
@@ -57,33 +58,31 @@ export function ZoomSection() {
 
         <div className="lg:order-3 lg:col-span-2 simple:lg:order-none simple:lg:col-span-1">
           <h3 className="text-2xl font-semibold">Cara bergabung</h3>
+          {/* Langkah bernomor rosette dalam daftar bergaris emas (sama dengan Misi di Tentang Kami). */}
           <ol
             role="list"
-            className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-3 simple:lg:grid-cols-1 huge:lg:grid-cols-1"
+            className="mt-4 grid grid-cols-1 border-b border-line-dark lg:grid-cols-3 lg:gap-x-10 simple:lg:grid-cols-1 huge:lg:grid-cols-1 hc:border-b-2"
           >
             {JOIN_STEPS.map((step, index) => (
               <li
                 key={step}
-                className="flex items-start gap-4 rounded-2xl border border-line-dark bg-white/5 p-5 hc:border-2 lg:flex-col lg:p-6 simple:lg:flex-row huge:lg:flex-row"
+                className="flex items-center gap-4 border-t border-line-dark py-5 hc:border-t-2 lg:items-start lg:gap-5 simple:lg:items-center huge:lg:items-center"
               >
-                <span
-                  aria-hidden="true"
-                  className="grid size-12 shrink-0 place-items-center rounded-full bg-gold font-display text-2xl font-semibold leading-none text-on-gold"
-                >
+                <Rosette dark className="size-14 text-2xl">
                   {index + 1}
-                </span>
+                </Rosette>
                 <p className="min-w-0 text-xl">{step}</p>
               </li>
             ))}
           </ol>
         </div>
 
-        <div className="rounded-2xl border border-line-dark bg-white/5 p-6 md:p-8 hc:border-2 lg:order-2 simple:lg:order-none">
+        <div className="bingkai rounded-card bg-white/5 p-6 md:p-8 hc:border-2 lg:order-2 simple:lg:order-none">
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold">
             <Clock aria-hidden className="size-7 shrink-0 text-gold" />
             Jadwal Sesi Daring
           </h3>
-          <dl className="mt-4 divide-y divide-white/20">
+          <dl className="mt-4 divide-y divide-line-dark">
             {ZOOM.slots.map((slot) => (
               <div
                 key={slot.label}

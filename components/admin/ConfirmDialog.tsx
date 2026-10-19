@@ -42,7 +42,7 @@ export function ConfirmDialogBox({
       ref={dialogRef}
       aria-labelledby={judulId}
       aria-describedby={pesanId}
-      className="m-auto w-[min(34rem,calc(100%-2rem))] rounded-2xl border-2 border-danger bg-card p-6 text-ink shadow-card backdrop:bg-black/60 hc:border-black"
+      className="m-auto w-[min(34rem,calc(100%-2rem))] rounded-card border-2 border-danger bg-card p-6 text-ink shadow-card backdrop:bg-black/60 hc:border-black"
     >
       <h2 id={judulId} className="font-display text-3xl font-semibold text-brand [overflow-wrap:anywhere]">
         {title}

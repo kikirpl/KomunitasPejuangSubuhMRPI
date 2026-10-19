@@ -36,7 +36,7 @@ export function SuccessBanner({
   if (!hasil || ditutup) return null;
 
   return (
-    <div role="status" className="mt-6 rounded-2xl border-2 border-primary bg-tint p-5 hc:border-black">
+    <div role="status" className="mt-6 rounded-card border-2 border-primary bg-tint p-5 hc:border-black">
       <p className="flex items-start gap-3 text-xl font-bold text-brand">
         <CircleCheck aria-hidden className="mt-0.5 size-7 shrink-0 huge:hidden" />
         {TEKS[hasil]}

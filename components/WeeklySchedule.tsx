@@ -16,7 +16,7 @@ const UKURAN_FOTO =
   "(min-width: 1296px) 400px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
 const todayChip =
-  "rounded-full bg-gold px-3 py-0.5 text-base font-bold text-on-gold";
+  "rounded-full border border-gilt bg-gold px-3 py-0.5 text-base font-bold text-on-gold shadow-elev-1";
 
 /** Lencana perubahan di sudut gambar: ikon dan tulisan (tidak hanya warna), latar pekat agar terbaca di atas foto. */
 const changeChip =
@@ -87,7 +87,7 @@ export function WeeklySchedule({ schedule, generatedAt }: { schedule: ScheduleDa
       ornament
     >
       {kartu.length === 0 ? (
-        <p className="rounded-2xl border border-line bg-card p-8 text-xl text-ink-soft shadow-card hc:border-2">
+        <p className="rounded-card border border-line bg-card p-8 text-xl text-ink-soft shadow-card hc:border-2">
           Jadwal kajian belum tersedia.
         </p>
       ) : (
@@ -136,8 +136,8 @@ export function WeekCard({
   return (
     <Tag
       aria-current={isToday ? "date" : undefined}
-      className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card hc:border-2 ${
-        isToday ? "border-gold ring-4 ring-gold/40" : "border-line"
+      className={`flex flex-col overflow-hidden rounded-card border bg-card transition-shadow duration-(--dur-state) ease-out-expo hover:shadow-elev-2 hc:border-2 ${
+        isToday ? "border-gilt shadow-elev-2 ring-2 ring-gold/60 ring-offset-2 ring-offset-paper-2" : "border-line shadow-card"
       }`}
     >
       {/* Lencana di sudut gambar, jadi judul kartu tetap sejajar dengan kartu di sebelahnya. */}

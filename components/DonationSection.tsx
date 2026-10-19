@@ -5,11 +5,12 @@ import Image from "next/image";
 import { Landmark, QrCode, ZoomIn } from "lucide-react";
 import { QrisDialog } from "@/components/QrisDialog";
 import { CopyButton } from "@/components/ui/CopyButton";
+import { MasjidSiluet } from "@/components/ui/MasjidSiluet";
 import { Section } from "@/components/ui/Section";
 import { DONATION } from "@/data/content";
 
 const card =
-  "rounded-2xl border border-line bg-card p-6 shadow-card md:p-8 hc:border-2";
+  "rounded-card border border-line bg-card p-6 shadow-card md:p-8 hc:border-2";
 
 /**
  * Info donasi: QRIS (bisa diperbesar) dan rekening bank syariah dengan tombol
@@ -30,7 +31,9 @@ export function DonationSection() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 simple:lg:grid-cols-1">
         <article className={card}>
           <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold text-brand">
-            <QrCode aria-hidden className="size-8 shrink-0" />
+            <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
+              <QrCode className="size-6" />
+            </span>
             Scan QRIS
           </h3>
           <button
@@ -38,7 +41,7 @@ export function DonationSection() {
             onClick={() => setQrisOpen(true)}
             aria-label="Tekan untuk memperbesar kode QRIS"
             aria-haspopup="dialog"
-            className="mx-auto mt-5 block w-full max-w-sm rounded-2xl border-2 border-line-soft bg-white p-3 transition-colors hover:border-primary"
+            className="mx-auto mt-5 block w-full max-w-sm rounded-card border-2 border-line-soft bg-white p-3 transition-colors hover:border-primary"
           >
             <Image
               src={qris.imageSrc}
@@ -63,7 +66,9 @@ export function DonationSection() {
         {bankAccounts.map((account) => (
           <article key={account.id} className={card}>
             <h3 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-semibold text-brand">
-              <Landmark aria-hidden className="size-8 shrink-0" />
+              <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-full bg-tint text-accent ring-1 ring-gilt/35 hc:ring-line">
+                <Landmark className="size-6" />
+              </span>
               Transfer Bank Syariah
             </h3>
             <dl className="mt-5 space-y-5">
@@ -101,9 +106,12 @@ export function DonationSection() {
         ))}
       </div>
 
-      <div className="mt-6 rounded-2xl border border-line-soft bg-card px-6 py-5 hc:border-2">
-        <p className="max-w-2xl text-xl">
-          <strong className="text-brand">Tidak perlu konfirmasi.</strong> Setelah
+      {/* Penutup infak: langit Subuh berbingkai dengan siluet MRPI di depan cahaya fajar. */}
+      <div className="bingkai on-dark langit-subuh relative mt-8 overflow-clip rounded-card px-6 pt-8 pb-36 text-on-brand shadow-elev-2 sm:px-10 sm:pb-40 md:py-10 md:pr-[42%] hc:border-2 hc:pb-8 simple:pb-8 simple:md:pr-10">
+        <div aria-hidden="true" className="khatam-pattern absolute inset-0" />
+        <MasjidSiluet className="terbit pointer-events-none absolute -bottom-px right-4 h-32 w-auto text-brand-deep sm:h-36 md:right-8 md:h-[88%] hc:hidden simple:hidden" />
+        <p className="relative max-w-2xl text-xl leading-relaxed">
+          <strong className="text-gold-soft">Tidak perlu konfirmasi.</strong> Setelah
           transfer atau scan, selesai. Tidak ada formulir yang perlu diisi dan tidak
           perlu mengirim bukti ke WhatsApp.
         </p>

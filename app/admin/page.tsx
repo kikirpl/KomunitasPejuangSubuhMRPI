@@ -5,6 +5,7 @@ import { ErrorBanner } from "@/components/admin/ErrorBanner";
 import { SampleStatus } from "@/components/admin/SampleStatus";
 import { StoreNotice } from "@/components/admin/StoreNotice";
 import { SuccessBanner } from "@/components/admin/SuccessBanner";
+import { Pemisah } from "@/components/ui/Pemisah";
 import { buttonClass } from "@/components/ui/buttonStyles";
 import { loadAdminContext } from "@/lib/admin/context";
 import { MESSAGE_STATUS_FAILED } from "@/lib/admin/form-state";
@@ -28,8 +29,8 @@ function KartuMenu({
 }) {
   const isi: ReactNode = (
     <>
-      <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-brand-deep text-gold huge:hidden">
-        <IkonKartu aria-hidden className="size-9" />
+      <span className="grid size-16 shrink-0 place-items-center rounded-full bg-brand-deep text-gold ring-2 ring-gilt/45 ring-offset-2 ring-offset-card huge:hidden hc:ring-black">
+        <IkonKartu aria-hidden className="size-9" strokeWidth={1.75} />
       </span>
       <span className="min-w-0 flex-1">
         <span className="block font-display text-3xl font-semibold text-brand [overflow-wrap:anywhere]">
@@ -37,14 +38,18 @@ function KartuMenu({
         </span>
         <span className="mt-1 block text-xl text-ink-soft">{keterangan}</span>
       </span>
-      {aktif ? <ChevronRight aria-hidden className="size-8 shrink-0 text-primary huge:hidden" /> : null}
+      {aktif ? <ChevronRight
+          aria-hidden
+          className="size-8 shrink-0 text-primary transition-transform duration-(--dur-state) ease-out-expo group-hover/kartu:translate-x-1 huge:hidden"
+        /> : null}
     </>
   );
-  const dasar = "flex items-center gap-5 rounded-2xl border-2 bg-card p-6 shadow-card hc:border-black";
+  const dasar =
+    "flex items-center gap-5 rounded-card border-2 bg-card p-6 shadow-elev-1 transition-[border-color,background-color,box-shadow,transform] duration-(--dur-state) ease-out-expo hc:border-black";
 
   // next/link (bukan <a>): perpindahan terjadi di peramban dan kerangka pemuat (loading.tsx) tampil seketika.
   return aktif ? (
-    <Link href={href} className={`${dasar} border-primary hover:border-accent hover:bg-tint`}>
+    <Link href={href} className={`${dasar} group/kartu border-primary hover:border-accent hover:bg-tint hover:shadow-elev-2 active:translate-y-px`}>
       {isi}
     </Link>
   ) : (
@@ -68,12 +73,13 @@ export default async function AdminHome({
   return (
     <div>
       <h1 className="font-display text-4xl font-semibold text-brand">Panel Pengurus</h1>
-      <p className="mt-2 text-lg text-ink-soft [overflow-wrap:anywhere]">Masuk sebagai {admin.email}</p>
+      <Pemisah className="mt-3" />
+      <p className="mt-3 text-lg text-ink-soft [overflow-wrap:anywhere]">Masuk sebagai {admin.email}</p>
 
       {hasil === "siap" && aktif ? (
         <p
           role="status"
-          className="mt-6 flex items-center gap-3 rounded-xl border-2 border-primary bg-tint px-5 py-4 text-xl font-bold text-brand hc:border-black"
+          className="mt-6 flex items-center gap-3 rounded-control border-2 border-primary bg-tint px-5 py-4 text-xl font-bold text-brand hc:border-black"
         >
           <CircleCheck aria-hidden className="size-7 shrink-0" />
           Database sudah disiapkan. Silakan pilih yang ingin diubah.
@@ -87,7 +93,7 @@ export default async function AdminHome({
       {galat === "setup" ? (
         <p
           role="alert"
-          className="mt-6 flex items-start gap-3 rounded-xl border-2 border-gold bg-gold-tint px-5 py-4 text-xl font-bold text-ink hc:border-black"
+          className="mt-6 flex items-start gap-3 rounded-control border-2 border-gold bg-gold-tint px-5 py-4 text-xl font-bold text-ink hc:border-black"
         >
           <CircleAlert aria-hidden className="mt-0.5 size-7 shrink-0 text-brand" />
           Database belum berhasil disiapkan. Periksa sambungan, lalu coba lagi; bila terulang, hubungi pengelola web.

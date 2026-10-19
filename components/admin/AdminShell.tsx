@@ -25,9 +25,14 @@ export function AdminShell({ admin, children }: { admin: AdminSession | null; ch
 
   return (
     <>
-      <header className="on-dark border-b border-line-dark bg-brand-deep text-on-brand hc:border-b-2">
+      <header className="on-dark relative border-b border-line-dark bg-brand-deep text-on-brand hc:border-b-2">
+        {/* Garis cahaya fajar tipis di tepi bawah, sama dengan bagian gelap di halaman utama. */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 -bottom-px h-px bg-linear-to-r from-transparent via-gold to-transparent hc:hidden"
+        />
         <div className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-4 sm:px-8 simple:max-w-3xl">
-          <a href="/admin" className="flex w-fit items-center gap-3 rounded-xl">
+          <a href="/admin" className="flex w-fit items-center gap-3 rounded-control">
             <Logo />
             <span className="flex flex-col leading-tight">
               <span className="font-display text-2xl font-semibold text-on-brand">Panel Pengurus</span>
@@ -50,7 +55,7 @@ export function AdminShell({ admin, children }: { admin: AdminSession | null; ch
               </a>
             ) : null}
             {admin ? (
-              <form action={keluar} className="sm:border-l sm:border-white/30 sm:pl-3">
+              <form action={keluar} className="sm:border-l sm:border-line-dark sm:pl-3">
                 <button type="submit" className={buttonClass("outlineOnDark", "md")}>
                   <LogOut aria-hidden className="size-6" />
                   Keluar

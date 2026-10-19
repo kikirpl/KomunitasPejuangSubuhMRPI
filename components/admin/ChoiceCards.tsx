@@ -34,7 +34,7 @@ export function ChoiceCards<T extends string>({
           return (
             <label
               key={o.value}
-              className={`relative flex min-h-16 cursor-pointer items-start gap-3 rounded-xl p-4 text-xl text-ink has-[:focus-visible]:outline-4 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-(--focus) ${
+              className={`relative flex min-h-16 cursor-pointer items-start gap-3 rounded-control p-4 text-xl text-ink has-[:focus-visible]:outline-4 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-(--focus) ${
                 dipilih
                   ? "border-4 border-primary bg-tint"
                   : `border-2 bg-card ${error ? "border-danger" : "border-ink-soft"}`

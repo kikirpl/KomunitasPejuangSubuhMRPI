@@ -104,7 +104,7 @@ export function PhotoField({
       {!uploadEnabled ? (
         <>
           {gambar ? <Miniatur src={gambar} /> : null}
-          <p className="mt-2 rounded-xl border-2 border-gold bg-gold-tint px-4 py-3 text-lg text-ink hc:border-black">
+          <p className="mt-2 rounded-control border-2 border-gold bg-gold-tint px-4 py-3 text-lg text-ink hc:border-black">
             Unggah foto belum disiapkan.
           </p>
           {gambar ? (
@@ -223,7 +223,7 @@ function Miniatur({ src }: { src: string }) {
       width={320}
       height={320}
       unoptimized
-      className="h-40 w-auto max-w-full rounded-xl border-2 border-line bg-paper-2 object-contain hc:border-black"
+      className="h-40 w-auto max-w-full rounded-control border-2 border-line bg-paper-2 object-contain hc:border-black"
     />
   );
 }

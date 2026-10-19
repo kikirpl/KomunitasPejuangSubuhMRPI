@@ -8,8 +8,13 @@ export type ButtonVariant =
   | "dangerSolid";
 export type ButtonSize = "md" | "lg" | "xl";
 
+/*
+ * Sudut, bayangan, dan gerak memakai token komponen di app/globals.css (--radius-control,
+ * --elev-*, --dur-hover, --ease-out-expo). Saat ditekan tombol turun 1px: umpan balik sentuh
+ * yang terasa tanpa animasi panjang (dimatikan oleh "kurangi gerakan").
+ */
 const base =
-  "inline-flex items-center justify-center gap-3 rounded-xl border-2 text-center font-bold leading-tight transition-colors select-none disabled:opacity-60 [&_svg]:shrink-0 huge:[&_svg]:hidden";
+  "inline-flex items-center justify-center gap-3 rounded-control border-2 text-center font-bold leading-tight select-none transition-[background-color,border-color,color,box-shadow,filter,transform] duration-(--dur-hover) ease-out-expo active:translate-y-px disabled:opacity-60 disabled:active:translate-y-0 [&_svg]:shrink-0 huge:[&_svg]:hidden";
 
 /**
  * Pada ukuran tulisan "Lebih besar" dan "Terbesar" (varian huge:), ikon di dalam tombol
@@ -24,20 +29,20 @@ const sizes: Record<ButtonSize, string> = {
 
 /*
  * Warna tombol mengikuti peran di app/globals.css:
- * primary = biru atap (biru malam saat disentuh), gold = cahaya fajar dengan teks gelap,
- * outline = garis biru atap di latar terang (garis biru atap terang saat disentuh),
+ * primary = biru genteng (lebih gelap saat disentuh), gold = emas fajar berbingkai daun emas
+ * dengan teks gelap, outline = garis biru genteng di latar terang,
  * outlineOnDark = garis putih di latar gelap; isinya biru malam tembus pandang, jadi tulisan tetap
- * terbaca walau tombol berada di atas langit lukisan beranda,
+ * terbaca walau tombol berada di atas langit beranda,
  * danger = garis merah di latar kartu (tombol hapus yang membuka konfirmasi),
  * dangerSolid = isi merah dengan teks putih ("Ya, hapus" di dalam konfirmasi).
  */
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "border-primary bg-primary text-on-brand hover:border-primary-hover hover:bg-primary-hover active:bg-primary-hover",
-  gold: "border-gold bg-gold text-on-gold hover:brightness-105 active:brightness-95",
+    "border-primary bg-primary text-on-brand shadow-elev-1 hover:border-primary-hover hover:bg-primary-hover hover:shadow-elev-2 active:bg-primary-hover active:shadow-none",
+  gold: "border-gilt bg-gold text-on-gold shadow-elev-1 hover:brightness-[1.06] hover:shadow-elev-2 active:brightness-95 active:shadow-none",
   outline:
-    "border-primary bg-card text-primary hover:border-accent hover:bg-tint active:bg-tint",
-  light: "border-card bg-card text-primary hover:border-tint hover:bg-tint",
+    "border-primary bg-card text-primary hover:bg-tint active:bg-tint",
+  light: "border-card bg-card text-primary shadow-elev-1 hover:border-tint hover:bg-tint",
   outlineOnDark:
     "border-on-brand bg-brand-deep/55 text-on-brand hover:bg-on-brand hover:text-brand active:bg-on-brand active:text-brand",
   danger: "border-danger bg-card text-danger hover:bg-danger-tint active:bg-danger-tint",

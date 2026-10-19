@@ -7,7 +7,7 @@ import { dayName, daySlug } from "@/lib/time";
 import type { StudySession } from "@/types";
 
 export const KARTU_DAFTAR =
-  "flex flex-col gap-4 rounded-2xl border border-line bg-card p-5 shadow-card hc:border-2 sm:flex-row sm:items-center sm:justify-between huge:sm:flex-col huge:sm:items-stretch simple:sm:flex-col simple:sm:items-stretch";
+  "flex flex-col gap-4 rounded-card border border-line bg-card p-5 shadow-card hc:border-2 sm:flex-row sm:items-center sm:justify-between huge:sm:flex-col huge:sm:items-stretch simple:sm:flex-col simple:sm:items-stretch";
 
 /**
  * Tujuh kartu hari, Senin sampai Ahad. Hari yang punya jadwal tetap menampilkan jam, tema, dan ustadz dengan

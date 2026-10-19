@@ -62,11 +62,11 @@ const SOCIAL_BUTTONS: readonly SocialButton[] = [
  * tetap rapi di kisi 2x2. Layar lebar: ikon di samping tulisan, satu baris.
  */
 const socialBase =
-  "flex w-full min-h-14 flex-col items-center justify-center gap-1.5 rounded-xl border-2 px-3 py-3 text-center text-lg font-bold leading-tight transition-colors select-none [&_svg]:shrink-0 huge:[&_svg]:hidden lg:w-auto lg:flex-row lg:gap-3";
+  "flex w-full min-h-14 flex-col items-center justify-center gap-1.5 rounded-control border-2 px-3 py-3 text-center text-lg font-bold leading-tight transition-[background-color,border-color,color,box-shadow,transform] duration-(--dur-hover) ease-out-expo select-none active:translate-y-px [&_svg]:shrink-0 huge:[&_svg]:hidden lg:w-auto lg:flex-row lg:gap-3";
 const socialUtama =
-  "border-primary bg-primary text-on-brand hover:border-primary-hover hover:bg-primary-hover active:bg-primary-hover lg:px-8";
+  "border-primary bg-primary text-on-brand shadow-elev-1 hover:border-primary-hover hover:bg-primary-hover hover:shadow-elev-2 active:bg-primary-hover lg:px-8";
 const socialBiasa =
-  "border-primary bg-card text-primary hover:border-accent hover:bg-tint active:bg-tint lg:px-6";
+  "border-primary bg-card text-primary hover:bg-tint active:bg-tint lg:px-6";
 
 /** ID video YouTube selalu 11 karakter (huruf, angka, garis bawah, strip). */
 const YOUTUBE_ID = /^[\w-]{11}$/;
@@ -83,11 +83,12 @@ export function VideoGallery() {
   return (
     <Section
       id="video"
+      kepala="ringan"
       title="Rekaman Kajian"
       intro="Ketinggalan kajian? Tonton ulang kapan saja, dari rumah."
       isSample={VIDEO.isSample}
     >
-      <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-line bg-card shadow-card hc:border-2">
+      <div className="mx-auto max-w-4xl overflow-hidden rounded-card border border-line bg-card shadow-card hc:border-2">
         {/* Video asli: rasio 16:9. Kotak contoh berisi catatan, jadi tingginya mengikuti isi. */}
         <div className={`relative bg-brand-deep ${playable ? "aspect-video" : ""}`}>
           {playing && playable ? (
@@ -105,23 +106,23 @@ export function VideoGallery() {
               type="button"
               onClick={() => setPlaying(true)}
               aria-label={`Putar video: ${VIDEO.title}`}
-              className="on-dark absolute inset-0 grid place-items-center bg-linear-to-br from-brand-deep to-primary text-on-brand"
+              className="group/video on-dark langit-subuh absolute inset-0 grid place-items-center overflow-hidden text-on-brand"
             >
               <span aria-hidden className="khatam-pattern absolute inset-0" />
               <span className="relative flex flex-col items-center gap-3 px-6 text-center">
-                <span className="grid size-24 place-items-center rounded-full bg-gold text-on-gold shadow-xl">
+                <span className="grid size-24 place-items-center rounded-full border-2 border-gilt bg-gold text-on-gold shadow-elev-3 transition-transform duration-(--dur-state) ease-out-expo group-hover/video:scale-105">
                   <Play aria-hidden className="ms-1 size-12" fill="currentColor" />
                 </span>
                 <span className="text-2xl font-bold">Putar Video</span>
               </span>
             </button>
           ) : (
-            <div className="on-dark relative grid min-h-80 w-full place-items-center bg-linear-to-br from-brand-deep to-primary py-10 text-on-brand">
+            <div className="on-dark langit-subuh relative grid min-h-80 w-full place-items-center overflow-hidden py-10 text-on-brand">
               <span aria-hidden className="khatam-pattern absolute inset-0" />
               <div className="relative flex flex-col items-center gap-3 px-6 text-center">
                 <span
                   aria-hidden
-                  className="grid size-24 place-items-center rounded-full bg-gold text-on-gold shadow-xl"
+                  className="grid size-24 place-items-center rounded-full border-2 border-gilt bg-gold text-on-gold shadow-elev-3"
                 >
                   <Play className="ms-1 size-12" fill="currentColor" />
                 </span>
