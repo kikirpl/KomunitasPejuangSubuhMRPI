@@ -94,7 +94,7 @@ export function WeeklySchedule({ schedule, generatedAt }: { schedule: ScheduleDa
         <ul
           role="list"
           aria-label="Jadwal kajian Pejuang Subuh Masjid Raya Pondok Indah, Senin sampai Ahad"
-          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 huge:md:grid-cols-1 huge:lg:grid-cols-1 simple:md:grid-cols-1 simple:lg:grid-cols-1"
+          className="muncul-anak grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 huge:md:grid-cols-1 huge:lg:grid-cols-1 simple:md:grid-cols-1 simple:lg:grid-cols-1"
         >
           {kartu.map(({ day, session, changed, note }) => (
             <WeekCard

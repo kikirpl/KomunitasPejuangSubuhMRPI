@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="on-dark relative bg-brand-deep text-on-brand">
       <div aria-hidden="true" className="bg-paper-2 hc:hidden simple:hidden">
         <div className="mx-auto flex w-full max-w-6xl justify-end px-5 sm:px-8">
-          <MasjidSiluet className="-mb-px h-[clamp(4.75rem,10vw,9rem)] w-auto text-brand-deep" />
+          <MasjidSiluet className="terbit -mb-px h-[clamp(4.75rem,10vw,9rem)] w-auto text-brand-deep" />
         </div>
       </div>
       <div className="relative overflow-hidden">

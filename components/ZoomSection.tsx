@@ -29,7 +29,7 @@ export function ZoomSection() {
       intro="Tidak perlu datang ke masjid. Tekan tombol kuning, kajian langsung terbuka."
       isSample={ZOOM.isSample}
     >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 simple:lg:grid-cols-1">
+      <div className="muncul-anak grid grid-cols-1 gap-8 lg:grid-cols-2 simple:lg:grid-cols-1">
         <div className="flex flex-col gap-4 lg:order-1 simple:lg:order-none">
           <a
             href={ZOOM.meetingUrl}

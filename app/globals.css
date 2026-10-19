@@ -524,6 +524,39 @@ html[data-contrast="high"] {
   }
 
   /*
+   * Gerak masuk saat digulir (CSS scroll-driven, tanpa JavaScript). Ditautkan ke posisi gulir,
+   * bukan waktu, jadi isi yang sudah di layar (misalnya setelah lompat lewat menu) selalu utuh.
+   * - .muncul: satu blok naik 1,25rem sambil menjadi jelas, selesai setelah tepi atasnya
+   *   masuk 12rem ke layar.
+   * - .muncul-anak: setiap kartu dalam kisi melakukan hal yang sama, kolom ke-2 dan ke-3
+   *   sedikit menyusul.
+   * - .terbit: siluet MRPI naik perlahan dari balik cakrawala (panel infak, kaki halaman).
+   * Memakai `transform` (bukan `translate`) agar tidak bertabrakan dengan efek tekan
+   * `active:translate-y-px` pada kartu. Tidak berjalan pada "kurangi gerakan", Kontras Tinggi,
+   * Tampilan Sederhana, atau peramban tanpa dukungan; di sana semuanya tampil utuh sejak awal.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      html:not([data-contrast="high"]):not([data-simple="true"]) :is(.muncul, .muncul-anak > *) {
+        animation: muncul linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 12rem;
+      }
+      html:not([data-contrast="high"]):not([data-simple="true"]) .muncul-anak > :nth-child(3n + 2) {
+        animation-range: entry 1.25rem entry 13.25rem;
+      }
+      html:not([data-contrast="high"]):not([data-simple="true"]) .muncul-anak > :nth-child(3n + 3) {
+        animation-range: entry 2.5rem entry 14.5rem;
+      }
+      html:not([data-contrast="high"]):not([data-simple="true"]) .terbit {
+        animation: terbit linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 40%;
+      }
+    }
+  }
+
+  /*
    * Bingkai iluminasi: garis ganda tipis berwarna daun emas, seperti bingkai halaman mushaf.
    * Dipakai hanya pada panel yang istimewa (ayat, visi, donasi), bukan pada setiap kartu.
    */
@@ -625,6 +658,26 @@ html[data-contrast="high"] {
   to {
     transform: scaleX(1);
     opacity: 1;
+  }
+}
+
+@keyframes muncul {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes terbit {
+  from {
+    transform: translateY(32%);
+  }
+  to {
+    transform: none;
   }
 }
 
